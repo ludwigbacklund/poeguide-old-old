@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import { injectGlobal } from 'styled-components';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+import storage from 'redux-persist/lib/storage';
 // import WebFont from 'webfontloader';
 
 import App from './components/App/App';
@@ -24,14 +27,23 @@ injectGlobal`
   }
 `;
 
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = createStore(
-  rootReducer,
+  persistedReducer,
   window.devToolsExtension ? window.devToolsExtension() : f => f,
 );
+const persistor = persistStore(store);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById('root'),
 );
