@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import Items from '../Items/Items';
-import Timeline from '../Timeline/Timeline';
+import ItemSection from '../ItemSection/ItemSection';
+import TimelineSection from '../TimelineSection/TimelineSection';
 import { getTimelineItems } from '../../features/selectors';
 import { removeItem, addItem } from '../../features/timeline/actions';
 
@@ -16,14 +16,14 @@ const App = ({
   uniquesData, gemsData, timelineItems, removeItem, addItem,
 }) => (
   <MainContainer>
-    <Items
+    <ItemSection
       header="Uniques"
       items={uniquesData}
       type="unique"
       onClick={addItem}
     />
-    <Timeline items={timelineItems} onClick={removeItem} />
-    <Items header="Gems" items={gemsData} type="gem" onClick={addItem} />
+    <TimelineSection items={timelineItems} onClick={removeItem} />
+    <ItemSection header="Gems" items={gemsData} type="gem" onClick={addItem} />
   </MainContainer>
 );
 

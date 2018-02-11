@@ -24,20 +24,9 @@ const FilterInput = styled.input`
   border-left: none;
   border-right: none;
   font-size: 16px;
-
-  &:before {
-    content: '';
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-    right: 0px;
-    height: 1px;
-    width: 200px;
-    background-color: rgba(0, 0, 0, 0.42);
-  }
 `;
 
-class Items extends Component {
+class ItemSection extends Component {
   constructor() {
     super();
 
@@ -73,7 +62,7 @@ class Items extends Component {
 
   render() {
     const { filterValue } = this.state;
-    const { header, items, onClick } = this.props;
+    const { header, items } = this.props;
 
     return (
       <ItemsContainer>
@@ -128,4 +117,4 @@ class Items extends Component {
 //   width={340}
 // />
 
-export default Items;
+export default ItemSection;

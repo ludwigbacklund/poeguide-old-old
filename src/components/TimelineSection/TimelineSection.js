@@ -20,7 +20,7 @@ const TimelineItems = styled.div`
 
 const acts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const Timeline = ({ items, onClick }) => (
+const TimelineSection = ({ items, onClick }) => (
   <TimelineContainer>
     <SectionHeader text="Timeline" />
     <TimelineItems>
@@ -43,4 +43,4 @@ const Timeline = ({ items, onClick }) => (
   </TimelineContainer>
 );
 
-export default Timeline;
+export default TimelineSection;
