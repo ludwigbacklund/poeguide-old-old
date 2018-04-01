@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
+import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles';
 // import WebFont from 'webfontloader';
 
 import App from './components/App/App';
@@ -24,11 +25,17 @@ injectGlobal`
     font-family: Fontin;
     width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: center;
   }
 `;
 
+const theme = createMuiTheme({
+  typography: { fontFamily: 'Fontin' },
+});
+
 const persistConfig = {
-  key: 'root',
+  key: 'timeline',
   storage,
 };
 
@@ -38,20 +45,17 @@ const store = createStore(
   window.devToolsExtension ? window.devToolsExtension() : f => f,
 );
 const persistor = persistStore(store);
+// persistor.purge();
 
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <App />
+      <MuiThemeProvider theme={theme}>
+        <App />
+      </MuiThemeProvider>
     </PersistGate>
   </Provider>,
   document.getElementById('root'),
 );
-registerServiceWorker();
 
-// WebFont.load({
-//   custom: {
-//     families: ['Fontin SmallCaps'],
-//     urls: ['../public/fonts.css'],
-//   },
-// });
+registerServiceWorker();
