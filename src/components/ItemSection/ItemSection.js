@@ -39,11 +39,11 @@ class ItemSection extends Component {
     this.setState({ filterValue: event.target.value });
   };
 
-  onItemClick = id => {
-    const { onClick } = this.props;
+  onClick = id => {
+    const { onItemClick } = this.props;
 
     this.clearFilterValue();
-    onClick(id);
+    onItemClick(id);
   };
 
   clearFilterValue = () => {
@@ -84,8 +84,12 @@ class ItemSection extends Component {
                 key={item.name}
                 id={item.id}
                 name={item.name}
-                levelRequirement={item.level_req}
-                onClick={this.onItemClick}
+                levelReq={item.level_req}
+                dexReq={item.dex_req}
+                intReq={item.int_req}
+                strReq={item.str_req}
+                chosen={false}
+                onClick={this.onClick}
               />
             ))}
         </ItemsList>
