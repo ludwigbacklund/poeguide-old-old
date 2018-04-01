@@ -5,4 +5,18 @@ const addItem = itemId => ({
 
 const removeItem = itemId => ({ type: 'REMOVE_ITEM', itemId });
 
-export { addItem, removeItem };
+const selectCharacter = characterId => ({
+  type: 'SELECT_CHARACTER',
+  characterId,
+});
+
+const addCharacter = characterName => ({
+  type: 'ADD_CHARACTER',
+  characterName,
+});
+
+const saveItems = () => ({
+  type: 'SAVE_ITEMS',
+});
+
+export { addItem, removeItem, selectCharacter, addCharacter, saveItems };

@@ -12,7 +12,11 @@ const INITIAL_STATE = {
     10: { name: 'Act 10', min_lvl: 64, max_lvl: 99 },
   },
   itemIds: [],
+  characters: { 0: { name: null, itemIds: [] } },
+  selectedCharacterId: 0,
 };
+
+let characterId = 0;
 
 const timeline = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -24,6 +28,35 @@ const timeline = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         itemIds: state.itemIds.filter(itemId => itemId !== action.itemId),
+      };
+    case 'SELECT_CHARACTER':
+      return {
+        ...state,
+        itemIds: state.characters[action.characterId].itemIds,
+        selectedCharacterId: action.characterId,
+      };
+    case 'ADD_CHARACTER':
+      return {
+        ...state,
+        characters: {
+          ...state.characters,
+          [++characterId]: {
+            name: action.characterName,
+            itemIds: state.itemIds,
+          },
+        },
+        selectedCharacterId: characterId,
+      };
+    case 'SAVE_ITEMS':
+      return {
+        ...state,
+        characters: {
+          ...state.characters,
+          [state.selectedCharacterId]: {
+            ...state.characters[state.selectedCharacterId],
+            itemIds: state.itemIds,
+          },
+        },
       };
     default:
       return state;

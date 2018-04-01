@@ -1,9 +1,17 @@
 import { createSelector } from 'reselect';
 
-const getActs = state => state.timeline.acts;
+export const getActs = state => state.timeline.acts;
 const getGemsData = state => state.gems.gemsData;
+const getCharacters = state => state.timeline.characters;
 const getUniquesData = state => state.uniques.uniquesData;
 const getChosenItemIds = state => state.timeline.itemIds;
+export const getSelectedCharacterId = state =>
+  state.timeline.selectedCharacterId;
+
+export const getSelectedCharacter = createSelector(
+  [getSelectedCharacterId, getCharacters],
+  (selectedCharacterId, characters) => characters[selectedCharacterId],
+);
 
 export const getChosenItems = createSelector(
   [getGemsData, getUniquesData, getChosenItemIds],
