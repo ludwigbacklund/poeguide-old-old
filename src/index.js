@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
-import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles';
+import 'antd/dist/antd.css';
 // import WebFont from 'webfontloader';
 
 import App from './components/App/App';
@@ -16,23 +16,19 @@ import Fontin from './static/Fontin-SmallCaps.ttf';
 
 // eslint-disable-next-line
 injectGlobal`
-  @font-face {
+  /* @font-face {
     font-family: Fontin;
     src: url(${Fontin});
-  }
+  } */
 
   html, body {
-    font-family: Fontin;
+    /* font-family: Fontin; */
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
   }
 `;
-
-const theme = createMuiTheme({
-  typography: { fontFamily: 'Fontin' },
-});
 
 const persistConfig = {
   key: 'timeline',
@@ -45,14 +41,12 @@ const store = createStore(
   window.devToolsExtension ? window.devToolsExtension() : f => f,
 );
 const persistor = persistStore(store);
-// persistor.purge();
+persistor.purge();
 
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <MuiThemeProvider theme={theme}>
-        <App />
-      </MuiThemeProvider>
+      <App />
     </PersistGate>
   </Provider>,
   document.getElementById('root'),

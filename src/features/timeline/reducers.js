@@ -1,3 +1,5 @@
+import removeByKey from '../../helpers/removeByKey';
+
 const INITIAL_STATE = {
   acts: {
     1: { name: 'Act 1', min_lvl: 1, max_lvl: 12 },
@@ -47,6 +49,16 @@ const timeline = (state = INITIAL_STATE, action) => {
         },
         selectedCharacterId: characterId,
       };
+    case 'REMOVE_CHARACTER': {
+      const key = [action.characterId];
+      const newCharacters = removeByKey(state.characters, key);
+
+      return {
+        ...state,
+        itemIds: [],
+        characters: newCharacters,
+      };
+    }
     case 'SAVE_ITEMS':
       return {
         ...state,

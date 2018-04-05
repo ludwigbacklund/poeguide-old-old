@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import Select from 'material-ui/Select';
-import { MenuItem } from 'material-ui/Menu';
-import IconButton from 'material-ui/IconButton';
-import SaveIcon from 'material-ui-icons/Save';
-import EditIcon from 'material-ui-icons/Edit';
+import Select from 'antd/lib/select';
+import Button from 'antd/lib/button';
+import { confirm } from 'antd/lib/modal';
 
 import {
   getTimelineItems,
@@ -16,6 +14,7 @@ import {
 import {
   removeItem,
   addCharacter,
+  removeCharacter,
   selectCharacter,
   saveItems,
 } from '../../features/timeline/actions';
@@ -33,6 +32,8 @@ const TimelineContainer = styled.div`
 
 const Toolbar = styled.div`
   padding-bottom: 10px;
+  display: flex;
+  align-items: center;
 `;
 
 const CharacterSelect = styled(Select)`
@@ -41,7 +42,7 @@ const CharacterSelect = styled(Select)`
 
 const TimelinePaper = styled.div`
   flex: 1;
-  overflow: scroll;
+  overflow: auto;
   padding: 15px;
   box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.14);
 `;
@@ -79,6 +80,30 @@ class TimelineSection extends Component {
     this.handleCloseModal();
   };
 
+  showDeleteConfirm = () => {
+    const {
+      // characters,
+      selectedCharacterId,
+      removeCharacter,
+      // selectCharacter,
+    } = this.props;
+
+    confirm({
+      title: 'Are you sure you want to delete this character?',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk() {
+        // const characterArr = Object.keys(characters);
+        removeCharacter(selectedCharacterId);
+        // selectCharacter(characterArr[characterArr.length - 1]);
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
+
   render() {
     const { showModal, saveInputValue } = this.state;
     const {
@@ -107,18 +132,23 @@ class TimelineSection extends Component {
                 }
 
                 return (
-                  <MenuItem key={character[0]} value={character[0]}>
-                    {character[1].name || 'Not yet saved...'}
-                  </MenuItem>
+                  <Select.Option key={character[0]} value={character[0]}>
+                    {character[0] !== '0'
+                      ? character[1].name
+                      : 'Not yet saved...'}
+                  </Select.Option>
                 );
               })}
             </CharacterSelect>
-            <IconButton onClick={this.handleOpenModal}>
-              <SaveIcon />
-            </IconButton>
-            <IconButton>
-              <EditIcon />
-            </IconButton>
+            <Button icon="save" onClick={this.handleOpenModal} />
+            <Button
+              icon="delete"
+              onClick={() => {
+                if (selectedCharacterId !== 0) {
+                  this.showDeleteConfirm();
+                }
+              }}
+            />
             <Modal
               showModal={showModal}
               handleCloseModal={this.handleCloseModal}
@@ -162,6 +192,7 @@ const mapState = state => ({
 export default connect(mapState, {
   removeItem,
   addCharacter,
+  removeCharacter,
   selectCharacter,
   saveItems,
 })(TimelineSection);

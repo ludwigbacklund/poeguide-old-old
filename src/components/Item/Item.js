@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 
+import Card from 'antd/lib/card';
+
 const ItemCard = styled.div`
   background-color: white;
   display: flex;
@@ -22,7 +24,7 @@ const Description = styled.div`
 `;
 
 const ItemName = styled.p`
-  flex: 5;
+  margin: 0;
 `;
 
 const AttributeRequirements = styled.div`

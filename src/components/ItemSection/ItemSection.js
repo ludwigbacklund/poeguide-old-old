@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// import List from 'react-virtualized/dist/commonjs/List';
-// import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
+
+import Input from 'antd/lib/input';
 
 import SectionHeader from '../SectionHeader/SectionHeader';
 import Item from '../Item/Item';
@@ -15,15 +15,12 @@ const ItemsContainer = styled.div`
 
 const ItemsList = styled.div`
   max-height: 100%;
-  overflow: scroll;
+  overflow: hidden;
   padding: 1px;
-`;
 
-const FilterInput = styled.input`
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  font-size: 16px;
+  &:hover {
+    overflow: auto;
+  }
 `;
 
 class ItemSection extends Component {
@@ -67,7 +64,7 @@ class ItemSection extends Component {
     return (
       <ItemsContainer>
         <SectionHeader text={header} />
-        <FilterInput
+        <Input
           placeholder="Filter items..."
           onChange={this.onChange}
           value={filterValue}
@@ -97,28 +94,5 @@ class ItemSection extends Component {
     );
   }
 }
-
-// rowRenderer = ({ key, index, style }) => {
-//   const item = this.props.items[index];
-//   return (
-//     <div key={key} style={style}>
-//       <Item
-//         key={item.name}
-//         id={item.id}
-//         name={item.name}
-//         levelRequirement={item.level_req}
-//         onClick={this.props.onClick}
-//       />
-//     </div>
-//   );
-// };
-
-// <List
-//   height={1200}
-//   rowCount={items.length}
-//   rowHeight={60}
-//   rowRenderer={this.rowRenderer}
-//   width={340}
-// />
 
 export default ItemSection;
