@@ -5,6 +5,7 @@ const SectionTitle = styled.h1`
   text-align: center;
   padding: 15px;
   font-size: 20px;
+  color: white;
 `;
 
 const SectionHeader = ({ text }) => (

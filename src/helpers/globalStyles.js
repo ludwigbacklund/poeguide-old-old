@@ -6,9 +6,12 @@ export default `
     /* font-family: Fontin; */
     width: 100%;
     height: 100%;
+    background: url(${bg});
+  }
+
+  #root {
     display: flex;
     justify-content: center;
-    background: url(${bg});
   }
 
   .ant-select-dropdown {
@@ -25,4 +28,9 @@ export default `
     background-color: #515151;
     color: rgba(255, 255, 255, 0.7);
   }
+
+  ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 0px;
+}
 `;

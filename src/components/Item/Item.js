@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Card from 'antd/lib/card';
 
 const ItemCard = styled.div`
-  background-color: white;
+  background-color: #424242;
   display: flex;
   flex-direction: column;
   padding: 15px;
@@ -14,17 +14,23 @@ const ItemCard = styled.div`
 
   &:hover {
     box-shadow: -1px 1px 2px 1px
-      rgba(${props => (props.chosen ? '244, 67, 54' : '76, 175, 8')}, 0.5);
+      rgba(${props => (props.chosen ? '244, 67, 54' : '64, 169, 255')}, 0.5);
+  }
+
+  @media (max-width: 756px) {
+    font-size: 12px;
   }
 `;
 
 const Description = styled.div`
   display: flex;
   justify-content: space-between;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
 `;
 
-const ItemName = styled.p`
-  margin: 0;
+const ItemName = styled.h3`
+  color: white;
 `;
 
 const AttributeRequirements = styled.div`
@@ -48,10 +54,8 @@ class Item extends PureComponent {
 
     return (
       <ItemCard chosen={chosen} onClick={() => onClick(id)}>
-        <h3>{name}</h3>
-        <Description>
-          <ItemName>{`Level: ${levelReq}`}</ItemName>
-        </Description>
+        <ItemName>{name}</ItemName>
+        <Description>{`Level: ${levelReq}`}</Description>
       </ItemCard>
     );
   }

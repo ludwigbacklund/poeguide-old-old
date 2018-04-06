@@ -1,9 +1,14 @@
 import React, { Fragment } from 'react';
+import styled from 'styled-components';
+
+const ActText = styled.h3`
+  color: white;
+`;
 
 const Act = ({ number, children }) =>
   (children && children.length > 0 ? (
     <Fragment>
-      <h2>Act {number}</h2>
+      <ActText>Act {number}</ActText>
       {children}
     </Fragment>
   ) : null);

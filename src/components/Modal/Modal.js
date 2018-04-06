@@ -1,31 +1,61 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import styled from 'styled-components';
 
 import AntModal from 'antd/lib/modal';
-import Input from 'antd/lib/input';
+
+const DarkModal = styled(AntModal)`
+  background-color: #303030;
+  padding-bottom: 0;
+
+  & .ant-modal-content {
+    background-color: #303030;
+  }
+
+  & .ant-modal-header {
+    background-color: #303030;
+    border-bottom: 1px solid #212121;
+  }
+
+  & .ant-modal-title,
+  .ant-modal-close-x,
+  .ant-input,
+  p {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  & .ant-modal-footer {
+    border-top: 1px solid #212121;
+  }
+
+  & .ant-btn {
+    color: rgba(255, 255, 255, 0.7);
+    background-color: #424242;
+    border-color: #424242;
+  }
+
+  & .ant-btn:hover {
+    border-color: #40a9ff;
+  }
+
+  & .ant-btn-primary {
+    color: rgba(255, 255, 255, 0.7);
+    background-color: #424242;
+    border-color: #40a9ff;
+  }
+`;
 
 const Modal = ({
-  showModal,
-  handleCloseModal,
-  inputValue,
-  inputOnChange,
-  inputOnSubmit,
+  title, showModal, handleCloseModal, onOk, children,
 }) => (
-  <div>
-    <AntModal
-      title="New character"
-      visible={showModal}
-      onCancel={handleCloseModal}
-      onOk={inputOnSubmit}
-      ariaHideApp={false}
-    >
-      <Input
-        placeholder="Character name..."
-        value={inputValue}
-        onChange={inputOnChange}
-        maxLength="28"
-      />
-    </AntModal>
-  </div>
+  <DarkModal
+    title={title}
+    visible={showModal}
+    onCancel={handleCloseModal}
+    onOk={onOk}
+    ariaHideApp={false}
+  >
+    {children}
+  </DarkModal>
 );
 
 export default Modal;

@@ -10,7 +10,16 @@ import { addItem } from '../../features/timeline/actions';
 const MainContainer = styled.div`
   display: flex;
   height: 100vh;
-  width: 1000px;
+  margin: 0;
+  overflow-y: hidden;
+
+  @media (max-width: 1100px) {
+    width: 100%;
+  }
+
+  @media (min-width: 1100px) {
+    width: 50%;
+  }
 `;
 
 const App = ({ uniquesData, gemsData, addItem }) => (

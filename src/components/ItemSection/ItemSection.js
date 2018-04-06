@@ -7,7 +7,7 @@ import SectionHeader from '../SectionHeader/SectionHeader';
 import Item from '../Item/Item';
 
 const ItemsContainer = styled.div`
-  flex: 1;
+  flex: 5;
   display: flex;
   flex-direction: column;
   padding: 15px 15px 0px 15px;
@@ -15,12 +15,15 @@ const ItemsContainer = styled.div`
 
 const ItemsList = styled.div`
   max-height: 100%;
-  overflow: hidden;
   padding: 1px;
+  overflow: auto;
+  overflow-x: hidden;
+`;
 
-  &:hover {
-    overflow: auto;
-  }
+const FilterInput = styled(Input)`
+  background-color: #424242;
+  border: 1px solid #303030;
+  color: rgba(255, 255, 255, 0.7);
 `;
 
 class ItemSection extends Component {
@@ -64,17 +67,18 @@ class ItemSection extends Component {
     return (
       <ItemsContainer>
         <SectionHeader text={header} />
-        <Input
+        <FilterInput
           placeholder="Filter items..."
           onChange={this.onChange}
           value={filterValue}
+          theme="dark"
         />
         <ItemsList>
           {items
             .filter(item =>
                 (filterValue !== ''
                   ? item.name.toLowerCase().slice(0, filterValue.length) ===
-                    filterValue
+                    filterValue.toLowerCase()
                   : item))
             .map(item => (
               <Item
