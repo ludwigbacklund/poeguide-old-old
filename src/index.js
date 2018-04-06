@@ -12,23 +12,10 @@ import 'antd/dist/antd.css';
 import App from './components/App/App';
 import registerServiceWorker from './registerServiceWorker';
 import rootReducer from './features';
-import Fontin from './static/Fontin-SmallCaps.ttf';
+import globalStyles from './helpers/globalStyles';
 
 // eslint-disable-next-line
-injectGlobal`
-  /* @font-face {
-    font-family: Fontin;
-    src: url(${Fontin});
-  } */
-
-  html, body {
-    /* font-family: Fontin; */
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-  }
-`;
+injectGlobal`${globalStyles}`;
 
 const persistConfig = {
   key: 'timeline',
