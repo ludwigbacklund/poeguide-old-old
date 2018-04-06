@@ -4,7 +4,8 @@ export const getActs = state => state.timeline.acts;
 const getGemsData = state => state.gems.gemsData;
 const getCharacters = state => state.timeline.characters;
 const getUniquesData = state => state.uniques.uniquesData;
-const getChosenItemIds = state => state.timeline.itemIds;
+const getChosenItemIds = state =>
+  state.timeline.itemIds[state.timeline.selectedCharacterId] || [];
 export const getSelectedCharacterId = state =>
   state.timeline.selectedCharacterId;
 

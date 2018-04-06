@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -12,7 +12,6 @@ import {
   addCharacter,
   removeCharacter,
   selectCharacter,
-  saveItems,
 } from '../../features/timeline/actions';
 
 import SectionHeader from '../SectionHeader/SectionHeader';
@@ -34,77 +33,49 @@ const TimelinePaper = styled.div`
   box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.14);
 `;
 
-class TimelineSection extends Component {
-  onCharacterSelect = characterId => {
-    const { selectCharacter, saveItems, selectedCharacterId } = this.props;
-
-    if (characterId !== '0' && selectedCharacterId.toString() !== characterId) {
-      saveItems();
-      selectCharacter(characterId);
-    }
-  };
-
-  saveInputOnChange = e => {
-    this.setState({ newCharacterInputValue: e.target.value });
-  };
-
-  newCharacterOnOk = () => {
-    const { addCharacter } = this.props;
-    const { newCharacterInputValue } = this.state;
-
-    addCharacter(newCharacterInputValue);
-    this.setState({ newCharacterInputValue: '' });
-    this.handleCloseNewCharacterModal();
-  };
-
-  deleteOnOk = () => {
-    const { selectedCharacterId, removeCharacter } = this.props;
-
-    removeCharacter(selectedCharacterId);
-    this.handleCloseDeleteModal();
-  };
-
-  render() {
-    const {
-      items,
-      removeItem,
-      acts,
-      selectedCharacterId,
-      characters,
-    } = this.props;
-
-    return (
-      <TimelineContainer>
-        <SectionHeader text="Timeline" />
-        <TimelinePaper>
-          <TimelineToolbar
-            characters={characters}
-            selectedCharacterId={selectedCharacterId}
-          />
-          {Object.keys(acts).map(act => (
-            <Act key={act} number={act}>
-              {items[act]
-                ? items[act].map(item => (
-                  <Item
-                    key={item.name}
-                    id={item.id}
-                    name={item.name}
-                    levelReq={item.level_req}
-                    dexReq={item.dex_req}
-                    intReq={item.int_req}
-                    strReq={item.str_req}
-                    chosen
-                    onClick={removeItem}
-                  />
-                  ))
-                : null}
-            </Act>
-          ))}
-        </TimelinePaper>
-      </TimelineContainer>
-    );
-  }
-}
+const TimelineSection = ({
+  items,
+  acts,
+  selectedCharacterId,
+  characters,
+  removeItem,
+  addCharacter,
+  removeCharacter,
+  selectCharacter,
+}) => (
+  <TimelineContainer>
+    <SectionHeader text="Timeline" />
+    <TimelinePaper>
+      <TimelineToolbar
+        characters={characters}
+        selectedCharacterId={selectedCharacterId}
+        removeItem={removeItem}
+        addCharacter={addCharacter}
+        removeCharacter={removeCharacter}
+        selectCharacter={selectCharacter}
+      />
+      {Object.keys(acts).map(act => (
+        <Act key={act} number={act}>
+          {items[act]
+            ? items[act].map(item => (
+              <Item
+                key={item.name}
+                id={item.id}
+                name={item.name}
+                levelReq={item.level_req}
+                dexReq={item.dex_req}
+                intReq={item.int_req}
+                strReq={item.str_req}
+                chosen
+                onClick={removeItem}
+              />
+              ))
+            : null}
+        </Act>
+      ))}
+    </TimelinePaper>
+  </TimelineContainer>
+);
 
 const mapState = state => ({
   items: getTimelineItems(state),
@@ -118,5 +89,4 @@ export default connect(mapState, {
   addCharacter,
   removeCharacter,
   selectCharacter,
-  saveItems,
 })(TimelineSection);

@@ -13,8 +13,8 @@ const INITIAL_STATE = {
     9: { name: 'Act 9', min_lvl: 61, max_lvl: 63 },
     10: { name: 'Act 10', min_lvl: 64, max_lvl: 99 },
   },
-  itemIds: [],
-  characters: { 0: { name: null, itemIds: [] } },
+  itemIds: {},
+  characters: { 0: { name: 'Default' } },
   selectedCharacterId: 0,
 };
 
@@ -22,19 +22,32 @@ let characterId = 0;
 
 const timeline = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'ADD_ITEM':
-      return state.itemIds.includes(action.itemId)
+    case 'ADD_ITEM': {
+      const chosenItems = state.itemIds[state.selectedCharacterId] || [];
+
+      return chosenItems.includes(action.itemId)
         ? state
-        : { ...state, itemIds: [...state.itemIds, action.itemId] };
+        : {
+          ...state,
+          itemIds: {
+            ...state.itemIds,
+            [state.selectedCharacterId]: [...chosenItems, action.itemId],
+          },
+        };
+    }
     case 'REMOVE_ITEM':
       return {
         ...state,
-        itemIds: state.itemIds.filter(itemId => itemId !== action.itemId),
+        itemIds: {
+          ...state.itemIds,
+          [state.selectedCharacterId]: state.itemIds[
+            state.selectedCharacterId
+          ].filter(itemId => itemId !== action.itemId),
+        },
       };
     case 'SELECT_CHARACTER':
       return {
         ...state,
-        itemIds: state.characters[action.characterId].itemIds,
         selectedCharacterId: action.characterId,
       };
     case 'ADD_CHARACTER':
@@ -44,32 +57,24 @@ const timeline = (state = INITIAL_STATE, action) => {
           ...state.characters,
           [++characterId]: {
             name: action.characterName,
-            itemIds: state.itemIds,
           },
         },
         selectedCharacterId: characterId,
       };
     case 'REMOVE_CHARACTER': {
-      const key = [action.characterId];
-      const newCharacters = removeByKey(state.characters, key);
+      const newCharacters = removeByKey(state.characters, action.characterId);
+      const newSelectedCharacterId = Object.keys(newCharacters).reduce(
+        (max, character) => Math.max(max, parseInt(character, 10)),
+        0,
+      );
 
       return {
         ...state,
-        itemIds: [],
+        itemIds: { ...state.itemIds, [state.selectedCharacterId]: {} },
         characters: newCharacters,
+        selectedCharacterId: newSelectedCharacterId,
       };
     }
-    case 'SAVE_ITEMS':
-      return {
-        ...state,
-        characters: {
-          ...state.characters,
-          [state.selectedCharacterId]: {
-            ...state.characters[state.selectedCharacterId],
-            itemIds: state.itemIds,
-          },
-        },
-      };
     default:
       return state;
   }

@@ -57,6 +57,32 @@ class TimelineToolbar extends Component {
     showDeleteModal: false,
   };
 
+  onCharacterSelect = characterId => {
+    const { selectCharacter } = this.props;
+
+    selectCharacter(characterId);
+  };
+
+  saveInputOnChange = e => {
+    this.setState({ newCharacterInputValue: e.target.value });
+  };
+
+  newCharacterOnOk = () => {
+    const { addCharacter } = this.props;
+    const { newCharacterInputValue } = this.state;
+
+    addCharacter(newCharacterInputValue);
+    this.setState({ newCharacterInputValue: '' });
+    this.handleCloseNewCharacterModal();
+  };
+
+  deleteOnOk = () => {
+    const { selectedCharacterId, removeCharacter } = this.props;
+
+    removeCharacter(selectedCharacterId);
+    this.handleCloseDeleteModal();
+  };
+
   handleOpenNewCharacterModal = () => {
     this.setState({ showNewCharacterModal: true });
   };
@@ -87,23 +113,17 @@ class TimelineToolbar extends Component {
           value={selectedCharacterId.toString()}
           onChange={value => this.onCharacterSelect(value)}
         >
-          {Object.entries(characters).map(character => {
-            if (Object.keys(characters).length > 1 && character[0] === '0') {
-              return null;
-            }
-
-            return (
-              <Select.Option key={character[0]} value={character[0]}>
-                {character[0] !== '0' ? character[1].name : 'Default'}
-              </Select.Option>
-            );
-          })}
+          {Object.entries(characters).map(character => (
+            <Select.Option key={character[0]} value={character[0]}>
+              {character[1].name}
+            </Select.Option>
+          ))}
         </CharacterSelect>
         <IconButton icon="save" onClick={this.handleOpenNewCharacterModal} />
         <IconButton
           icon="delete"
           onClick={() => {
-            if (selectedCharacterId !== 0) {
+            if (selectedCharacterId.toString() !== '0') {
               this.handleOpenDeleteModal();
             }
           }}
