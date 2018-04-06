@@ -20,4 +20,15 @@ const removeCharacter = characterId => ({
   characterId,
 });
 
-export { addItem, removeItem, selectCharacter, addCharacter, removeCharacter };
+const clearItems = () => ({
+  type: 'CLEAR_ITEMS',
+});
+
+export {
+  addItem,
+  removeItem,
+  selectCharacter,
+  addCharacter,
+  removeCharacter,
+  clearItems,
+};

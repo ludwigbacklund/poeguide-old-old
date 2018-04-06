@@ -68,7 +68,7 @@ class ItemSection extends Component {
       <ItemsContainer>
         <SectionHeader text={header} />
         <FilterInput
-          placeholder="Filter items..."
+          placeholder="Search items..."
           onChange={this.onChange}
           value={filterValue}
           theme="dark"
@@ -89,7 +89,8 @@ class ItemSection extends Component {
                 dexReq={item.dex_req}
                 intReq={item.int_req}
                 strReq={item.str_req}
-                chosen={false}
+                chosen={item.chosen}
+                onHoverColor="blue"
                 onClick={this.onClick}
               />
             ))}

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Select from 'antd/lib/select';
 import Button from 'antd/lib/button';
 import Input from 'antd/lib/input';
+import Tooltip from 'antd/lib/tooltip';
 
 import Modal from '../Modal/Modal';
 
@@ -120,14 +121,28 @@ class TimelineToolbar extends Component {
           ))}
         </CharacterSelect>
         <IconButton icon="save" onClick={this.handleOpenNewCharacterModal} />
-        <IconButton
-          icon="delete"
-          onClick={() => {
-            if (selectedCharacterId.toString() !== '0') {
-              this.handleOpenDeleteModal();
-            }
-          }}
-        />
+        {selectedCharacterId.toString() === '0' ? (
+          <Tooltip title="You cannot delete the default character">
+            <IconButton
+              icon="delete"
+              onClick={() => {
+                if (selectedCharacterId.toString() !== '0') {
+                  this.handleOpenDeleteModal();
+                }
+              }}
+            />
+          </Tooltip>
+        ) : (
+          <IconButton
+            icon="delete"
+            onClick={() => {
+              if (selectedCharacterId.toString() !== '0') {
+                this.handleOpenDeleteModal();
+              }
+            }}
+          />
+        )}
+
         <Modal
           title="New character"
           showModal={showNewCharacterModal}

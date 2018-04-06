@@ -12,6 +12,7 @@ import {
   addCharacter,
   removeCharacter,
   selectCharacter,
+  clearItems,
 } from '../../features/timeline/actions';
 
 import SectionHeader from '../SectionHeader/SectionHeader';
@@ -42,40 +43,53 @@ const TimelineSection = ({
   addCharacter,
   removeCharacter,
   selectCharacter,
-}) => (
-  <TimelineContainer>
-    <SectionHeader text="Timeline" />
-    <TimelinePaper>
-      <TimelineToolbar
-        characters={characters}
-        selectedCharacterId={selectedCharacterId}
-        removeItem={removeItem}
-        addCharacter={addCharacter}
-        removeCharacter={removeCharacter}
-        selectCharacter={selectCharacter}
-      />
-      {Object.keys(acts).map(act => (
-        <Act key={act} number={act}>
-          {items[act]
-            ? items[act].map(item => (
-              <Item
-                key={item.name}
-                id={item.id}
-                name={item.name}
-                levelReq={item.level_req}
-                dexReq={item.dex_req}
-                intReq={item.int_req}
-                strReq={item.str_req}
-                chosen
-                onClick={removeItem}
-              />
-              ))
-            : null}
-        </Act>
-      ))}
-    </TimelinePaper>
-  </TimelineContainer>
-);
+  clearItems,
+}) => {
+  const firstOccurringAct = Object.keys(acts)
+    .filter(act => items[act].length > 0)
+    .reduce((min, act) => Math.min(min, parseInt(act, 10)), 10)
+    .toString();
+
+  return (
+    <TimelineContainer>
+      <SectionHeader text="Timeline" />
+      <TimelinePaper>
+        <TimelineToolbar
+          characters={characters}
+          selectedCharacterId={selectedCharacterId}
+          removeItem={removeItem}
+          addCharacter={addCharacter}
+          removeCharacter={removeCharacter}
+          selectCharacter={selectCharacter}
+        />
+        {Object.keys(acts)
+          .filter(act => items[act].length > 0)
+          .map(act => (
+            <Act
+              key={act}
+              number={act}
+              first={act === firstOccurringAct}
+              onClick={clearItems}
+            >
+              {items[act].map(item => (
+                <Item
+                  key={item.name}
+                  id={item.id}
+                  name={item.name}
+                  levelReq={item.level_req}
+                  dexReq={item.dex_req}
+                  intReq={item.int_req}
+                  strReq={item.str_req}
+                  onHoverColor="red"
+                  onClick={removeItem}
+                />
+              ))}
+            </Act>
+          ))}
+      </TimelinePaper>
+    </TimelineContainer>
+  );
+};
 
 const mapState = state => ({
   items: getTimelineItems(state),
@@ -89,4 +103,5 @@ export default connect(mapState, {
   addCharacter,
   removeCharacter,
   selectCharacter,
+  clearItems,
 })(TimelineSection);

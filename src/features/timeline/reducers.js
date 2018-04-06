@@ -75,6 +75,12 @@ const timeline = (state = INITIAL_STATE, action) => {
         selectedCharacterId: newSelectedCharacterId,
       };
     }
+    case 'CLEAR_ITEMS': {
+      return {
+        ...state,
+        itemIds: { ...state.itemIds, [state.selectedCharacterId]: [] },
+      };
+    }
     default:
       return state;
   }

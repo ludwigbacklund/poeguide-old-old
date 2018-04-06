@@ -21,6 +21,26 @@ export const getChosenItems = createSelector(
       chosenItemIds.includes(item.id)),
 );
 
+export const getAnnotatedGemsData = createSelector(
+  [getGemsData, getChosenItemIds],
+  (gemsData, chosenItemIds) =>
+    gemsData.map(gem => {
+      const newGem = gem;
+      newGem.chosen = chosenItemIds.includes(gem.id);
+      return newGem;
+    }),
+);
+
+export const getAnnotatedUniquesData = createSelector(
+  [getUniquesData, getChosenItemIds],
+  (uniquesData, chosenItemIds) =>
+    uniquesData.map(gem => {
+      const newGem = gem;
+      newGem.chosen = chosenItemIds.includes(gem.id);
+      return newGem;
+    }),
+);
+
 export const getTimelineItems = createSelector(
   [getChosenItems, getActs],
   (chosenItems, acts) => {

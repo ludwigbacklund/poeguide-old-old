@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 
-import Card from 'antd/lib/card';
+import Badge from 'antd/lib/badge';
 
 const ItemCard = styled.div`
   background-color: #424242;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   padding: 15px;
   margin-bottom: 10px;
   margin-top: 10px;
@@ -14,7 +14,11 @@ const ItemCard = styled.div`
 
   &:hover {
     box-shadow: -1px 1px 2px 1px
-      rgba(${props => (props.chosen ? '244, 67, 54' : '64, 169, 255')}, 0.5);
+      rgba(
+        ${props =>
+    (props.onHoverColor === 'red' ? '244, 67, 54' : '64, 169, 255')},
+        0.5
+      );
   }
 
   @media (max-width: 756px) {
@@ -33,11 +37,18 @@ const ItemName = styled.h3`
   color: white;
 `;
 
-const AttributeRequirements = styled.div`
-  flex: 1;
-  display: flex;
-  font-size: 12px;
+const BlueBadge = styled(Badge)`
+  & .ant-badge-dot {
+    background: #40a9ff;
+    box-shadow: none;
+  }
 `;
+
+// const AttributeRequirements = styled.div`
+//   flex: 1;
+//   display: flex;
+//   font-size: 12px;
+// `;
 
 class Item extends PureComponent {
   render() {
@@ -45,17 +56,20 @@ class Item extends PureComponent {
       id,
       name,
       levelReq,
-      dexReq,
-      intReq,
-      strReq,
+      // dexReq,
+      // intReq,
+      // strReq,
       chosen,
+      onHoverColor,
       onClick,
     } = this.props;
 
     return (
-      <ItemCard chosen={chosen} onClick={() => onClick(id)}>
-        <ItemName>{name}</ItemName>
-        <Description>{`Level: ${levelReq}`}</Description>
+      <ItemCard onHoverColor={onHoverColor} onClick={() => onClick(id)}>
+        <BlueBadge offset={[-5, -5]} dot={chosen}>
+          <ItemName>{name}</ItemName>
+          <Description>{`Level: ${levelReq}`}</Description>
+        </BlueBadge>
       </ItemCard>
     );
   }

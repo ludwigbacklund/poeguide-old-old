@@ -6,6 +6,11 @@ import ItemSection from '../ItemSection/ItemSection';
 import TimelineSection from '../TimelineSection/TimelineSection';
 
 import { addItem } from '../../features/timeline/actions';
+import {
+  getChosenItems,
+  getAnnotatedGemsData,
+  getAnnotatedUniquesData,
+} from '../../features/selectors';
 
 const MainContainer = styled.div`
   display: flex;
@@ -13,21 +18,24 @@ const MainContainer = styled.div`
   margin: 0;
   overflow-y: hidden;
 
-  @media (max-width: 1100px) {
+  @media (max-width: 1200px) {
     width: 100%;
   }
 
-  @media (min-width: 1100px) {
-    width: 50%;
+  @media (min-width: 1200px) {
+    width: 60%;
   }
 `;
 
-const App = ({ uniquesData, gemsData, addItem }) => (
+const App = ({
+  uniquesData, gemsData, addItem, chosenItems,
+}) => (
   <MainContainer>
     <ItemSection
       header="Uniques"
       items={uniquesData}
       type="unique"
+      chosenItems={chosenItems}
       onItemClick={addItem}
     />
     <TimelineSection />
@@ -35,14 +43,16 @@ const App = ({ uniquesData, gemsData, addItem }) => (
       header="Gems"
       items={gemsData}
       type="gem"
+      chosenItems={chosenItems}
       onItemClick={addItem}
     />
   </MainContainer>
 );
 
 const mapState = state => ({
-  uniquesData: state.uniques.uniquesData,
-  gemsData: state.gems.gemsData,
+  uniquesData: getAnnotatedUniquesData(state),
+  gemsData: getAnnotatedGemsData(state),
+  chosenItems: getChosenItems(state),
 });
 
 export default connect(mapState, {
