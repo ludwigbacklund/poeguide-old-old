@@ -17,6 +17,7 @@
 .env.production.local
 /.vscode
 .netlify
+build-analysis-*.html
 
 npm-debug.log*
 yarn-debug.log*
