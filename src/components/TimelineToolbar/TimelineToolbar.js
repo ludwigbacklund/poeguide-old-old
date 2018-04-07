@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import Select from 'antd/lib/select';
-import Button from 'antd/lib/button';
-import Input from 'antd/lib/input';
-import Tooltip from 'antd/lib/tooltip';
+import { Select, Button, Input, Tooltip } from 'antd';
 
 import Modal from '../Modal/Modal';
 

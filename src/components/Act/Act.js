@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
-import Button from 'antd/lib/button';
+import { Button } from 'antd';
 
 const TitleHolder = styled.div`
   display: flex;

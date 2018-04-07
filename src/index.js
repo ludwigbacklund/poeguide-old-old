@@ -6,7 +6,6 @@ import { Provider } from 'react-redux';
 import { persistStore, persistReducer, createMigrate } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
-import 'antd/dist/antd.css';
 // import WebFont from 'webfontloader';
 
 import App from './components/App/App';

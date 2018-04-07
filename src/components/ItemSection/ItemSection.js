@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import Input from 'antd/lib/input';
+import { Input } from 'antd';
 
 import SectionHeader from '../SectionHeader/SectionHeader';
 import Item from '../Item/Item';

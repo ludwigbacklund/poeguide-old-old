@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import AntModal from 'antd/lib/modal';
+import { Modal as AntModal } from 'antd';
 
 const DarkModal = styled(AntModal)`
   background-color: #303030;

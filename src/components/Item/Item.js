@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 
-import Badge from 'antd/lib/badge';
+import { Badge } from 'antd';
 
 const ItemCard = styled.div`
   background-color: #424242;
