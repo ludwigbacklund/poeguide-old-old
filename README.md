@@ -1,6 +1,6 @@
 # poe.guide
 
-A character progression planner for the online Action RPG game *[Path of Exile](pathofexile.com)* built with React and Redux.
+A character progression planner for the online Action RPG game *[Path of Exile](https://pathofexile.com)* built with React and Redux.
 
 ## Quick-start
 
@@ -8,5 +8,3 @@ A character progression planner for the online Action RPG game *[Path of Exile](
 $ yarn install
 $ yarn start
 ```
-
-##
