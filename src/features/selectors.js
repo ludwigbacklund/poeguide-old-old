@@ -68,3 +68,42 @@ export const getTimelineItems = createSelector(
     return actItems;
   },
 );
+
+export const getFirstOccurringAct = createSelector(
+  [getActs, getTimelineItems],
+  (acts, timelineItems) =>
+    Object.keys(acts)
+      .filter(act => timelineItems[act].length > 0)
+      .reduce((min, act) => Math.min(min, parseInt(act, 10)), 10)
+      .toString(),
+);
+
+export const getActAttributeRequirements = createSelector(
+  [getActs, getTimelineItems],
+  (acts, timelineItems) =>
+    // { 1: {int: x, str: x, dex: x}, 2: ... }
+    Object.keys(acts).reduce((actAttributes, act) => {
+      const newActAttributes = actAttributes;
+
+      newActAttributes[act] = timelineItems[act].reduce(
+        (maxRequirements, item) => {
+          const attributes = ['int', 'str', 'dex'];
+
+          const newRequirements = attributes.map(attribute =>
+            Math.max(
+              maxRequirements[attribute] || 0,
+              parseInt(item[`${attribute}_req`], 10) || 0,
+            ));
+
+          return {
+            int: newRequirements[0],
+            str: newRequirements[1],
+            dex: newRequirements[2],
+          };
+        },
+        {},
+      );
+
+      return newActAttributes;
+    }, {}),
+);

@@ -6,6 +6,8 @@ import {
   getTimelineItems,
   getActs,
   getSelectedCharacterId,
+  getFirstOccurringAct,
+  getActAttributeRequirements,
 } from '../../features/selectors';
 import {
   removeItem,
@@ -44,58 +46,56 @@ const TimelineSection = ({
   removeCharacter,
   selectCharacter,
   clearItems,
-}) => {
-  const firstOccurringAct = Object.keys(acts)
-    .filter(act => items[act].length > 0)
-    .reduce((min, act) => Math.min(min, parseInt(act, 10)), 10)
-    .toString();
-
-  return (
-    <TimelineContainer>
-      <SectionHeader text="Timeline" />
-      <TimelinePaper>
-        <TimelineToolbar
-          characters={characters}
-          selectedCharacterId={selectedCharacterId}
-          removeItem={removeItem}
-          addCharacter={addCharacter}
-          removeCharacter={removeCharacter}
-          selectCharacter={selectCharacter}
-        />
-        {Object.keys(acts)
-          .filter(act => items[act].length > 0)
-          .map(act => (
-            <Act
-              key={act}
-              number={act}
-              first={act === firstOccurringAct}
-              onClick={clearItems}
-            >
-              {items[act].map(item => (
-                <Item
-                  key={item.name}
-                  id={item.id}
-                  name={item.name}
-                  levelReq={item.level_req}
-                  dexReq={item.dex_req}
-                  intReq={item.int_req}
-                  strReq={item.str_req}
-                  onHoverColor="red"
-                  onClick={removeItem}
-                />
-              ))}
-            </Act>
-          ))}
-      </TimelinePaper>
-    </TimelineContainer>
-  );
-};
+  firstOccurringAct,
+  actAttributeRequirements,
+}) => (
+  <TimelineContainer>
+    <SectionHeader text="Timeline" />
+    <TimelinePaper>
+      <TimelineToolbar
+        characters={characters}
+        selectedCharacterId={selectedCharacterId}
+        removeItem={removeItem}
+        addCharacter={addCharacter}
+        removeCharacter={removeCharacter}
+        selectCharacter={selectCharacter}
+      />
+      {Object.keys(acts)
+        .filter(act => items[act].length > 0)
+        .map(act => (
+          <Act
+            key={act}
+            number={act}
+            isFirst={act === firstOccurringAct}
+            onClick={clearItems}
+            attributeRequirements={actAttributeRequirements[act]}
+          >
+            {items[act].map(item => (
+              <Item
+                key={item.name}
+                id={item.id}
+                name={item.name}
+                levelReq={item.level_req}
+                dexReq={item.dex_req}
+                intReq={item.int_req}
+                strReq={item.str_req}
+                onHoverColor="red"
+                onClick={removeItem}
+              />
+            ))}
+          </Act>
+        ))}
+    </TimelinePaper>
+  </TimelineContainer>
+);
 
 const mapState = state => ({
   items: getTimelineItems(state),
   characters: state.timeline.characters,
   selectedCharacterId: getSelectedCharacterId(state),
   acts: getActs(state),
+  firstOccurringAct: getFirstOccurringAct(state),
+  actAttributeRequirements: getActAttributeRequirements(state),
 });
 
 export default connect(mapState, {
