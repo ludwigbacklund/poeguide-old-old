@@ -1,6 +1,6 @@
 import removeByKey from '../../helpers/removeByKey';
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   acts: {
     1: { name: 'Act 1', min_lvl: 1, max_lvl: 12 },
     2: { name: 'Act 2', min_lvl: 13, max_lvl: 22 },

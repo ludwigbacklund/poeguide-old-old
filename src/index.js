@@ -18,10 +18,11 @@ import migrations from './helpers/migrations';
 injectGlobal`${globalStyles}`;
 
 const persistConfig = {
-  version: 0,
-  key: 'timeline',
+  version: 1,
+  key: 'root',
   storage,
   migrate: createMigrate(migrations),
+  whitelist: ['timeline'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
