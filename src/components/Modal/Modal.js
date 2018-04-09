@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import { Modal as AntModal } from 'antd';
 
 const DarkModal = styled(AntModal)`
-  background-color: #303030;
-  padding-bottom: 0;
+  &&& {
+    background-color: #303030;
+    padding-bottom: 0;
+  }
 
   & .ant-modal-content {
     background-color: #303030;
