@@ -29,8 +29,22 @@ export default `
     color: rgba(255, 255, 255, 0.7);
   }
 
+  .ant-notification-notice {
+    background: #424242; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .ant-notification-notice-icon-info {
+    color: #40a9ff;
+  }
+
+  .ant-notification-notice-close, .ant-notification-notice-message {
+    color: white;
+  }
+
   ::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 0px;
-}
+  }
 `;
