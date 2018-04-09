@@ -18,9 +18,12 @@ export const INITIAL_STATE = {
   selectedCharacterId: 0,
 };
 
-let characterId = 0;
-
 const timeline = (state = INITIAL_STATE, action) => {
+  let characterId = Object.keys(state.characters).reduce(
+    (maxId, characterId) => Math.max(maxId, characterId),
+    0,
+  );
+
   switch (action.type) {
     case 'ADD_ITEM': {
       const chosenItems = state.itemIds[state.selectedCharacterId] || [];
@@ -63,6 +66,7 @@ const timeline = (state = INITIAL_STATE, action) => {
       };
     case 'REMOVE_CHARACTER': {
       const newCharacters = removeByKey(state.characters, action.characterId);
+      const newItemIds = removeByKey(state.itemIds, action.characterId);
       const newSelectedCharacterId = Object.keys(newCharacters).reduce(
         (max, character) => Math.max(max, parseInt(character, 10)),
         0,
@@ -70,7 +74,7 @@ const timeline = (state = INITIAL_STATE, action) => {
 
       return {
         ...state,
-        itemIds: { ...state.itemIds, [state.selectedCharacterId]: {} },
+        itemIds: newItemIds,
         characters: newCharacters,
         selectedCharacterId: newSelectedCharacterId,
       };
