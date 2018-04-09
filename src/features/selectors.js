@@ -101,7 +101,7 @@ export const getActAttributeRequirements = createSelector(
             dex: newRequirements[2],
           };
         },
-        {},
+        newActAttributes[act - 1] || {},
       );
 
       return newActAttributes;
