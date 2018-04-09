@@ -97,6 +97,17 @@ class TimelineToolbar extends Component {
     this.setState({ showDeleteModal: false });
   };
 
+  renderDeleteIcon = selectedCharacterId => (
+    <IconButton
+      icon="delete"
+      onClick={() => {
+        if (selectedCharacterId.toString() !== '0') {
+          this.handleOpenDeleteModal();
+        }
+      }}
+    />
+  );
+
   render() {
     const {
       showNewCharacterModal,
@@ -113,31 +124,17 @@ class TimelineToolbar extends Component {
         >
           {Object.entries(characters).map(character => (
             <Select.Option key={character[0]} value={character[0]}>
-              {character[1].name}
+              {character[1].name || character[0]}
             </Select.Option>
           ))}
         </CharacterSelect>
         <IconButton icon="save" onClick={this.handleOpenNewCharacterModal} />
         {selectedCharacterId.toString() === '0' ? (
           <Tooltip title="You cannot delete the default character">
-            <IconButton
-              icon="delete"
-              onClick={() => {
-                if (selectedCharacterId.toString() !== '0') {
-                  this.handleOpenDeleteModal();
-                }
-              }}
-            />
+            {this.renderDeleteIcon(selectedCharacterId)}
           </Tooltip>
         ) : (
-          <IconButton
-            icon="delete"
-            onClick={() => {
-              if (selectedCharacterId.toString() !== '0') {
-                this.handleOpenDeleteModal();
-              }
-            }}
-          />
+          this.renderDeleteIcon(selectedCharacterId)
         )}
 
         <Modal
