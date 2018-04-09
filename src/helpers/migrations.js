@@ -6,6 +6,10 @@ const migrations = {
     ...state,
     timeline: INITIAL_TIMELINE_STATE,
   }),
+  2: state => ({
+    ...state,
+    timeline: INITIAL_TIMELINE_STATE,
+  }),
 };
 
 export default migrations;

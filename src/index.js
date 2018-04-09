@@ -6,7 +6,8 @@ import { Provider } from 'react-redux';
 import { persistStore, persistReducer, createMigrate } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
-// import WebFont from 'webfontloader';
+
+import { notification } from 'antd';
 
 import App from './components/App/App';
 import registerServiceWorker from './registerServiceWorker';
@@ -18,7 +19,7 @@ import migrations from './helpers/migrations';
 injectGlobal`${globalStyles}`;
 
 const persistConfig = {
-  version: 1,
+  version: 2,
   key: 'root',
   storage,
   migrate: createMigrate(migrations),
@@ -42,4 +43,14 @@ ReactDOM.render(
   document.getElementById('root'),
 );
 
-registerServiceWorker();
+const handleServiceWorkerUpdate = () => {
+  notification.info({
+    message: 'Update ready',
+    description:
+      'An update for poe.guide is ready, please reload your browser.',
+  });
+};
+
+registerServiceWorker({
+  onUpdate: handleServiceWorkerUpdate,
+});
