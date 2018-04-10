@@ -81,6 +81,7 @@ const TimelineSection = ({
                 strReq={item.str_req}
                 onHoverColor="red"
                 onClick={removeItem}
+                showWikiLink
               />
             ))}
           </Act>

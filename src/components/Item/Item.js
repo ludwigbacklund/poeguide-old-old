@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 
-import { Badge } from 'antd';
+import { Badge, Icon } from 'antd';
 
 const ItemCard = styled.div`
   background-color: #424242;
@@ -38,9 +38,30 @@ const ItemName = styled.h3`
 `;
 
 const BlueBadge = styled(Badge)`
+  flex: 1;
   & .ant-badge-dot {
     background: #40a9ff;
     box-shadow: none;
+  }
+`;
+
+const CardBottom = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const WikiIcon = styled(Icon)`
+  margin-left: 10px;
+`;
+
+const WikiLink = styled.a`
+  color: white;
+  opacity: 0.4;
+  transition: all 0.3s;
+
+  &:hover {
+    opacity: 0.7;
   }
 `;
 
@@ -62,13 +83,31 @@ class Item extends PureComponent {
       chosen,
       onHoverColor,
       onClick,
+      showWikiLink,
     } = this.props;
+
+    const wikiLink = `https://pathofexile.gamepedia.com/${name.replace(
+      ' ',
+      '_',
+    )}`;
 
     return (
       <ItemCard onHoverColor={onHoverColor} onClick={() => onClick(id)}>
         <BlueBadge offset={[-5, -5]} dot={chosen}>
           <ItemName>{name}</ItemName>
-          <Description>{`Level: ${levelReq}`}</Description>
+
+          <CardBottom>
+            <Description>{`Lvel: ${levelReq}`}</Description>
+            {showWikiLink && (
+              <WikiLink
+                href={wikiLink}
+                target="_blank"
+                onClick={e => e.stopPropagation()}
+              >
+                <WikiIcon type="info-circle" />
+              </WikiLink>
+            )}
+          </CardBottom>
         </BlueBadge>
       </ItemCard>
     );
@@ -84,6 +123,7 @@ class Item extends PureComponent {
 Item.defaultProps = {
   name: 'N/A',
   subheader: 'N/A',
+  showWikiLink: false,
 };
 
 export default Item;
