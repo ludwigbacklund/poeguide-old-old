@@ -79,9 +79,9 @@ const TimelineSection = ({
                 dexReq={item.dex_req}
                 intReq={item.int_req}
                 strReq={item.str_req}
+                primaryAttribute={item.primary_att}
                 onHoverColor="red"
                 onClick={removeItem}
-                showWikiLink
               />
             ))}
           </Act>

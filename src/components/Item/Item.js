@@ -56,11 +56,19 @@ const WikiIcon = styled(Icon)`
 `;
 
 const WikiLink = styled.a`
-  color: white;
+  color: ${props => {
+    const { primaryAttribute } = props;
+
+    if (primaryAttribute === 'Strength') return '#F44336';
+    else if (primaryAttribute === 'Intelligence') return '#40a9ff';
+    else if (primaryAttribute === 'Dexterity') return '#4CAF50';
+    return 'white';
+  }};
   opacity: 0.4;
   transition: all 0.3s;
 
   &:hover {
+    color: white;
     opacity: 0.7;
   }
 `;
@@ -80,10 +88,10 @@ class Item extends PureComponent {
       // dexReq,
       // intReq,
       // strReq,
+      primaryAttribute,
       chosen,
       onHoverColor,
       onClick,
-      showWikiLink,
     } = this.props;
 
     const wikiLink = `https://pathofexile.gamepedia.com/${name.replace(
@@ -98,15 +106,14 @@ class Item extends PureComponent {
 
           <CardBottom>
             <Description>{`Lvel: ${levelReq}`}</Description>
-            {showWikiLink && (
-              <WikiLink
-                href={wikiLink}
-                target="_blank"
-                onClick={e => e.stopPropagation()}
-              >
-                <WikiIcon type="info-circle" />
-              </WikiLink>
-            )}
+            <WikiLink
+              href={wikiLink}
+              target="_blank"
+              primaryAttribute={primaryAttribute}
+              onClick={e => e.stopPropagation()}
+            >
+              <WikiIcon type="info-circle" />
+            </WikiLink>
           </CardBottom>
         </BlueBadge>
       </ItemCard>
