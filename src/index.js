@@ -7,10 +7,11 @@ import { persistStore, persistReducer, createMigrate } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import storage from 'redux-persist/lib/storage';
 
-import { notification } from 'antd';
+// import { notification } from 'antd';
 
 import App from './components/App/App';
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
+import { unregister } from './registerServiceWorker';
 import rootReducer from './features';
 import globalStyles from './helpers/globalStyles';
 import migrations from './helpers/migrations';
@@ -43,14 +44,16 @@ ReactDOM.render(
   document.getElementById('root'),
 );
 
-const handleServiceWorkerUpdate = () => {
-  notification.info({
-    message: 'Update ready',
-    description:
-      'An update for poe.guide is ready, please reload your browser.',
-  });
-};
+// const handleServiceWorkerUpdate = () => {
+//   notification.info({
+//     message: 'Update ready',
+//     description:
+//       'An update for poe.guide is ready, please reload your browser.',
+//   });
+// };
 
-registerServiceWorker({
-  onUpdate: handleServiceWorkerUpdate,
-});
+// registerServiceWorker({
+//   onUpdate: handleServiceWorkerUpdate,
+// });
+
+unregister();
