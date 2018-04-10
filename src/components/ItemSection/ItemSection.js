@@ -51,18 +51,18 @@ class ItemSection extends Component {
   };
 
   getSuggestions = value => {
+    const { items } = this.props;
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
-    const { items } = this.props;
 
     return inputLength === 0
-      ? []
-      : items.filter(lang => lang.name.toLowerCase().slice(0, inputLength) === inputValue);
+      ? items
+      : items.filter(item => item.name.toLowerCase().includes(inputValue));
   };
 
   render() {
     const { filterValue } = this.state;
-    const { header, items } = this.props;
+    const { header } = this.props;
 
     return (
       <ItemsContainer>
@@ -74,26 +74,21 @@ class ItemSection extends Component {
           theme="dark"
         />
         <ItemsList>
-          {items
-            .filter(item =>
-                (filterValue !== ''
-                  ? item.name.toLowerCase().slice(0, filterValue.length) ===
-                    filterValue.toLowerCase()
-                  : item))
-            .map(item => (
-              <Item
-                key={item.name}
-                id={item.id}
-                name={item.name}
-                levelReq={item.level_req}
-                dexReq={item.dex_req}
-                intReq={item.int_req}
-                strReq={item.str_req}
-                chosen={item.chosen}
-                onHoverColor="blue"
-                onClick={this.onClick}
-              />
-            ))}
+          {this.getSuggestions(filterValue).map(item => (
+            <Item
+              key={item.name}
+              id={item.id}
+              name={item.name}
+              levelReq={item.level_req}
+              dexReq={item.dex_req}
+              intReq={item.int_req}
+              strReq={item.str_req}
+              primaryAttribute={item.primary_att}
+              chosen={item.chosen}
+              onHoverColor="blue"
+              onClick={this.onClick}
+            />
+          ))}
         </ItemsList>
       </ItemsContainer>
     );
