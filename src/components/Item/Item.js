@@ -105,7 +105,7 @@ class Item extends PureComponent {
           <ItemName>{name}</ItemName>
 
           <CardBottom>
-            <Description>{`Lvel: ${levelReq}`}</Description>
+            <Description>{`Level: ${levelReq}`}</Description>
             <WikiLink
               href={wikiLink}
               target="_blank"
