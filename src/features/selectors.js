@@ -50,8 +50,9 @@ export const getTimelineItems = createSelector(
         (acc, item) => {
           Object.entries(acts).map(act => {
             if (
-              item.level_req >= act[1].min_lvl &&
-              item.level_req <= act[1].max_lvl
+              (item.level_req >= act[1].min_lvl &&
+                item.level_req <= act[1].max_lvl) ||
+              (!item.level_req && act[0] === '1')
             ) {
               acc[act[0]].push(item);
             }
