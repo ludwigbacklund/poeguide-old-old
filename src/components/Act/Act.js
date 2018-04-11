@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 
-import { Button, Badge } from 'antd';
+import { Button, Badge, Icon } from 'antd';
 
 const TitleHolder = styled.div`
   display: flex;
@@ -13,7 +13,9 @@ const TitleHolder = styled.div`
 const ActText = styled.h3`
   color: white;
   margin-bottom: 0;
+  user-select: none;
   white-space: nowrap;
+  cursor: pointer;
 `;
 
 const DarkButton = styled(Button)`
@@ -48,39 +50,78 @@ const AttributeRequirement = styled(Badge)`
   }
 `;
 
-const Act = ({
-  number, isFirst, attributeRequirements, onClick, children,
-}) => (
-  <Fragment>
-    <TitleHolder>
-      <LeftTitle>
-        <ActText>Act {number}</ActText>
-        <DotDivider>&#9679;</DotDivider>
-        <AttributeRequirement
-          overflowCount={999}
-          count={attributeRequirements.int}
-          color="#40a9ff"
-        />
-        <AttributeRequirement
-          overflowCount={999}
-          count={attributeRequirements.str}
-          color="#F44336"
-        />
-        <AttributeRequirement
-          overflowCount={999}
-          count={attributeRequirements.dex}
-          color="#4CAF50"
-        />
-      </LeftTitle>
+const CollapseIcon = styled(Icon)`
+  color: white;
+  opacity: 0.7;
+  margin-right: 10px;
+  cursor: pointer;
 
-      {isFirst && (
-        <DarkButton size="small" ghost onClick={() => onClick()}>
-          Clear
-        </DarkButton>
-      )}
-    </TitleHolder>
-    {children}
-  </Fragment>
-);
+  &:hover {
+    opacity: 1;
+  }
+`;
 
+class Act extends Component {
+  state = { hidden: false };
+
+  componentWillUpdate(nextProps) {
+    const { newChildren } = nextProps;
+    const { children } = this.props;
+    const { hidden } = this.state;
+    if (hidden && children !== newChildren) this.toggleHidden();
+  }
+
+  toggleHidden = () => {
+    const { hidden } = this.state;
+    this.setState({ hidden: !hidden });
+  };
+
+  render() {
+    const { hidden } = this.state;
+    const {
+      number,
+      isFirst,
+      attributeRequirements,
+      onClick,
+      children,
+    } = this.props;
+
+    return (
+      <Fragment>
+        <TitleHolder>
+          <LeftTitle>
+            <CollapseIcon
+              type={hidden ? 'plus-square-o' : 'minus-square-o'}
+              onClick={() => this.toggleHidden()}
+            />
+            <ActText onClick={() => this.toggleHidden()}>Act {number}</ActText>
+            <DotDivider>&#9679;</DotDivider>
+            <AttributeRequirement
+              overflowCount={999}
+              count={attributeRequirements.int}
+              color="#40a9ff"
+            />
+            <AttributeRequirement
+              overflowCount={999}
+              count={attributeRequirements.str}
+              color="#F44336"
+            />
+            <AttributeRequirement
+              overflowCount={999}
+              count={attributeRequirements.dex}
+              color="#4CAF50"
+            />
+          </LeftTitle>
+
+          {isFirst && (
+            <DarkButton size="small" ghost onClick={() => onClick()}>
+              Clear
+            </DarkButton>
+          )}
+        </TitleHolder>
+        {!hidden && children}
+      </Fragment>
+    );
+  }
+}
 export default Act;
