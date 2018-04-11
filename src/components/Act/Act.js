@@ -64,13 +64,6 @@ const CollapseIcon = styled(Icon)`
 class Act extends Component {
   state = { hidden: false };
 
-  componentWillUpdate(nextProps) {
-    const { newChildren } = nextProps;
-    const { children } = this.props;
-    const { hidden } = this.state;
-    if (hidden && children !== newChildren) this.toggleHidden();
-  }
-
   toggleHidden = () => {
     const { hidden } = this.state;
     this.setState({ hidden: !hidden });
