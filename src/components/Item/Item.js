@@ -6,11 +6,10 @@ import { Badge, Icon } from 'antd';
 const ItemCard = styled.div`
   background-color: #424242;
   display: flex;
-  flex-direction: row;
-  padding: 15px;
   margin-bottom: 10px;
   margin-top: 10px;
   box-shadow: -1px 1px 2px 1px rgba(0, 0, 0, 0.14);
+  cursor: pointer;
 
   &:hover {
     box-shadow: -1px 1px 2px 1px
@@ -26,9 +25,22 @@ const ItemCard = styled.div`
   }
 `;
 
-const Description = styled.div`
+const CardLeft = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex: 6;
+  margin: 15px 0px 15px 15px;
+  flex-direction: column;
+`;
+
+const CardRight = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 15px 10px 15px 0px;
+  justify-content: center;
+`;
+
+const LevelRequirement = styled.h4`
   color: rgba(255, 255, 255, 0.7);
   margin: 0;
 `;
@@ -45,14 +57,8 @@ const BlueBadge = styled(Badge)`
   }
 `;
 
-const CardBottom = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
 const WikiIcon = styled(Icon)`
-  margin-left: 10px;
+  font-size: 18px;
 `;
 
 const WikiLink = styled.a`
@@ -66,6 +72,8 @@ const WikiLink = styled.a`
   }};
   opacity: 0.4;
   transition: all 0.3s;
+  text-align: center;
+  margin-left: 10px;
 
   &:hover {
     color: white;
@@ -101,21 +109,25 @@ class Item extends PureComponent {
 
     return (
       <ItemCard onHoverColor={onHoverColor} onClick={() => onClick(id)}>
-        <BlueBadge offset={[-5, -5]} dot={chosen}>
-          <ItemName>{name}</ItemName>
+        <CardLeft>
+          <BlueBadge offset={[-5, -5]} dot={chosen}>
+            <ItemName>{name}</ItemName>{' '}
+          </BlueBadge>
+          {levelReq && (
+            <LevelRequirement>{`Level: ${levelReq}`}</LevelRequirement>
+          )}
+        </CardLeft>
 
-          <CardBottom>
-            <Description>{`Level: ${levelReq}`}</Description>
-            <WikiLink
-              href={wikiLink}
-              target="_blank"
-              primaryAttribute={primaryAttribute}
-              onClick={e => e.stopPropagation()}
-            >
-              <WikiIcon type="info-circle" />
-            </WikiLink>
-          </CardBottom>
-        </BlueBadge>
+        <CardRight>
+          <WikiLink
+            href={wikiLink}
+            target="_blank"
+            primaryAttribute={primaryAttribute}
+            onClick={e => e.stopPropagation()}
+          >
+            <WikiIcon type="info-circle" />
+          </WikiLink>
+        </CardRight>
       </ItemCard>
     );
   }
