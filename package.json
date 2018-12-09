@@ -1,34 +1,40 @@
 {
-  "name": "poeguide",
-  "version": "0.1.0",
-  "private": true,
+  "name": "react-quick-start",
+  "version": "0.0.1",
+  "description": "Quick-start setup for React projects",
+  "main": "index.tsx",
+  "repository": "git@github.com:ludwigbacklund/react-quick-start.git",
+  "author": "Ludwig Bäcklund <ludwigbacklund@gmail.com>",
+  "license": "MIT",
+  "sideEffects": false,
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
   "devDependencies": {
-    "babel-plugin-import": "^1.7.0",
-    "babel-plugin-styled-components": "^1.4.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "prettier-eslint": "^8.6.0",
-    "react-app-rewire-less": "^2.1.1",
-    "react-app-rewired": "^1.5.0",
-    "react-scripts": "1.0.17",
-    "webpack-bundle-analyzer": "^2.10.0"
+    "@babel/core": "7.2.0",
+    "@types/react": "16.7.13",
+    "@types/react-dom": "16.0.11",
+    "@types/styled-components": "4.1.4",
+    "@zeit/next-bundle-analyzer": "0.1.2",
+    "@zeit/next-typescript": "1.1.1",
+    "babel-plugin-styled-components": "1.9.2",
+    "eslint": "5.10.0",
+    "eslint-plugin-react": "7.11.1",
+    "fork-ts-checker-webpack-plugin": "0.5.0",
+    "prettier": "1.15.3",
+    "typescript": "3.2.2",
+    "typescript-eslint-parser": "21.0.2",
+    "webpack": "4.27.1"
   },
   "dependencies": {
-    "antd": "^3.4.0",
-    "react": "^16.2.0",
-    "react-app-rewire-styled-components": "^3.0.2",
-    "react-dom": "^16.2.0",
-    "react-loadable": "^5.3.1",
-    "react-redux": "^5.0.6",
-    "redux": "^3.7.2",
-    "redux-persist": "^5.7.0",
-    "reselect": "^3.0.1",
-    "styled-components": "^3.1.6"
+    "next": "^7.0.2",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "styled-components": "^4.1.1"
   },
-  "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject",
-    "deploy": "yarn build && netlify deploy"
+  "resolutions": {
+    "@types/react": "16.7.13"
   }
 }

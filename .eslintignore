@@ -1,9 +1,0 @@
-.DS_Store
-node_modules
-npm-debug.log
-coverage/
-README.md
-config-overrides.js
-
-# build
-build/
