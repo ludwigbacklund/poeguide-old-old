@@ -1,11 +1,10 @@
 {
-  "name": "react-quick-start",
+  "name": "poe.guide",
   "version": "0.0.1",
-  "description": "Quick-start setup for React projects",
+  "description": "A character progression planner for Path of Exile",
   "main": "index.tsx",
-  "repository": "git@github.com:ludwigbacklund/react-quick-start.git",
+  "repository": "https://github.com/ludwigbacklund/poeguide.git",
   "author": "Ludwig Bäcklund <ludwigbacklund@gmail.com>",
-  "license": "MIT",
   "sideEffects": false,
   "scripts": {
     "dev": "next",
