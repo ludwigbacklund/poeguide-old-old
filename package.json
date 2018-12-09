@@ -12,7 +12,8 @@
     "build": "next build",
     "start": "next start",
     "test": "echo Hello from scripts!",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "devDependencies": {
     "@babel/core": "7.2.0",
