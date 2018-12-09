@@ -19,7 +19,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies- # Fallback to using the latest cache if no exact match is found
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
       - save_cache:
           paths:
             - node_modules
