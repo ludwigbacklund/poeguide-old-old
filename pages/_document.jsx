@@ -1,3 +1,4 @@
+/* eslint react/react-in-jsx-scope: 0 */
 import Document, { Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet, css } from 'styled-components';
 
