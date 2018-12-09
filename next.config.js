@@ -1,7 +1,9 @@
 const { PHASE_PRODUCTION_SERVER } =
   process.env.NODE_ENV === 'development'
     ? {}
-    : require('next-server/constants');
+    : !process.env.NOW
+      ? require('next/constants')
+      : require('next-server/constants');
 
 module.exports = phase => {
   if (phase === PHASE_PRODUCTION_SERVER) {
