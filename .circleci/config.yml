@@ -2,42 +2,73 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
+defaults: &defaults
+  docker:
+    - image: cypress/base:10
+      environment:
+        TERM: xterm # This enables colors in the output
 version: 2.1
-orbs:
-  cypress: cypress-io/cypress@1.1.0
-workflows:
-  build:
-    jobs:
-      - cypress/run # "run" job comes from "cypress" orb
 jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:10.14.1
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
-
+  prepare:
+    <<: *defaults
     steps:
       - checkout
-
-      # Download and cache dependencies
+      - run: pwd
+      - run: ls
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run: yarn install
-
+            - v2-dependencies
+      - run: yarn install --frozen-lockfile
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
-      # run tests!
-      - run: yarn test
+            - ~/.cache
+          key: v2-dependencies
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - .cache
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .next
+  unit:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn test:unit
+  e2e:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - attach_workspace:
+          at: .
+      - run: yarn test:e2e
+workflows:
+  build_and_test:
+    jobs:
+      - prepare
+      - build:
+          requires:
+            - prepare
+      - e2e:
+          requires:
+            - build
+      - unit:
+          requires:
+            - build
