@@ -29,9 +29,12 @@ jobs:
   test:
     <<: *defaults
     steps:
+      - checkout
+      - attach_workspace:
+          at: .
       - run: yarn test
 workflows:
-  e2e:
+  build_and_test:
     jobs:
       - prepare
       - test:
