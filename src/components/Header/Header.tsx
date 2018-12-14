@@ -43,7 +43,7 @@ const BuildName = styled.h2`
 
 // interface IHeaderProps {}
 
-const Header: React.SFC<{}> = props => {
+const Header: React.SFC<{}> = () => {
   return (
     <HeaderWrapper>
       <TopBar />
