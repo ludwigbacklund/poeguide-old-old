@@ -5,7 +5,10 @@
   "rules": {
     "quotemark": [true, "single", "jsx-double"],
     "arrow-parens": false,
-    "member-access": [true, "no-public"]
+    "member-access": [true, "no-public"],
+    "jsx-no-multiline-js": false,
+    "curly": false,
+    "trailing-comma": false
   },
   "rulesDirectory": []
 }
