@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import Character from '../Character/Character';
 import Header from '../Header/Header';
 import Search from '../Search/Search';
 
@@ -17,6 +18,7 @@ const App = () => {
     <Wrapper>
       <Header />
       <Search />
+      <Character />
     </Wrapper>
   );
 };

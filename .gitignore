@@ -3,6 +3,7 @@ node_modules/
 bundles/
 yarn-error.log
 .DS_store
+.env
 
 cypress/videos
 cypress/screenshots

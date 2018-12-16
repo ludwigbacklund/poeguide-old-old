@@ -14,7 +14,8 @@
     "cypress:run": "cypress run",
     "test:unit": "jest",
     "test:unit:watch": "jest --watch",
-    "test:e2e": "server-test :3000 cypress:run"
+    "test:e2e": "server-test :3000 cypress:run",
+    "now-build": "next build && next export -o dist"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
@@ -47,9 +48,14 @@
     "webpack": "4.27.1"
   },
   "dependencies": {
+    "apollo-boost": "^0.1.22",
+    "dotenv": "^6.2.0",
     "fontfaceobserver": "^2.1.0",
+    "graphql": "^14.0.2",
+    "isomorphic-unfetch": "^3.0.0",
     "next": "^7.0.2",
     "react": "^16.6.3",
+    "react-apollo": "^2.3.3",
     "react-dom": "^16.6.3",
     "styled-components": "^4.1.1",
     "tslint-react": "^3.6.0"

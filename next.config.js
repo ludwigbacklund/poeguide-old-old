@@ -1,4 +1,6 @@
-/* eslint-disable */
+const { parsed: localEnv } = require('dotenv').config();
+const webpack = require('webpack');
+
 const { PHASE_PRODUCTION_SERVER } =
   process.env.NODE_ENV === 'development'
     ? {}
@@ -20,7 +22,10 @@ module.exports = phase => {
     withBundleAnalyzer({
       webpack(config, options) {
         if (options.isServer)
-          config.plugins.push(new ForkTsCheckerWebpackPlugin());
+          config.plugins.push(
+            new ForkTsCheckerWebpackPlugin(),
+            new webpack.EnvironmentPlugin(localEnv)
+          );
 
         return config;
       },
