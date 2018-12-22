@@ -9,7 +9,6 @@ const HeaderWrapper = styled.header`
   flex-direction: column;
   min-height: 64px;
   width: 100%;
-  margin-bottom: 20px;
 `;
 
 const TopBar = styled.hr`

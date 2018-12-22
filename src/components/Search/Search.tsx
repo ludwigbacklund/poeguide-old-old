@@ -1,11 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+// import exampleBuild from '../../../utils/exampleBuild';
+// import decode from '../../../utils/pobDecoder';
 
 const SearchWrapper = styled.div`
-  font-family: Quicksand;
+  display: flex;
+  flex-direction: column;
+  grid-column: 2 / 3;
+  padding: 16px;
   background-color: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
-  padding: 16px;
 `;
 
 const Input = styled.input`
@@ -13,7 +17,6 @@ const Input = styled.input`
   border: none;
   outline: none;
   padding: 8px;
-  width: 300px;
 
   &:hover {
     background-color: hsl(210, 18%, 90%);
@@ -23,8 +26,7 @@ const Input = styled.input`
 const Search = () => {
   return (
     <SearchWrapper>
-      <h1>Search</h1>
-      <Input placeholder="Search for items, gems, categories..." />
+      <Input placeholder="Search for uniques and gems..." />
     </SearchWrapper>
   );
 };
