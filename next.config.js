@@ -21,11 +21,10 @@ module.exports = phase => {
   return withTypescript(
     withBundleAnalyzer({
       webpack(config, options) {
-        if (options.isServer)
-          config.plugins.push(
-            new ForkTsCheckerWebpackPlugin(),
-            new webpack.EnvironmentPlugin(localEnv)
-          );
+        if (options.isServer) {
+          config.plugins.push(new ForkTsCheckerWebpackPlugin());
+        }
+        config.plugins.push(new webpack.EnvironmentPlugin(localEnv));
 
         return config;
       },
@@ -34,13 +33,13 @@ module.exports = phase => {
       bundleAnalyzerConfig: {
         server: {
           analyzerMode: 'static',
-          reportFilename: '../bundles/server.html'
+          reportFilename: '../bundles/server.html',
         },
         browser: {
           analyzerMode: 'static',
-          reportFilename: '../bundles/client.html'
-        }
-      }
+          reportFilename: '../bundles/client.html',
+        },
+      },
     })
   );
 };
