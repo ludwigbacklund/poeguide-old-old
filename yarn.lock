@@ -1205,7 +1205,7 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.7.tgz#c6f1e0d0109ff358b132d98b7b4025c7a7b707c5"
   integrity sha512-a6WH0fXkgPNiGIuLjjdpf0n/GnmgWZ4vLuVIJJnDwhmRDPEaiRBcy5ofQPh+EJFua0S1QWmk1745+JqZQGnJ8Q==
 
-"@types/react-dom@16.0.11":
+"@types/react-dom@16.0.11", "@types/react-dom@^16.0.11":
   version "16.0.11"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.0.11.tgz#bd10ccb0d9260343f4b9a49d4f7a8330a5c1f081"
   integrity sha512-x6zUx9/42B5Kl2Vl9HlopV8JF64wLpX3c+Pst9kc1HgzrsH+mkehe/zmHMQTplIrR48H2gpU7ZqurQolYu8XBA==
@@ -7118,6 +7118,17 @@ netrc-parser@^3.1.4:
   dependencies:
     debug "^3.1.0"
     execa "^0.10.0"
+
+next-with-apollo@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/next-with-apollo/-/next-with-apollo-3.3.1.tgz#f7e3d5e3d26b5f0649d7a172897e93964c748d26"
+  integrity sha512-sxJcx39okz6iw/Ed2qI39dvNQJvjM9xc1erZSL3bNGDmTSCtrDnkC1jO/AumWNeL1X9zjA+pHqIXUlgi+xp5vw==
+  dependencies:
+    "@types/react-dom" "^16.0.11"
+    isomorphic-unfetch "^3.0.0"
+    prop-types "^15.6.2"
+    react-apollo "^2.3.3"
+    react-dom "^16.6.3"
 
 next@^7.0.2:
   version "7.0.2"
