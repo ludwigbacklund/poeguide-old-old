@@ -15,7 +15,8 @@
     "test:unit": "jest",
     "test:unit:watch": "jest --watch",
     "test:e2e": "server-test :3000 cypress:run",
-    "now-build": "next build && next export -o dist"
+    "now-build": "next build && next export -o dist",
+    "generate-types": "apollo codegen:generate __generated__ --target typescript"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
@@ -48,6 +49,7 @@
     "webpack": "4.27.1"
   },
   "dependencies": {
+    "apollo": "^2.1.8",
     "apollo-boost": "^0.1.22",
     "dotenv": "^6.2.0",
     "fontfaceobserver": "^2.1.0",
