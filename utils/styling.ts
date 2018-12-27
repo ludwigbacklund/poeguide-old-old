@@ -11,18 +11,29 @@ export const sizes: IBreakpoints = {
   xs: 576,
 };
 
+export const theme = {
+  darkAccent: '195,77,73',
+  darkShades: '40,39,51',
+  lightAccent: '151,172,185',
+  lightShades: '250,249,250',
+  main: '234,76,43',
+};
+
 export const fontSizes = {
   lg: css`
-    font-size: 1.6rem;
-  `,
-  md: css`
-    font-size: 1.4rem;
-  `,
-  sm: css`
     font-size: 1.2rem;
   `,
-  xs: css`
+  md: css`
     font-size: 1rem;
+  `,
+  sm: css`
+    font-size: 0.8rem;
+  `,
+  xl: css`
+    font-size: 1.4rem;
+  `,
+  xs: css`
+    font-size: 0.6rem;
   `,
 };
 

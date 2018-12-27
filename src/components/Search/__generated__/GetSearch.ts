@@ -7,9 +7,9 @@
 
 export interface GetSearch_search_nodes {
   __typename: "SearchItem";
-  id: number | null;
   name: string | null;
   iconUrl: string | null;
+  type: string | null;
 }
 
 export interface GetSearch_search {
@@ -17,7 +17,7 @@ export interface GetSearch_search {
   /**
    * A list of `SearchItem` objects.
    */
-  nodes: (GetSearch_search_nodes | null)[];
+  nodes: GetSearch_search_nodes[];
 }
 
 export interface GetSearch {
