@@ -29,6 +29,9 @@ export interface GetUnique_uniqueByName {
   iconUrl: string;
   flavourText: string;
   levelRequirement: number;
+  strRequirement: number;
+  dexRequirement: number;
+  intRequirement: number;
   /**
    * Reads and enables pagination through a set of `Modifier`.
    */

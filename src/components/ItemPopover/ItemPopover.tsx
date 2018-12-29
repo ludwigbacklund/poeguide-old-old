@@ -50,6 +50,9 @@ const GET_UNIQUE = gql`
       iconUrl
       flavourText
       levelRequirement
+      strRequirement
+      dexRequirement
+      intRequirement
       modifiers {
         nodes {
           type

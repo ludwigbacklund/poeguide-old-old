@@ -69,6 +69,9 @@ const Unique: React.SFC<IUniqueProps> = ({ data }) => {
     baseType,
     iconUrl,
     levelRequirement,
+    strRequirement,
+    dexRequirement,
+    intRequirement,
     flavourText,
     modifiers,
   } = data;
@@ -79,6 +82,14 @@ const Unique: React.SFC<IUniqueProps> = ({ data }) => {
   const explicitModifiers = modifiers.nodes.filter(
     modifier => modifier.type === 'EXPLICIT',
   );
+  const readableAttributeRequirements = [
+    { label: 'Str', value: strRequirement },
+    { label: 'Dex', value: dexRequirement },
+    { label: 'Int', value: intRequirement },
+  ]
+    .filter(requirement => requirement.value > 0)
+    .map(requirement => `${requirement.value} ${requirement.label}`)
+    .join(', ');
 
   return (
     <UniqueWrapper>
@@ -87,7 +98,11 @@ const Unique: React.SFC<IUniqueProps> = ({ data }) => {
         <Name>{baseType}</Name>
       </NameWrapper>
       <BodyWrapper>
-        <span>Requires Level {levelRequirement}</span>
+        <span>
+          Requires Level {levelRequirement}
+          {readableAttributeRequirements !== '' &&
+            `, ${readableAttributeRequirements}`}
+        </span>
         <Divider />
         {implicitModifiers.length > 0 && (
           <>
