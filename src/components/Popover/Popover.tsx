@@ -31,9 +31,9 @@ class Popover extends React.Component<IPopoverProps, IPopoverState> {
       anchor.addEventListener('mousemove', e => {
         this.setState({
           popoverStyles: {
-            left: e.clientX + 40,
+            left: e.clientX + 20,
             position: 'absolute',
-            top: e.clientY + 40,
+            top: e.clientY + 20,
           },
           shouldRenderPopover: true,
         });
