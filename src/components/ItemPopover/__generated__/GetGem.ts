@@ -6,7 +6,6 @@
 // ====================================================
 
 export interface GetGem_gemByName {
-  __typename: "Gem";
   name: string;
   description: string;
   iconUrl: string;

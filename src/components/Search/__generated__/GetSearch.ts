@@ -6,14 +6,12 @@
 // ====================================================
 
 export interface GetSearch_search_nodes {
-  __typename: "SearchItem";
   name: string | null;
   iconUrl: string | null;
   type: string | null;
 }
 
 export interface GetSearch_search {
-  __typename: "SearchItemsConnection";
   /**
    * A list of `SearchItem` objects.
    */

@@ -20,7 +20,6 @@ class Popover extends React.Component<IPopoverProps, IPopoverState> {
   private popoverRef = createRef<HTMLDivElement>();
 
   componentDidMount() {
-    // const popover = this.popoverRef.current;
     const anchor = this.anchorRef.current;
 
     if (anchor) {

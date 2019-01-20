@@ -61,27 +61,31 @@ const Type = styled.span`
 `;
 
 interface IItemProps {
-  tabIndex: number;
   data: GetSearch_search_nodes;
 }
 
 const Item: React.SFC<IItemProps> = props => {
-  const { tabIndex, data } = props;
+  const { data } = props;
 
   return (
     <Popover>
       {({ anchorRef, popoverRef, popoverStyles, shouldRenderPopover }) => (
         <>
-          <ItemWrapper ref={anchorRef} tabIndex={tabIndex}>
-            {data.iconUrl && <ItemIcon src={data.iconUrl} />}
+          {shouldRenderPopover && (
+            <div ref={popoverRef} style={popoverStyles}>
+              <ItemPopover name={data.name} type={data.type} />
+            </div>
+          )}
+          <ItemWrapper ref={anchorRef} tabIndex={0}>
+            {data.iconUrl && (
+              <ItemIcon
+                src={data.iconUrl}
+                alt={data.name ? data.name : undefined}
+              />
+            )}
             <Name>{data.name || 'Unknown'}</Name>
             <Type>{data.type && data.type.toUpperCase()}</Type>
           </ItemWrapper>
-          <div ref={popoverRef} style={popoverStyles}>
-            {shouldRenderPopover && (
-              <ItemPopover name={data.name} type={data.type} />
-            )}
-          </div>
         </>
       )}
     </Popover>
