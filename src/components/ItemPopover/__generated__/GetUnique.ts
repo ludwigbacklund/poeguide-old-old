@@ -8,14 +8,12 @@ import { ModifierType } from "./../../../../__generated__/globalTypes";
 // ====================================================
 
 export interface GetUnique_uniqueByName_modifiers_nodes {
-  __typename: "Modifier";
   type: ModifierType;
   text: string;
   optional: boolean;
 }
 
 export interface GetUnique_uniqueByName_modifiers {
-  __typename: "ModifiersConnection";
   /**
    * A list of `Modifier` objects.
    */
@@ -23,7 +21,6 @@ export interface GetUnique_uniqueByName_modifiers {
 }
 
 export interface GetUnique_uniqueByName {
-  __typename: "Unique";
   name: string;
   baseType: string;
   iconUrl: string;

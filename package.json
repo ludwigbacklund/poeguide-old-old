@@ -16,7 +16,7 @@
     "test:unit:watch": "jest --watch",
     "test:e2e": "server-test :3000 cypress:run",
     "now-build": "next build && next export -o dist",
-    "generate-types": "apollo codegen:generate __generated__ --target typescript"
+    "generate-types": "apollo codegen:generate __generated__ --target typescript --no-addTypename"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
