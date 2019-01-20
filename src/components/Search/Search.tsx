@@ -84,11 +84,7 @@ class Search extends Component<{}, ISearchState> {
                 {searchResults.map(
                   (itemData, i) =>
                     itemData && (
-                      <Item
-                        key={itemData.name || i}
-                        tabIndex={0}
-                        data={itemData}
-                      />
+                      <Item key={itemData.name || i} data={itemData} />
                     ),
                 )}
               </SearchResults>
