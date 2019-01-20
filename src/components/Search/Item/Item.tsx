@@ -71,6 +71,11 @@ const Item: React.SFC<IItemProps> = props => {
     <Popover>
       {({ anchorRef, popoverRef, popoverStyles, shouldRenderPopover }) => (
         <>
+          {shouldRenderPopover && (
+            <div ref={popoverRef} style={popoverStyles}>
+              <ItemPopover name={data.name} type={data.type} />
+            </div>
+          )}
           <ItemWrapper ref={anchorRef} tabIndex={0}>
             {data.iconUrl && (
               <ItemIcon
@@ -81,11 +86,6 @@ const Item: React.SFC<IItemProps> = props => {
             <Name>{data.name || 'Unknown'}</Name>
             <Type>{data.type && data.type.toUpperCase()}</Type>
           </ItemWrapper>
-          <div ref={popoverRef} style={popoverStyles}>
-            {shouldRenderPopover && (
-              <ItemPopover name={data.name} type={data.type} />
-            )}
-          </div>
         </>
       )}
     </Popover>
