@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import App from '../src/components/App/App';
-import fetchFonts from '../utils/fetchFonts';
+import fetchFonts from '../utils/fetch-fonts';
 import { theme } from '../utils/styling';
 
 class Index extends React.Component {

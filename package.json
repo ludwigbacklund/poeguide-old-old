@@ -5,6 +5,7 @@
   "main": "index.tsx",
   "repository": "https://github.com/ludwigbacklund/poeguide.git",
   "author": "Ludwig Bäcklund <ludwigbacklund@gmail.com>",
+  "license": "UNLICENSED",
   "sideEffects": false,
   "scripts": {
     "dev": "next",
