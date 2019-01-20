@@ -12,7 +12,9 @@
     "jsx-no-lambda": false,
     "semicolon": [true, "always", "ignore-bound-class-methods"],
     "object-literal-key-quotes": [true, "as-needed"],
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "ordered-imports": false,
+    "object-literal-sort-keys": false
   },
   "rulesDirectory": []
 }
