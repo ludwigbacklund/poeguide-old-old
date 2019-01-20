@@ -10,18 +10,19 @@ const AppWrapper = styled.div`
   font-family: Lato;
   height: 100vh;
   width: 100vw;
+  min-width: 320px;
+  color: rgb(${props => props.theme.darkShades});
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 `;
 
 const MainWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 100px auto;
   margin: 16px;
 
   ${media.sm`
+    display: flex;
+    flex-direction: column;
     margin: 8px;
-    grid-template-columns: 50px auto;
   `}
 `;
 

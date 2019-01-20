@@ -18,7 +18,7 @@ const Character: React.SFC<{}> = () => (
         if (error) return <p>Error :(</p>;
         if (!data || !data.uniqueByName) return <p>No data</p>;
 
-        return <p>{data.uniqueByName.name}</p>;
+        return null;
       }}
     </UniqueQuery>
   </CharacterWrapper>

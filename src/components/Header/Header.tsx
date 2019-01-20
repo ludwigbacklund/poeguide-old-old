@@ -7,7 +7,6 @@ import { fontSizes, media } from '../../../utils/styling';
 const HeaderWrapper = styled.header`
   display: flex;
   flex-direction: column;
-  min-height: 64px;
   width: 100%;
 `;
 
@@ -27,17 +26,22 @@ const NavWrapper = styled.nav`
 const HomeLink = styled.a`
   text-decoration: none;
   cursor: pointer;
-  font-size: 36px;
+  ${fontSizes.xl}
   font-weight: bold;
   margin: 0 8px;
 
   ${media.sm`
-    ${fontSizes.sm};
+    ${fontSizes.lg};
   `}
 `;
 
 const BuildName = styled.h2`
-  ${fontSizes.xs}
+  font-weight: normal;
+  ${fontSizes.lg}
+
+  ${media.sm`
+    ${fontSizes.md};
+  `}
 `;
 
 // interface IHeaderProps {}
