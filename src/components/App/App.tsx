@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { media } from '../../../utils/styling';
 import Character from '../Character/Character';
 import Header from '../Header/Header';
-import Search from '../Search/Search';
+import SearchConnector from '../Search/SearchConnector';
 
 const AppWrapper = styled.div`
   font-family: Lato;
@@ -31,7 +31,7 @@ const App = () => {
     <AppWrapper>
       <Header />
       <MainWrapper>
-        <Search />
+        <SearchConnector />
         <Character />
       </MainWrapper>
     </AppWrapper>
