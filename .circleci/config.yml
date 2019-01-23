@@ -9,6 +9,13 @@ defaults: &defaults
         TERM: xterm # This enables colors in the output
 version: 2.1
 jobs:
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn lint
   prepare:
     <<: *defaults
     steps:
