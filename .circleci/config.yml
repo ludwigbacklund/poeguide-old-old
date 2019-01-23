@@ -70,7 +70,7 @@ workflows:
   build_and_test:
     jobs:
       - lint
-      - prepare
+      - prepare:
           requires:
             - lint
       - build:
