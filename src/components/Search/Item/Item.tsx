@@ -60,11 +60,11 @@ const Type = styled.span`
   `}
 `;
 
-interface IItemProps {
+interface ItemProps {
   data: GetSearch_search_nodes;
 }
 
-const Item: React.SFC<IItemProps> = props => {
+const Item: React.SFC<ItemProps> = props => {
   const { data } = props;
 
   return (

@@ -59,11 +59,11 @@ const Icon = styled.img`
   object-fit: scale-down;
 `;
 
-interface IUniqueProps {
+interface UniqueProps {
   data: GetUnique_uniqueByName;
 }
 
-const Unique: React.SFC<IUniqueProps> = ({ data }) => {
+const Unique: React.SFC<UniqueProps> = ({ data }) => {
   const {
     name,
     baseType,

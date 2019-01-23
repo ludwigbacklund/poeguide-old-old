@@ -6,12 +6,12 @@ import { ApolloConsumer } from 'react-apollo';
 import { GetSearch, GetSearch_search_nodes } from './__generated__/GetSearch';
 import Search from './Search';
 
-interface ISearchState {
+interface SearchState {
   searchResults: GetSearch_search_nodes[];
 }
 
-class SearchConnector extends Component<{}, ISearchState> {
-  state: ISearchState = {
+class SearchConnector extends Component<{}, SearchState> {
+  state: SearchState = {
     searchResults: [],
   };
 

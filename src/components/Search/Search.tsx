@@ -35,18 +35,18 @@ const SearchResults = styled.div`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
 `;
 
-interface ISearchItem {
+interface SearchItem {
   name: string | null;
   iconUrl: string | null;
   type: string | null;
 }
 
-interface ISearchProps {
-  searchResults: ISearchItem[];
+interface SearchProps {
+  searchResults: SearchItem[];
   onSearchChange(query: string): void;
 }
 
-const Search: React.SFC<ISearchProps> = ({ onSearchChange, searchResults }) => {
+const Search: React.SFC<SearchProps> = ({ onSearchChange, searchResults }) => {
   return (
     <SearchWrapper>
       <Input

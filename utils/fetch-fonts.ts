@@ -1,5 +1,5 @@
-/* tslint:disable-next-line */
-const FontFaceObserver = require("fontfaceobserver");
+/* eslint-disable-next-line */
+const FontFaceObserver = require('fontfaceobserver');
 
 const fetchFonts = () => {
   const link = document.createElement('link');

@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* eslint-disable */
 const pako = require('pako');
 
 // https://gist.github.com/oeon/0ada0457194ebf70ec2428900ba76255
@@ -15,7 +15,7 @@ function a2b(a: any) {
   for (b = 0; 64 > b; b++) {
     e[
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.charAt(
-        b
+        b,
       )
     ] = b;
   }
