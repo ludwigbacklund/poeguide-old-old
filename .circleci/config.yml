@@ -9,13 +9,6 @@ defaults: &defaults
         TERM: xterm # This enables colors in the output
 version: 2.1
 jobs:
-  lint:
-    <<: *defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - run: yarn lint
   prepare:
     <<: *defaults
     steps:
@@ -39,6 +32,13 @@ jobs:
           root: .
           paths:
             - node_modules
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn lint
   build:
     <<: *defaults
     steps:
@@ -69,10 +69,10 @@ jobs:
 workflows:
   build_and_test:
     jobs:
-      - lint
-      - prepare:
+      - prepare
+      - lint:
           requires:
-            - lint
+            - prepare
       - build:
           requires:
             - prepare
