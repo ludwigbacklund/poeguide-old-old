@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { parsed: localEnv } = require('dotenv').config();
 const webpack = require('webpack');
 

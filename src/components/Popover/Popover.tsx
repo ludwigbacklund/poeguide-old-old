@@ -1,20 +1,20 @@
 import React, { createRef } from 'react';
 
-interface IPopoverState {
+interface PopoverState {
   popoverStyles: React.CSSProperties;
   shouldRenderPopover: boolean;
 }
 
-interface IInjectedPopoverProps extends IPopoverState {
+interface InjectedPopoverProps extends PopoverState {
   anchorRef: React.RefObject<HTMLDivElement>;
   popoverRef: React.RefObject<HTMLDivElement>;
 }
 
-interface IPopoverProps {
-  children(props: IInjectedPopoverProps): React.ReactNode;
+interface PopoverProps {
+  children(props: InjectedPopoverProps): React.ReactNode;
 }
 
-class Popover extends React.Component<IPopoverProps, IPopoverState> {
+class Popover extends React.Component<PopoverProps, PopoverState> {
   state = { popoverStyles: {}, shouldRenderPopover: false };
   private anchorRef = createRef<HTMLDivElement>();
   private popoverRef = createRef<HTMLDivElement>();

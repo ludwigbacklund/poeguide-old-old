@@ -1,10 +1,10 @@
 import { css } from 'styled-components';
 
-interface IBreakpoints {
+interface Breakpoints {
   [key: string]: number;
 }
 
-export const sizes: IBreakpoints = {
+export const sizes: Breakpoints = {
   lg: 1200,
   md: 992,
   sm: 768,

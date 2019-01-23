@@ -32,6 +32,13 @@ jobs:
           root: .
           paths:
             - node_modules
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run: yarn lint
   build:
     <<: *defaults
     steps:
@@ -63,9 +70,12 @@ workflows:
   build_and_test:
     jobs:
       - prepare
-      - build:
+      - lint:
           requires:
             - prepare
+      - build:
+          requires:
+            - lint
       - e2e:
           requires:
             - build
