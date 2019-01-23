@@ -69,7 +69,10 @@ jobs:
 workflows:
   build_and_test:
     jobs:
+      - lint
       - prepare
+          requires:
+            - lint
       - build:
           requires:
             - prepare
