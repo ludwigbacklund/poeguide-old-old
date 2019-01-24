@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 import Link from 'next/link';
-import { fontSizes, media } from '../../../utils/styling';
+import { fontSizes, media } from '../../utils/styling';
 
 const HeaderWrapper = styled.header`
   display: flex;
