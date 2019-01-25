@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { media } from '../../../utils/styling';
+import { media } from '../../utils/styling';
 import Character from '../Character/Character';
 import Header from '../Header/Header';
 import SearchConnector from '../Search/SearchConnector';

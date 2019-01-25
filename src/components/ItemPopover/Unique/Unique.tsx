@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { fontSizes } from '../../../../utils/styling';
+import { fontSizes } from '../../../utils/styling';
 import { GetUnique_uniqueByName } from '../__generated__/GetUnique';
 
 const UniqueWrapper = styled.div`

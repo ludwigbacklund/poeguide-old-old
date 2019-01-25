@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { fontSizes, media } from '../../../../utils/styling';
+import { fontSizes, media } from '../../../utils/styling';
 import ItemPopover from '../../ItemPopover/ItemPopover';
 import Popover from '../../Popover/Popover';
 import { GetSearch_search_nodes } from '../__generated__/GetSearch';
