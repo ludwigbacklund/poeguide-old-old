@@ -18,29 +18,75 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   state = { popoverStyles: {}, shouldRenderPopover: false };
   private anchorRef = createRef<HTMLDivElement>();
   private popoverRef = createRef<HTMLDivElement>();
+  private prevPopoverElementSize = { width: 0, height: 0 };
+
+  calculateNewPopoverPosition(
+    currentX: number,
+    currentY: number,
+    padding: number,
+  ) {
+    // Re-use previously known size of the popover to prevent it from overflowing every time it re-appears
+    let popoverElementSize = {
+      width: this.prevPopoverElementSize.width,
+      height: this.prevPopoverElementSize.height,
+    };
+
+    // Save current popover size
+    const popoverElement = this.popoverRef.current;
+    if (popoverElement) {
+      popoverElementSize.width = popoverElement.offsetWidth;
+      popoverElementSize.height = popoverElement.offsetHeight;
+      this.prevPopoverElementSize = popoverElementSize;
+    }
+
+    const clientSize = {
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
+    };
+
+    // Check if the current mouse position and the popover size would cause overflowing in X or Y dimensions and adjust calculated coordinates accordingly
+    const newX =
+      currentX + popoverElementSize.width + padding > clientSize.width
+        ? clientSize.width - popoverElementSize.width
+        : currentX + 20;
+    const newY =
+      currentY + popoverElementSize.height + padding > clientSize.height
+        ? clientSize.height - popoverElementSize.height
+        : currentY + 20;
+
+    return { newX, newY };
+  }
 
   componentDidMount() {
-    const anchor = this.anchorRef.current;
+    const anchorElement = this.anchorRef.current;
 
-    if (anchor) {
-      anchor.addEventListener('touchstart', e => {
+    if (anchorElement) {
+      anchorElement.addEventListener('touchstart', e => {
         e.preventDefault();
       });
 
-      anchor.addEventListener('mousemove', e => {
+      anchorElement.addEventListener('mousemove', e => {
+        const padding = 20;
+
+        const { newX, newY } = this.calculateNewPopoverPosition(
+          e.clientX,
+          e.clientY,
+          padding,
+        );
+
         this.setState({
           popoverStyles: {
             top: 0,
             left: 0,
             position: 'absolute',
-            transform: `translate3d(${e.clientX + 20}px, ${e.clientY +
-              20}px, 0)`,
+            transform: `translate3d(${newX}px, ${newY}px, 0)`,
+            zIndex: 999,
           },
           shouldRenderPopover: true,
         });
       });
 
-      anchor.addEventListener('mouseout', () => {
+      anchorElement.addEventListener('mouseout', () => {
         this.setState({ shouldRenderPopover: false });
       });
     }
