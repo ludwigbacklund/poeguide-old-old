@@ -44,11 +44,11 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
     const newX =
       mouseX + popoverElementSize.width + padding > clientSize.width
         ? clientSize.width - popoverElementSize.width
-        : mouseX + 20;
+        : mouseX + padding;
     const newY =
       mouseY + popoverElementSize.height + padding > clientSize.height
         ? clientSize.height - popoverElementSize.height
-        : mouseY + 20;
+        : mouseY + padding;
 
     return { newX, newY };
   }
