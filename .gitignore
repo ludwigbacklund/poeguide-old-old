@@ -4,6 +4,7 @@ bundles/
 yarn-error.log
 .DS_store
 .env
+.vscode/
 
 cypress/videos
 cypress/screenshots
