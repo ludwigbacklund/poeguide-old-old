@@ -1,7 +1,22 @@
 import React from 'react';
-import { render, fireEvent } from 'react-testing-library';
+import { render, fireEvent, wait } from 'react-testing-library';
 
 import Popover from './Popover';
+
+const WINDOW_WIDTH = 320;
+
+const getTransformValues = (transform: string) => {
+  const transformValues = transform
+    .replace(/translate3d|px|\(|\)/gi, '')
+    .split(',')
+    .map(translateValue => parseInt(translateValue, 10));
+
+  return {
+    x: transformValues[0],
+    y: transformValues[1],
+    z: transformValues[2],
+  };
+};
 
 describe('Popover', () => {
   const renderPopover = (shouldAlwaysShowPopover = false) => {
@@ -23,6 +38,12 @@ describe('Popover', () => {
     );
   };
 
+  beforeAll(() => {
+    Object.defineProperty(document.documentElement, 'clientWidth', {
+      value: WINDOW_WIDTH,
+    });
+  });
+
   it('displays the popover element only when the anchor element is hovered over', async () => {
     const { queryByTestId, getByTestId } = renderPopover();
 
@@ -37,11 +58,24 @@ describe('Popover', () => {
     const { getByTestId } = renderPopover(true);
 
     const oldTransform = getByTestId('popover-ref').style.transform;
+    const oldTransformX = oldTransform && getTransformValues(oldTransform).x;
     fireEvent.mouseMove(getByTestId('anchor-ref'), {
       clientX: 10,
     });
     const newTransform = getByTestId('popover-ref').style.transform;
+    const newTransformX = newTransform && getTransformValues(newTransform).x;
 
-    expect(oldTransform).not.toEqual(newTransform);
+    expect(newTransformX || 0).toBeGreaterThan(oldTransformX || 0);
+  });
+
+  it('should not let the cursor overlap with popover element', () => {
+    const { getByTestId } = renderPopover(true);
+
+    fireEvent.mouseMove(getByTestId('anchor-ref'), {
+      clientX: WINDOW_WIDTH,
+    });
+
+    const transform = getByTestId('popover-ref').style.transform;
+    expect(getTransformValues(transform || '').x).toBeLessThan(WINDOW_WIDTH);
   });
 });

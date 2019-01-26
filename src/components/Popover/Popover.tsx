@@ -41,7 +41,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
     };
 
     // Check if the current mouse position and the popover size would cause overflowing in X or Y dimensions and adjust calculated coordinates accordingly
-    const newX =
+    let newX =
       mouseX + popoverElementSize.width + padding > clientSize.width
         ? clientSize.width - popoverElementSize.width
         : mouseX + padding;
@@ -49,6 +49,9 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
       mouseY + popoverElementSize.height + padding > clientSize.height
         ? clientSize.height - popoverElementSize.height
         : mouseY + padding;
+
+    // Check if the mouse would overlap with the popover and flip the popover to the other side of the cursor if so
+    if (mouseX >= newX) newX = mouseX - popoverElementSize.width - padding;
 
     return { newX, newY };
   }
@@ -64,9 +67,11 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
       anchorElement.addEventListener('mousemove', e => {
         const padding = 20;
 
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
         const { newX, newY } = this.calculateNewPopoverPosition(
-          e.clientX,
-          e.clientY,
+          mouseX,
+          mouseY,
           padding,
         );
 
