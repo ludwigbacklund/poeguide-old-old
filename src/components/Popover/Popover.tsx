@@ -20,11 +20,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   private popoverRef = createRef<HTMLDivElement>();
   private prevPopoverElementSize = { width: 0, height: 0 };
 
-  calculateNewPopoverPosition(
-    currentX: number,
-    currentY: number,
-    padding: number,
-  ) {
+  calculateNewPopoverPosition(mouseX: number, mouseY: number, padding: number) {
     // Re-use previously known size of the popover to prevent it from overflowing every time it re-appears
     let popoverElementSize = {
       width: this.prevPopoverElementSize.width,
@@ -46,13 +42,13 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
 
     // Check if the current mouse position and the popover size would cause overflowing in X or Y dimensions and adjust calculated coordinates accordingly
     const newX =
-      currentX + popoverElementSize.width + padding > clientSize.width
+      mouseX + popoverElementSize.width + padding > clientSize.width
         ? clientSize.width - popoverElementSize.width
-        : currentX + 20;
+        : mouseX + 20;
     const newY =
-      currentY + popoverElementSize.height + padding > clientSize.height
+      mouseY + popoverElementSize.height + padding > clientSize.height
         ? clientSize.height - popoverElementSize.height
-        : currentY + 20;
+        : mouseY + 20;
 
     return { newX, newY };
   }
