@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, wait } from 'react-testing-library';
+import { render, fireEvent } from 'react-testing-library';
 
 import Popover from './Popover';
 
