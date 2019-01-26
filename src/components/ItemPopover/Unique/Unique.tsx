@@ -106,7 +106,7 @@ const Unique: React.SFC<UniqueProps> = ({ data }) => {
         <Divider />
         {implicitModifiers.length > 0 && (
           <>
-            <Modifiers>
+            <Modifiers data-testid="implicit-modifiers">
               {implicitModifiers.map((modifier, i) => (
                 <Modifier key={i}>{modifier.text}</Modifier>
               ))}
@@ -114,7 +114,7 @@ const Unique: React.SFC<UniqueProps> = ({ data }) => {
             <Divider />
           </>
         )}
-        <Modifiers>
+        <Modifiers data-testid="explicit-modifiers">
           {explicitModifiers.map((modifier, i) => (
             <Modifier key={i}>{modifier.text}</Modifier>
           ))}
