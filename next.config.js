@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { parsed: localEnv } = require('dotenv').config();
+// const { parsed: localEnv } = require('dotenv').config();
 // const webpack = require('webpack');
 const withTypescript = require('@zeit/next-typescript');
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+
+require('dotenv').config();
 
 const config = {
   webpack(config, options) {
@@ -28,8 +30,8 @@ const config = {
   },
   target: 'serverless',
   env: {
-    GRAPHQL_API_URL: 'xxx',
-    ENGINE_API_KEY: 'xxx',
+    GRAPHQL_API_URL: process.env.GRAPHQL_API_URL,
+    ENGINE_API_KEY: process.env.ENGINE_API_KEY,
   },
 };
 

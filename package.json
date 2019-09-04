@@ -70,7 +70,7 @@
   "dependencies": {
     "@apollo/react-hooks": "^0.1.0-beta.5",
     "apollo": "2.12.5",
-    "apollo-boost": "^0.4.0",
+    "apollo-boost": "0.4.1",
     "dotenv": "^8.0.0",
     "fontfaceobserver": "^2.1.0",
     "graphql": "~14.2.1",
