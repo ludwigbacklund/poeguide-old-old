@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, fireEvent } from 'react-testing-library';
 
 import Popover from './Popover';
+import { render, fireEvent } from '../../utils/custom-render';
 
 const WINDOW_WIDTH = 320;
 
@@ -24,10 +24,10 @@ describe('Popover', () => {
       <Popover>
         {({ anchorRef, popoverRef, popoverStyles, shouldRenderPopover }) => (
           <>
-            <div data-testid="anchor-ref" ref={anchorRef} />
+            <div data-testid='anchor-ref' ref={anchorRef} />
             {(shouldRenderPopover || shouldAlwaysShowPopover) && (
               <div
-                data-testid="popover-ref"
+                data-testid='popover-ref'
                 ref={popoverRef}
                 style={popoverStyles}
               />

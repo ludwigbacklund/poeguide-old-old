@@ -1,6 +1,6 @@
 import React from 'react';
-import { render } from 'react-testing-library';
 
+import { render } from '../../../utils/custom-render';
 import Item from './Item';
 
 describe('Item', () => {

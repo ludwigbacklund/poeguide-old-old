@@ -1,21 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 // const { parsed: localEnv } = require('dotenv').config();
 // const webpack = require('webpack');
-const withTypescript = require('@zeit/next-typescript');
 const withBundleAnalyzer = require('@zeit/next-bundle-analyzer');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 require('dotenv').config();
 
 const config = {
-  webpack(config, options) {
-    if (options.isServer) {
-      config.plugins.push(new ForkTsCheckerWebpackPlugin());
-    }
-    // config.plugins.push(new webpack.EnvironmentPlugin(localEnv));
-
-    return config;
-  },
   analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
   analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
   bundleAnalyzerConfig: {
@@ -35,4 +25,4 @@ const config = {
   },
 };
 
-module.exports = withTypescript(withBundleAnalyzer(config));
+module.exports = withBundleAnalyzer(config);

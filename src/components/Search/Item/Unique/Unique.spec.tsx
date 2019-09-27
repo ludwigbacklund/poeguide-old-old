@@ -1,10 +1,11 @@
 import React from 'react';
-import { render } from 'react-testing-library';
 import { MockedProvider } from '@apollo/react-testing';
 import wait from 'waait';
 
 import Unique, { POPOVER_UNIQUE } from './Unique';
 import { ModifierType } from '../../../../graphql-types';
+import { render } from '../../../../utils/custom-render';
+import { act } from 'react-dom/test-utils';
 
 const implicitModifier = {
   type: ModifierType.Implicit,
@@ -50,7 +51,7 @@ describe('Popover', () => {
   const renderUnique = () => {
     return render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <Unique name="Test Unique" />
+        <Unique name='Test Unique' />
       </MockedProvider>,
     );
   };
@@ -58,7 +59,9 @@ describe('Popover', () => {
   it('displays the modifiers separated by modifier type', async () => {
     const { getByTestId } = renderUnique();
 
-    await wait(0);
+    await act(async () => {
+      await wait(0);
+    });
 
     expect(getByTestId('implicit-modifiers').children.length).toBe(1);
     expect(getByTestId('implicit-modifiers')).toHaveTextContent(
