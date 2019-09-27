@@ -1,26 +1,34 @@
 import React from 'react';
 import { render } from 'react-testing-library';
-import { ModifierType } from '../../../../__generated__/globalTypes';
+import { MockedProvider } from '@apollo/react-testing';
+import wait from 'waait';
 
-import Unique from './Unique';
+import Unique, { POPOVER_UNIQUE } from './Unique';
+import { ModifierType } from '../../../../graphql-types';
 
-describe('Popover', () => {
-  const implicitModifier = {
-    type: ModifierType.IMPLICIT,
-    text: 'Test Implicit Modifier',
-    optional: false,
-  };
+const implicitModifier = {
+  type: ModifierType.Implicit,
+  text: 'Test Implicit Modifier',
+  optional: false,
+};
 
-  const explicitModifier = {
-    type: ModifierType.EXPLICIT,
-    text: 'Test Explicit Modifier',
-    optional: false,
-  };
+const explicitModifier = {
+  type: ModifierType.Explicit,
+  text: 'Test Explicit Modifier',
+  optional: false,
+};
 
-  const renderUnique = () => {
-    return render(
-      <Unique
-        data={{
+const mocks = [
+  {
+    request: {
+      query: POPOVER_UNIQUE,
+      variables: {
+        name: 'Test Unique',
+      },
+    },
+    result: {
+      data: {
+        uniqueByName: {
           name: 'Test Unique',
           baseType: 'Test Basetype',
           iconUrl: 'http://example.com/image.png',
@@ -32,13 +40,25 @@ describe('Popover', () => {
           modifiers: {
             nodes: [implicitModifier, explicitModifier],
           },
-        }}
-      />,
+        },
+      },
+    },
+  },
+];
+
+describe('Popover', () => {
+  const renderUnique = () => {
+    return render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Unique name="Test Unique" />
+      </MockedProvider>,
     );
   };
 
   it('displays the modifiers separated by modifier type', async () => {
     const { getByTestId } = renderUnique();
+
+    await wait(0);
 
     expect(getByTestId('implicit-modifiers').children.length).toBe(1);
     expect(getByTestId('implicit-modifiers')).toHaveTextContent(

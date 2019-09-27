@@ -18,7 +18,7 @@
     "test:unit": "jest",
     "test:unit:watch": "jest --watch",
     "test:e2e": "server-test :3000 cypress:run",
-    "generate-types": "apollo codegen:generate __generated__ --target typescript --no-addTypename"
+    "generate-types": "graphql-codegen --config codegen.yml"
   },
   "husky": {
     "hooks": {
@@ -32,7 +32,14 @@
     ]
   },
   "devDependencies": {
+    "@apollo/react-testing": "^3.1.1",
     "@babel/core": "^7.4.4",
+    "@graphql-codegen/cli": "^1.7.0",
+    "@graphql-codegen/introspection": "1.7.0",
+    "@graphql-codegen/near-operation-file-preset": "^1.7.0",
+    "@graphql-codegen/typescript": "1.7.0",
+    "@graphql-codegen/typescript-operations": "^1.7.0",
+    "@graphql-codegen/typescript-react-apollo": "1.7.0",
     "@types/jest": "^24.0.12",
     "@types/next": "^8.0.5",
     "@types/react": "16.8.16",
@@ -65,22 +72,22 @@
     "tslint-react": "^4.0.0",
     "typescript": "3.4.5",
     "typescript-eslint-parser": "22.0.0",
+    "waait": "^1.0.5",
     "webpack": "4.30.0"
   },
   "dependencies": {
-    "@apollo/react-hooks": "^0.1.0-beta.5",
+    "@apollo/react-hooks": "^3.1.1",
     "apollo": "2.12.5",
-    "apollo-boost": "0.4.1",
+    "apollo-boost": "^0.4.4",
     "dotenv": "^8.0.0",
     "fontfaceobserver": "^2.1.0",
-    "graphql": "~14.2.1",
+    "graphql": "^14.5.8",
     "isomorphic-unfetch": "^3.0.0",
     "next": "^8.1.0",
     "next-with-apollo": "^3.4.0",
-    "react": "^16.8.6",
-    "react-apollo": "^2.5.5",
-    "react-apollo-hooks": "^0.4.5",
-    "react-dom": "^16.8.6",
+    "react": "^16.9.0",
+    "react-apollo": "^3.1.1",
+    "react-dom": "^16.9.0",
     "styled-components": "^4.2.0"
   }
 }

@@ -9,16 +9,7 @@ describe('Item', () => {
   const type = 'Test type';
 
   const renderItem = () => {
-    return render(
-      <Item
-        data={{
-          __typename: 'SearchItem',
-          name,
-          iconUrl,
-          type,
-        }}
-      />,
-    );
+    return render(<Item name={name} iconUrl={iconUrl} type={type} />);
   };
 
   it('renders the icon', () => {

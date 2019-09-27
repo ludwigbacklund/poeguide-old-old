@@ -1,52 +1,38 @@
-import { ApolloClient, ApolloQueryResult } from 'apollo-boost';
 import gql from 'graphql-tag';
-import React, { Component } from 'react';
-import { ApolloConsumer } from 'react-apollo';
+import React, { useState } from 'react';
 
-import { GetSearch, GetSearch_search_nodes } from './__generated__/GetSearch';
 import Search from './Search';
+import { useSearchLazyQuery } from '../../graphql-types';
+import isNotNull from '../../utils/isNotNull';
 
-interface SearchState {
-  searchResults: GetSearch_search_nodes[];
-}
+const SearchConnector: React.SFC = () => {
+  const [isSearchEmpty, setIsSearchEmpty] = useState(true);
+  const [getSearch, { data }] = useSearchLazyQuery();
 
-class SearchConnector extends Component<{}, SearchState> {
-  state: SearchState = {
-    searchResults: [],
-  };
+  const searchResults =
+    (data &&
+      data.search &&
+      data.search.nodes &&
+      data.search.nodes.filter(isNotNull)) ||
+    [];
 
-  itemSearch = async (client: ApolloClient<any>, query: string) => {
-    if (query === '') {
-      this.setState({ searchResults: [] });
-      return;
-    }
+  return (
+    <Search
+      searchResults={isSearchEmpty ? [] : searchResults}
+      onSearchChange={query => {
+        if (query !== '') {
+          getSearch({ variables: { query } });
+          setIsSearchEmpty(false);
+        } else {
+          setIsSearchEmpty(true);
+        }
+      }}
+    />
+  );
+};
 
-    const { data } = (await client.query({
-      query: SEARCH_QUERY,
-      variables: { query },
-    })) as ApolloQueryResult<GetSearch>;
-
-    this.setState({ searchResults: data.search.nodes });
-  };
-
-  render() {
-    const { searchResults } = this.state;
-
-    return (
-      <ApolloConsumer>
-        {client => (
-          <Search
-            searchResults={searchResults}
-            onSearchChange={query => this.itemSearch(client, query)}
-          />
-        )}
-      </ApolloConsumer>
-    );
-  }
-}
-
-const SEARCH_QUERY = gql`
-  query GetSearch($query: String!) {
+export const SEARCH_QUERY = gql`
+  query Search($query: String!) {
     search(query: $query, first: 5) {
       nodes {
         name
