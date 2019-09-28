@@ -22,7 +22,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
 
   calculateNewPopoverPosition(mouseX: number, mouseY: number, padding: number) {
     // Re-use previously known size of the popover to prevent it from overflowing every time it re-appears
-    let popoverElementSize = {
+    const popoverElementSize = {
       width: this.prevPopoverElementSize.width,
       height: this.prevPopoverElementSize.height,
     };
