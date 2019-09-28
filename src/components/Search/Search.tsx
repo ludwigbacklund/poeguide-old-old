@@ -58,8 +58,8 @@ const Search: React.SFC<SearchProps> = ({ onSearchChange, searchResults }) => {
       />
       {searchResults.length > 0 && (
         <SearchResults data-testid="search-results">
-          {searchResults.map((itemData, i) => (
-            <Item key={itemData.name || i} data={itemData} />
+          {searchResults.map(({ name, iconUrl, type }, i) => (
+            <Item key={name || i} name={name} iconUrl={iconUrl} type={type} />
           ))}
         </SearchResults>
       )}

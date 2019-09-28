@@ -1,30 +1,23 @@
 import gql from 'graphql-tag';
 import * as React from 'react';
-import { Query } from 'react-apollo';
 import styled from 'styled-components';
-import { GetUnique, GetUniqueVariables } from './__generated__/GetUnique';
+import { useGetUniqueQuery } from '../../graphql-types';
 
 const CharacterWrapper = styled.div`
   grid-column: 2 / 3;
 `;
 
-class UniqueQuery extends Query<GetUnique, GetUniqueVariables> {}
+const Character: React.SFC<{}> = () => {
+  const { data } = useGetUniqueQuery({ variables: { name: 'Shimmeron' } });
 
-const Character: React.SFC<{}> = () => (
-  <CharacterWrapper>
-    <UniqueQuery query={GET_UNIQUE} variables={{ name: 'Shiversting' }}>
-      {({ loading, error, data }) => {
-        if (loading) return <p>Loading...</p>;
-        if (error) return <p>Error :(</p>;
-        if (!data || !data.uniqueByName) return <p>No data</p>;
+  return (
+    <CharacterWrapper>
+      {data && data.uniqueByName && data.uniqueByName.name}
+    </CharacterWrapper>
+  );
+};
 
-        return null;
-      }}
-    </UniqueQuery>
-  </CharacterWrapper>
-);
-
-const GET_UNIQUE = gql`
+export const GET_UNIQUE = gql`
   query GetUnique($name: String!) {
     uniqueByName(name: $name) {
       name

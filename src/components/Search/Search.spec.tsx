@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, fireEvent } from 'react-testing-library';
 
 import Search from './Search';
+import { render, fireEvent } from '../../utils/custom-render';
 
 describe('Search', () => {
   const renderSearch = (onSearchChangeMock?: jest.Mock) => {
