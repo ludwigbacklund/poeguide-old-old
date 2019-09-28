@@ -1,7 +1,42 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Item from './Item/Item';
+import { Item } from './Item/Item';
+
+interface SearchItem {
+  name: string | null;
+  iconUrl: string | null;
+  type: string | null;
+}
+
+interface SearchProps {
+  searchResults: SearchItem[];
+  onSearchChange(query: string): void;
+}
+
+export const Search: React.SFC<SearchProps> = ({
+  onSearchChange,
+  searchResults,
+}) => {
+  return (
+    <SearchWrapper>
+      <Input
+        placeholder='Search for uniques and gems...'
+        onChange={async e => {
+          onSearchChange(e.target.value);
+        }}
+        tabIndex={0}
+      />
+      {searchResults.length > 0 && (
+        <SearchResults data-testid='search-results'>
+          {searchResults.map(({ name, iconUrl, type }, i) => (
+            <Item key={name || i} name={name} iconUrl={iconUrl} type={type} />
+          ))}
+        </SearchResults>
+      )}
+    </SearchWrapper>
+  );
+};
 
 const SearchWrapper = styled.div`
   display: flex;
@@ -34,37 +69,3 @@ const SearchResults = styled.div`
   margin-top: -16px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
 `;
-
-interface SearchItem {
-  name: string | null;
-  iconUrl: string | null;
-  type: string | null;
-}
-
-interface SearchProps {
-  searchResults: SearchItem[];
-  onSearchChange(query: string): void;
-}
-
-const Search: React.SFC<SearchProps> = ({ onSearchChange, searchResults }) => {
-  return (
-    <SearchWrapper>
-      <Input
-        placeholder="Search for uniques and gems..."
-        onChange={async e => {
-          onSearchChange(e.target.value);
-        }}
-        tabIndex={0}
-      />
-      {searchResults.length > 0 && (
-        <SearchResults data-testid="search-results">
-          {searchResults.map(({ name, iconUrl, type }, i) => (
-            <Item key={name || i} name={name} iconUrl={iconUrl} type={type} />
-          ))}
-        </SearchResults>
-      )}
-    </SearchWrapper>
-  );
-};
-
-export default Search;

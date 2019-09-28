@@ -2,7 +2,7 @@ import React from 'react';
 import { MockedProvider } from '@apollo/react-testing';
 import wait from 'waait';
 
-import Unique, { POPOVER_UNIQUE } from './Unique';
+import { Unique, POPOVER_UNIQUE } from './Unique';
 import { ModifierType } from '../../../../graphql-types';
 import { render } from '../../../../utils/custom-render';
 import { act } from 'react-dom/test-utils';

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import Search from './Search';
+import { Search } from './Search';
 import { render, fireEvent } from '../../utils/custom-render';
 
-describe('Search', () => {
+describe('SearchView', () => {
   const renderSearch = (onSearchChangeMock?: jest.Mock) => {
     const searchResults = [
       {

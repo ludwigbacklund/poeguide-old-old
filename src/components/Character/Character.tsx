@@ -7,7 +7,7 @@ const CharacterWrapper = styled.div`
   grid-column: 2 / 3;
 `;
 
-const Character: React.SFC<{}> = () => {
+export const Character: React.SFC<{}> = () => {
   const { data } = useGetUniqueQuery({ variables: { name: 'Shimmeron' } });
 
   return (
@@ -25,5 +25,3 @@ export const GET_UNIQUE = gql`
     }
   }
 `;
-
-export default Character;

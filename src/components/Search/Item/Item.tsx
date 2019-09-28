@@ -2,17 +2,17 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 import { fontSizes, media } from '../../../utils/styling';
-import Popover from '../../Popover/Popover';
+import { Popover } from '../../Popover/Popover';
 import { SearchItem } from '../../../graphql-types';
-import Unique from './Unique/Unique';
+import { UniqueConnector } from './Unique/UniqueConnector';
 
-const Item: React.SFC<{} & SearchItem> = ({ name, type, iconUrl }) => (
+export const Item: React.SFC<{} & SearchItem> = ({ name, type, iconUrl }) => (
   <Popover>
     {({ anchorRef, popoverRef, popoverStyles, shouldRenderPopover }) => (
       <>
         {shouldRenderPopover && (
           <div ref={popoverRef} style={popoverStyles}>
-            {type !== 'gem' && name && <Unique name={name} />}
+            {type !== 'gem' && name && <UniqueConnector name={name} />}
           </div>
         )}
         <ItemWrapper ref={anchorRef} tabIndex={0}>
@@ -78,5 +78,3 @@ const Type = styled.span`
     ${fontSizes.xs}
   `}
 `;
-
-export default Item;

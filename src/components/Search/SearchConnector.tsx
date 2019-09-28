@@ -1,11 +1,11 @@
 import gql from 'graphql-tag';
 import React, { useState } from 'react';
 
-import Search from './Search';
+import { Search } from './Search';
 import { useSearchLazyQuery } from '../../graphql-types';
 import isNotNull from '../../utils/isNotNull';
 
-const SearchConnector: React.SFC = () => {
+export const SearchConnector: React.SFC = () => {
   const [isSearchEmpty, setIsSearchEmpty] = useState(true);
   const [getSearch, { data }] = useSearchLazyQuery();
 
@@ -42,5 +42,3 @@ export const SEARCH_QUERY = gql`
     }
   }
 `;
-
-export default SearchConnector;

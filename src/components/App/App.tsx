@@ -2,9 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { media } from '../../utils/styling';
-import Character from '../Character/Character';
-import Header from '../Header/Header';
-import SearchConnector from '../Search/SearchConnector';
+import { Character } from '../Character/Character';
+import { Header } from '../Header/Header';
+import { SearchConnector } from '../Search/SearchConnector';
+
+export const App = () => {
+  return (
+    <AppWrapper>
+      <Header />
+      <MainWrapper>
+        <SearchConnector />
+        <Character />
+      </MainWrapper>
+    </AppWrapper>
+  );
+};
 
 const AppWrapper = styled.div`
   font-family: Lato;
@@ -25,17 +37,3 @@ const MainWrapper = styled.div`
     margin: 8px;
   `}
 `;
-
-const App = () => {
-  return (
-    <AppWrapper>
-      <Header />
-      <MainWrapper>
-        <SearchConnector />
-        <Character />
-      </MainWrapper>
-    </AppWrapper>
-  );
-};
-
-export default App;

@@ -14,7 +14,7 @@ interface PopoverProps {
   children(props: InjectedPopoverProps): React.ReactNode;
 }
 
-class Popover extends React.Component<PopoverProps, PopoverState> {
+export class Popover extends React.Component<PopoverProps, PopoverState> {
   state = { popoverStyles: {}, shouldRenderPopover: false };
   private anchorRef = createRef<HTMLDivElement>();
   private popoverRef = createRef<HTMLDivElement>();
@@ -109,5 +109,3 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
     );
   }
 }
-
-export default Popover;

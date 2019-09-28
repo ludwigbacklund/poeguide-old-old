@@ -46,12 +46,12 @@ const BuildName = styled.h2`
 
 // interface IHeaderProps {}
 
-const Header: React.SFC<{}> = () => {
+export const Header: React.SFC<{}> = () => {
   return (
     <HeaderWrapper>
       <TopBar />
       <NavWrapper>
-        <Link href="/">
+        <Link href='/'>
           <HomeLink>poe.guide</HomeLink>
         </Link>
         <BuildName>Blade Vortex Elementalist </BuildName>
@@ -59,5 +59,3 @@ const Header: React.SFC<{}> = () => {
     </HeaderWrapper>
   );
 };
-
-export default Header;

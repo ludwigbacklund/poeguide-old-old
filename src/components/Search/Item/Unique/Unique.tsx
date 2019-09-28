@@ -3,41 +3,46 @@ import styled from 'styled-components';
 import gql from 'graphql-tag';
 
 import { fontSizes } from '../../../../utils/styling';
-import { usePopoverUniqueQuery } from '../../../../graphql-types';
+
+type Modifier = {
+  type: string;
+  text: string;
+};
 
 interface UniqueProps {
-  name: string;
+  baseType: string;
+  iconUrl: string;
+  levelRequirement: number;
+  strRequirement: number;
+  dexRequirement: number;
+  intRequirement: number;
+  flavourText: string;
+  modifiers: Modifier[];
 }
 
-const Unique: React.SFC<UniqueProps> = ({ name }) => {
-  const { data } = usePopoverUniqueQuery({ variables: { name } });
-
-  const popoverUnique = data && data.uniqueByName;
-  if (!popoverUnique) return null;
-
-  const {
-    baseType,
-    iconUrl,
-    levelRequirement,
-    strRequirement,
-    dexRequirement,
-    intRequirement,
-    flavourText,
-    modifiers,
-  } = popoverUnique;
-
-  const implicitModifiers = modifiers.nodes.filter(
+export const Unique: React.SFC<UniqueProps> = ({
+  baseType,
+  iconUrl,
+  levelRequirement,
+  strRequirement,
+  dexRequirement,
+  intRequirement,
+  flavourText,
+  modifiers,
+}) => {
+  const implicitModifiers = modifiers.filter(
     modifier => modifier && modifier.type === 'IMPLICIT',
   );
-  const explicitModifiers = modifiers.nodes.filter(
+  const explicitModifiers = modifiers.filter(
     modifier => modifier && modifier.type === 'EXPLICIT',
   );
+
   const readableAttributeRequirements = [
     { label: 'Str', value: strRequirement },
     { label: 'Dex', value: dexRequirement },
     { label: 'Int', value: intRequirement },
   ]
-    .filter(requirement => requirement.value > 0)
+    .filter(requirement => requirement.value && requirement.value > 0)
     .map(requirement => `${requirement.value} ${requirement.label}`)
     .join(', ');
 
@@ -56,7 +61,7 @@ const Unique: React.SFC<UniqueProps> = ({ name }) => {
         <Divider />
         {implicitModifiers.length > 0 && (
           <>
-            <Modifiers data-testid="implicit-modifiers">
+            <Modifiers data-testid='implicit-modifiers'>
               {implicitModifiers.map((modifier, i) =>
                 modifier ? <Modifier key={i}>{modifier.text}</Modifier> : null,
               )}
@@ -64,7 +69,7 @@ const Unique: React.SFC<UniqueProps> = ({ name }) => {
             <Divider />
           </>
         )}
-        <Modifiers data-testid="explicit-modifiers">
+        <Modifiers data-testid='explicit-modifiers'>
           {explicitModifiers.map((modifier, i) =>
             modifier ? <Modifier key={i}>{modifier.text}</Modifier> : null,
           )}
@@ -169,5 +174,3 @@ export const POPOVER_UNIQUE = gql`
 //     }
 //   }
 // `;
-
-export default Unique;
