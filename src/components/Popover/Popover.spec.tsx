@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Popover from './Popover';
+import { Popover } from './Popover';
 import { render, fireEvent } from '../../utils/custom-render';
 
 const WINDOW_WIDTH = 320;

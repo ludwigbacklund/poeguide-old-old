@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { render } from '../../../utils/custom-render';
-import Item from './Item';
+import { Item } from './Item';
 
 describe('Item', () => {
   const name = 'Test item';
