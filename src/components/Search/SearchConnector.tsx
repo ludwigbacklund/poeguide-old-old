@@ -13,7 +13,6 @@ interface SearchItem {
 
 export const SearchConnector: React.SFC = () => {
   const [isSearchEmpty, setIsSearchEmpty] = useState(true);
-  // const [searchResults, setSearchResults] = useState<SearchItem[]>([]);
   const searchResults = useRef<SearchItem[]>([]);
   const [getSearch, { data, loading }] = useSearchLazyQuery();
 
