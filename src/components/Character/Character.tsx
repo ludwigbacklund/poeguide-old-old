@@ -11,7 +11,7 @@ export const Character: React.SFC<{}> = () => {
   const { data } = useGetUniqueQuery({ variables: { name: 'Shimmeron' } });
 
   return (
-    <CharacterWrapper>
+    <CharacterWrapper style={{ display: 'none' }}>
       {data && data.uniqueByName && data.uniqueByName.name}
     </CharacterWrapper>
   );
