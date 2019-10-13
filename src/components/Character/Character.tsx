@@ -66,6 +66,6 @@ const CharacterGrid = styled.div`
     'weaponOne weaponOne ringOne body   body   ringTwo weaponTwo weaponTwo'
     '.         gloves    gloves  body   body   boots   boots     .'
     '.         gloves    gloves  belt   belt   boots   boots     .';
-  grid-template-columns: repeat(8, minmax(40px, 80px));
+  grid-template-columns: repeat(8, minmax(40px, 60px));
   grid-template-rows: repeat(6, 1fr);
 `;
