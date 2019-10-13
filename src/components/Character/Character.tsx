@@ -1,54 +1,44 @@
+import React from 'react';
+import styled from 'styled-components';
 import gql from 'graphql-tag';
-import * as React from 'react';
 
-// import {
-//   CharacterWrapper,
-//   CharacterGrid,
-//   WeaponOne,
-//   Helmet,
-//   WeaponTwo,
-//   Body,
-//   Amulet,
-//   RingOne,
-//   RingTwo,
-//   Gloves,
-//   Belt,
-//   Boots,
-// } from './styled';
+import { useBuildQuery } from '../../graphql-types';
+import isNotNull from '../../utils/isNotNull';
+import { Item } from './Item/Item';
+
+const snakeToCamel = (str: string) =>
+  str.replace(/([-_][a-z])/g, group =>
+    group
+      .toUpperCase()
+      .replace('-', '')
+      .replace('_', ''),
+  );
 
 export const Character: React.SFC<{}> = () => {
-  return null;
-  // const { loading, data, error } = useQuery<GetBuild, GetBuildVariables>(
-  //   GET_BUILD,
-  //   {
-  //     variables: { id: 1 },
-  //   },
-  // );
-  // if (!data || !data.buildById) return <p>No data</p>;
-  // if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error :(</p>;
+  const { loading, data, error } = useBuildQuery({
+    variables: { id: 1 },
+  });
+  if (!data || !data.buildById) return <p>No data</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
 
-  // const { nodes: uniques } = data.buildById.buildUniques;
-  // const realUniques = uniques.filter(unique => unique !== null);
-  // if (realUniques) {
-  //   realUniques.map(uniq => uniq);
-  // }
-  // return (
-  //   <CharacterWrapper>
-  //     <CharacterGrid>
-  //       <WeaponOne>WeaponOne</WeaponOne>
-  //       <Helmet>Helmet</Helmet>
-  //       <WeaponTwo>Weapon two</WeaponTwo>
-  //       <Body>Body</Body>
-  //       <Amulet>Amulet</Amulet>
-  //       <RingOne>Ring one</RingOne>
-  //       <RingTwo>Ring two</RingTwo>
-  //       <Gloves>Gloves</Gloves>
-  //       <Belt>Belt</Belt>
-  //       <Boots>Boots</Boots>
-  //     </CharacterGrid>
-  //   </CharacterWrapper>
-  // );
+  const { nodes } = data.buildById.buildUniques;
+  const uniques = nodes.filter(isNotNull);
+
+  return (
+    <CharacterGrid>
+      {uniques.map(({ slot, unique }) => {
+        if (!unique) return;
+        return (
+          <Item
+            key={unique.id}
+            slot={snakeToCamel(slot)}
+            iconUrl={unique.iconUrl}
+          />
+        );
+      })}
+    </CharacterGrid>
+  );
 };
 
 export const BUILD_QUERY = gql`
@@ -56,11 +46,26 @@ export const BUILD_QUERY = gql`
     buildById(id: $id) {
       buildUniques {
         nodes {
+          slot
           unique {
+            id
             iconUrl
           }
         }
       }
     }
   }
+`;
+
+const CharacterGrid = styled.div`
+  display: grid;
+  grid-template-areas:
+    'weaponOne weaponOne .       helmet helmet .       weaponTwo weaponTwo'
+    'weaponOne weaponOne .       helmet helmet .       weaponTwo weaponTwo'
+    'weaponOne weaponOne .       body   body   amulet  weaponTwo weaponTwo'
+    'weaponOne weaponOne ringOne body   body   ringTwo weaponTwo weaponTwo'
+    '.         gloves    gloves  body   body   boots   boots     .'
+    '.         gloves    gloves  belt   belt   boots   boots     .';
+  grid-template-columns: repeat(8, minmax(40px, 80px));
+  grid-template-rows: repeat(6, 1fr);
 `;
