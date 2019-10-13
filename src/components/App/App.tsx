@@ -28,7 +28,7 @@ const AppWrapper = styled.div`
   -webkit-font-smoothing: antialiased;
 `;
 
-const MainWrapper = styled.div`
+const MainWrapper = styled.main`
   margin: 16px;
 
   ${media.sm`
