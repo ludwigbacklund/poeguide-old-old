@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { fontSizes, media } from '../../../utils/styling';
+import { fontSizes, desktop } from '../../../utils/styling';
 import { Popover } from '../../Popover/Popover';
 import { SearchItem } from '../../../graphql-types';
 import { UniqueConnector } from './Unique/UniqueConnector';
@@ -46,35 +46,35 @@ const ItemWrapper = styled.div`
 `;
 
 const ItemIcon = styled.img`
-  object-fit: scale-down;
-  width: 40px;
-  height: 40px;
+  width: 30px;
 
-  ${media.sm`
-    width: 30px;
+  @media (${desktop}) {
     height: 30px;
-  `}
+    object-fit: scale-down;
+    width: 40px;
+    height: 40px;
+  }
 `;
 
 const Name = styled.p`
+  ${fontSizes.sm}
+
+ @media (${desktop}) {
   margin: 0 8px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-
-  ${media.sm`
-    ${fontSizes.sm}
-  `}
+  }
 `;
 
 const Type = styled.span`
+  ${fontSizes.xs}
+
+ @media (${desktop}) {
   ${fontSizes.sm}
-  color: rgba(${props => props.theme.darkShades}, 0.6);
+  color: rgba(${(props: any) => props.theme.darkShades}, 0.6);
   text-align: end;
   margin-left: auto;
   white-space: nowrap;
-
-  ${media.sm`
-    ${fontSizes.xs}
-  `}
+  }
 `;

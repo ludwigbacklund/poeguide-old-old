@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 import Link from 'next/link';
-import { fontSizes, media } from '../../utils/styling';
+import { fontSizes, desktop } from '../../utils/styling';
 
 const HeaderWrapper = styled.header`
   display: flex;
@@ -24,24 +24,24 @@ const NavWrapper = styled.nav`
 `;
 
 const HomeLink = styled.a`
-  text-decoration: none;
-  cursor: pointer;
-  ${fontSizes.xl}
-  font-weight: bold;
-  margin: 0 8px;
+  ${fontSizes.lg};
 
-  ${media.sm`
-    ${fontSizes.lg};
-  `}
+  @media (${desktop}) {
+    text-decoration: none;
+    cursor: pointer;
+    ${fontSizes.xl}
+    font-weight: bold;
+    margin: 0 8px;
+  }
 `;
 
 const BuildName = styled.h2`
-  font-weight: normal;
-  ${fontSizes.lg}
+  ${fontSizes.md};
 
-  ${media.sm`
-    ${fontSizes.md};
-  `}
+  @media (${desktop}) {
+    font-weight: normal;
+    ${fontSizes.lg}
+  }
 `;
 
 // interface IHeaderProps {}

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { media } from '../../utils/styling';
+import { desktop } from '../../utils/styling';
 import { Character } from '../Character/Character';
 import { Header } from '../Header/Header';
 import { SearchConnector } from '../Search/SearchConnector';
@@ -29,11 +29,11 @@ const AppWrapper = styled.div`
 `;
 
 const MainWrapper = styled.main`
-  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
 
-  ${media.sm`
-    display: flex;
-    flex-direction: column;
-    margin: 8px;
-  `}
+  @media (${desktop}) {
+    margin: 16px;
+  }
 `;

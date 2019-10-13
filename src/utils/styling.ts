@@ -5,10 +5,7 @@ interface Breakpoints {
 }
 
 export const sizes: Breakpoints = {
-  lg: 1200,
-  md: 992,
-  sm: 768,
-  xs: 576,
+  desktop: 768,
 };
 
 export const theme = {
@@ -38,12 +35,4 @@ export const fontSizes = {
 };
 
 // Iterate through the sizes and create a media template
-export const media = Object.keys(sizes).reduce((acc: any, label) => {
-  acc[label] = (...args: [any]) => css`
-    @media (max-width: ${sizes[label] / 16}em) {
-      ${css(...args)}
-    }
-  `;
-
-  return acc;
-}, {});
+export const desktop = `min-width: ${sizes.desktop / 16}em`;
