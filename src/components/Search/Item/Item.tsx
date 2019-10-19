@@ -1,29 +1,31 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import Popover from 'react-tiny-popover';
 
 import { fontSizes, desktop } from '../../../utils/styling';
-import { Popover } from '../../Popover/Popover';
 import { SearchItem } from '../../../graphql-types';
+import { useHover } from '../../../utils/hooks';
 import { UniqueConnector } from './Unique/UniqueConnector';
 
-export const Item: React.SFC<{} & SearchItem> = ({ name, type, iconUrl }) => (
-  <Popover>
-    {({ anchorRef, popoverRef, popoverStyles, shouldRenderPopover }) => (
-      <>
-        {shouldRenderPopover && (
-          <div ref={popoverRef} style={popoverStyles}>
-            {type !== 'gem' && name && <UniqueConnector name={name} />}
-          </div>
-        )}
-        <ItemWrapper ref={anchorRef} tabIndex={0}>
-          {iconUrl && <ItemIcon src={iconUrl} alt={name ? name : 'Item'} />}
-          <Name>{name || 'Unknown'}</Name>
-          <Type>{type && type.toUpperCase()}</Type>
-        </ItemWrapper>
-      </>
-    )}
-  </Popover>
-);
+export const Item: React.SFC<{} & SearchItem> = ({ name, type, iconUrl }) => {
+  const { hovered, bind } = useHover();
+
+  if (!name) return null;
+  return (
+    <Popover
+      isOpen={!!hovered}
+      position={'bottom'} // preferred position
+      content={<UniqueConnector name={name} />}
+      // content={<div>Hej</div>}
+    >
+      <ItemWrapper {...bind} tabIndex={0}>
+        {iconUrl && <ItemIcon src={iconUrl} alt={name ? name : 'Item'} />}
+        <Name>{name || 'Unknown'}</Name>
+        <Type>{type && type.toUpperCase()}</Type>
+      </ItemWrapper>
+    </Popover>
+  );
+};
 
 const ItemWrapper = styled.div`
   display: flex;
