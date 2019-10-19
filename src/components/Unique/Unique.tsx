@@ -1,8 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import gql from 'graphql-tag';
 
-import { fontSizes } from '../../../../utils/styling';
+import { fontSizes } from '../../utils/styling';
 
 type Modifier = {
   type: string;
@@ -10,6 +9,7 @@ type Modifier = {
 };
 
 interface UniqueProps {
+  name: string;
   baseType: string;
   iconUrl: string;
   levelRequirement: number;
@@ -21,6 +21,7 @@ interface UniqueProps {
 }
 
 export const Unique: React.SFC<UniqueProps> = ({
+  name,
   baseType,
   iconUrl,
   levelRequirement,
@@ -36,6 +37,8 @@ export const Unique: React.SFC<UniqueProps> = ({
   const explicitModifiers = modifiers.filter(
     modifier => modifier && modifier.type === 'EXPLICIT',
   );
+  const hasModifiers =
+    implicitModifiers.length > 0 || explicitModifiers.length > 0;
 
   const readableAttributeRequirements = [
     { label: 'Str', value: strRequirement },
@@ -58,7 +61,7 @@ export const Unique: React.SFC<UniqueProps> = ({
           {readableAttributeRequirements !== '' &&
             `, ${readableAttributeRequirements}`}
         </span>
-        <Divider />
+        {hasModifiers && <Divider />}
         {implicitModifiers.length > 0 && (
           <>
             <Modifiers data-testid='implicit-modifiers'>
@@ -69,11 +72,13 @@ export const Unique: React.SFC<UniqueProps> = ({
             <Divider />
           </>
         )}
-        <Modifiers data-testid='explicit-modifiers'>
-          {explicitModifiers.map((modifier, i) =>
-            modifier ? <Modifier key={i}>{modifier.text}</Modifier> : null,
-          )}
-        </Modifiers>
+        {explicitModifiers.length > 0 && (
+          <Modifiers data-testid='explicit-modifiers'>
+            {explicitModifiers.map((modifier, i) =>
+              modifier ? <Modifier key={i}>{modifier.text}</Modifier> : null,
+            )}
+          </Modifiers>
+        )}
         <Divider />
         <FlavourText>{flavourText.replace(/\|/gm, '\n')}</FlavourText>
         <Icon src={iconUrl} />
@@ -136,41 +141,3 @@ const FlavourText = styled.p`
 const Icon = styled.img`
   object-fit: scale-down;
 `;
-
-export const POPOVER_UNIQUE = gql`
-  query PopoverUnique($name: String!) {
-    uniqueByName(name: $name) {
-      name
-      baseType
-      iconUrl
-      flavourText
-      levelRequirement
-      strRequirement
-      dexRequirement
-      intRequirement
-      modifiers {
-        nodes {
-          type
-          text
-          optional
-        }
-      }
-    }
-  }
-`;
-
-// export const GET_GEM = gql`
-//   query GetGem($name: String!) {
-//     gemByName(name: $name) {
-//       name
-//       description
-//       iconUrl
-//       statText
-//       qualityStatText
-//       levelRequirement
-//       strRequirement
-//       dexRequirement
-//       intRequirement
-//     }
-//   }
-// `;

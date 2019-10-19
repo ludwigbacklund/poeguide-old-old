@@ -23,21 +23,40 @@ export const Character: React.SFC<{}> = () => {
   if (error) return <p>Error :(</p>;
 
   const { nodes } = data.buildById.buildUniques;
-  const uniques = nodes.filter(isNotNull);
+  const buildUniques = nodes.filter(isNotNull);
 
   return (
-    <CharacterGrid>
-      {uniques.map(({ slot, unique }) => {
-        if (!unique) return;
-        return (
-          <Item
-            key={unique.id}
-            slot={snakeToCamel(slot)}
-            iconUrl={unique.iconUrl}
-          />
-        );
-      })}
-    </CharacterGrid>
+    <CharacterWrapper>
+      <CharacterGrid>
+        {buildUniques
+          .filter(buildUnique => !buildUnique.slot.startsWith('flask'))
+          .map(({ slot, unique }) => {
+            if (!unique) return;
+            return (
+              <Item
+                key={unique.name}
+                uniqueName={unique.name}
+                slot={snakeToCamel(slot)}
+                iconUrl={unique.iconUrl}
+              />
+            );
+          })}
+      </CharacterGrid>
+      <Flasks>
+        {buildUniques
+          .filter(buildUnique => buildUnique.slot.startsWith('flask'))
+          .map(({ unique }) => {
+            if (!unique) return;
+            return (
+              <Item
+                key={unique.name}
+                uniqueName={unique.name}
+                iconUrl={unique.iconUrl}
+              />
+            );
+          })}
+      </Flasks>
+    </CharacterWrapper>
   );
 };
 
@@ -48,13 +67,17 @@ export const BUILD_QUERY = gql`
         nodes {
           slot
           unique {
-            id
+            name
             iconUrl
           }
         }
       }
     }
   }
+`;
+
+const CharacterWrapper = styled.div`
+  width: max-content;
 `;
 
 const CharacterGrid = styled.div`
@@ -68,4 +91,9 @@ const CharacterGrid = styled.div`
     '.         gloves    gloves  belt   belt   boots   boots     .';
   grid-template-columns: repeat(8, minmax(40px, 60px));
   grid-template-rows: repeat(6, 1fr);
+`;
+
+const Flasks = styled.div`
+  display: flex;
+  justify-content: center;
 `;

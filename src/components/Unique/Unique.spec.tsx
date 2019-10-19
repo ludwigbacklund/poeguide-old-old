@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Unique } from './Unique';
-import { ModifierType } from '../../../../graphql-types';
-import { render } from '../../../../utils/custom-render';
+import { ModifierType } from '../../graphql-types';
+import { render } from '../../utils/custom-render';
 
 const implicitModifier = {
   type: ModifierType.Implicit,

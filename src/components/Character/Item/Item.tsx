@@ -1,19 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Popover } from '../../Popover/Popover';
+import { UniqueConnector } from '../../Unique/UniqueConnector';
 
 interface ItemProps {
-  slot: string;
+  uniqueName: string;
+  slot?: string;
   iconUrl: string;
 }
 
-export const Item: React.SFC<ItemProps> = ({ slot, iconUrl }) => {
-  return <Icon slot={slot} src={iconUrl} />;
+interface IconProps {
+  slot?: string;
+}
+
+export const Item: React.SFC<ItemProps> = ({ uniqueName, slot, iconUrl }) => {
+  return (
+    <Popover>
+      {({ anchorRef, popoverRef, popoverStyles, shouldRenderPopover }) => (
+        <>
+          {shouldRenderPopover && (
+            <div ref={popoverRef} style={popoverStyles}>
+              <UniqueConnector name={uniqueName} />
+            </div>
+          )}
+          <ItemWrapper ref={anchorRef} slot={slot}>
+            <Icon src={iconUrl} />
+          </ItemWrapper>
+        </>
+      )}
+    </Popover>
+  );
 };
 
-interface IconProps {
-  slot: string;
-}
+const ItemWrapper = styled.div`
+  ${({ slot }: IconProps) => slot && `grid-area: ${slot};`}
+`;
+
 const Icon = styled.img`
-  grid-area: ${({ slot }: IconProps) => slot};
   width: 100%;
 `;

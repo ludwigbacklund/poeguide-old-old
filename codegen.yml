@@ -1,4 +1,3 @@
-overwrite: true
 schema: 'http://192.168.1.141:3000/graphql'
 documents:
   - 'src/**/*.{ts,tsx}'
@@ -17,3 +16,4 @@ generates:
       withHooks: true
       withComponent: false
       preResolveTypes: true
+overwrite: true

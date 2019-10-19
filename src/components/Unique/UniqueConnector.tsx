@@ -1,8 +1,9 @@
 import React from 'react';
+import gql from 'graphql-tag';
 
-import { usePopoverUniqueQuery } from '../../../../graphql-types';
+import { usePopoverUniqueQuery } from '../../graphql-types';
 import { Unique } from './Unique';
-import isNotNull from '../../../../utils/isNotNull';
+import isNotNull from '../../utils/isNotNull';
 
 interface UniqueProps {
   name: string;
@@ -27,6 +28,7 @@ export const UniqueConnector: React.SFC<UniqueProps> = ({ name }) => {
 
   return (
     <Unique
+      name={name}
       baseType={baseType}
       iconUrl={iconUrl}
       levelRequirement={levelRequirement}
@@ -40,3 +42,41 @@ export const UniqueConnector: React.SFC<UniqueProps> = ({ name }) => {
     </Unique>
   );
 };
+
+export const POPOVER_UNIQUE = gql`
+  query PopoverUnique($name: String!) {
+    uniqueByName(name: $name) {
+      name
+      baseType
+      iconUrl
+      flavourText
+      levelRequirement
+      strRequirement
+      dexRequirement
+      intRequirement
+      modifiers {
+        nodes {
+          type
+          text
+          optional
+        }
+      }
+    }
+  }
+`;
+
+// export const GET_GEM = gql`
+//   query GetGem($name: String!) {
+//     gemByName(name: $name) {
+//       name
+//       description
+//       iconUrl
+//       statText
+//       qualityStatText
+//       levelRequirement
+//       strRequirement
+//       dexRequirement
+//       intRequirement
+//     }
+//   }
+// `;
