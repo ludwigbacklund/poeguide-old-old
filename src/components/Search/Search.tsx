@@ -42,6 +42,7 @@ const SearchWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: rgb(${props => props.theme.lightShades});
+  margin: 0 24px;
 `;
 
 const Input = styled.input`

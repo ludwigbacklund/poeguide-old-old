@@ -5,13 +5,15 @@ import { desktop } from '../../utils/styling';
 import { Character } from '../Character/Character';
 import { Header } from '../Header/Header';
 import { SearchConnector } from '../Search/SearchConnector';
+import { Timeline } from '../Timeline/Timeline';
 
 export const App = () => {
   return (
     <AppWrapper>
       <Header />
+      <SearchConnector />
       <MainWrapper>
-        <SearchConnector />
+        <Timeline />
         <Character />
       </MainWrapper>
     </AppWrapper>
@@ -34,6 +36,8 @@ const MainWrapper = styled.main`
   margin: 8px;
 
   @media (${desktop}) {
-    margin: 16px;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    margin: 24px;
   }
 `;

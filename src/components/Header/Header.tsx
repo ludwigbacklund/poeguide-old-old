@@ -31,7 +31,7 @@ const HomeLink = styled.a`
     cursor: pointer;
     ${fontSizes.xl}
     font-weight: bold;
-    margin: 0 8px;
+    margin: 0 24px;
   }
 `;
 
