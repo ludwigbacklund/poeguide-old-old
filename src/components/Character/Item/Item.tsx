@@ -34,6 +34,7 @@ export const Item: React.SFC<ItemProps> = ({ uniqueName, slot, iconUrl }) => {
 
 const ItemWrapper = styled.div`
   ${({ slot }: IconProps) => slot && `grid-area: ${slot};`}
+  align-self: center;
 `;
 
 const Icon = styled.img`
