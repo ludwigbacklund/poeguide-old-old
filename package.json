@@ -9,7 +9,7 @@
   "sideEffects": false,
   "scripts": {
     "predev": "npm run generate-types",
-    "dev": "next",
+    "dev": "concurrently --restart-tries 5 --restart-after 5000 --names 'next,codegen' 'next' 'yarn generate-types'",
     "prebuild": "npm run generate-types",
     "build": "next build",
     "now-build": "next build",
@@ -57,6 +57,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^24.9.0",
     "babel-plugin-styled-components": "1.10.6",
+    "concurrently": "^5.0.0",
     "cypress": "^3.4.1",
     "eslint": "^6.4.0",
     "eslint-config-prettier": "^6.3.0",
