@@ -34,7 +34,7 @@ export const Character: React.SFC<{}> = () => {
             if (!unique) return;
             return (
               <Item
-                key={unique.name}
+                key={slot + unique.name}
                 uniqueName={unique.name}
                 slot={snakeToCamel(slot)}
                 iconUrl={unique.iconUrl}
@@ -45,11 +45,11 @@ export const Character: React.SFC<{}> = () => {
       <Flasks>
         {buildUniques
           .filter(buildUnique => buildUnique.slot.startsWith('flask'))
-          .map(({ unique }) => {
+          .map(({ unique }, i) => {
             if (!unique) return;
             return (
               <Item
-                key={unique.name}
+                key={i + unique.name}
                 uniqueName={unique.name}
                 iconUrl={unique.iconUrl}
               />
