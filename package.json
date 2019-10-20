@@ -10,8 +10,10 @@
   "scripts": {
     "predev": "npm run generate-types",
     "dev": "next",
+    "prebuild": "npm run generate-types",
     "build": "next build",
     "now-build": "next build",
+    "prestart": "npm run generate-types",
     "start": "next start",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "cypress:open": "cypress open",
