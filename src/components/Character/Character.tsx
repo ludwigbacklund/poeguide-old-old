@@ -62,7 +62,11 @@ export const Character: React.SFC = () => {
 
 export const CHARACTER_QUERY = gql`
   query Character($id: Int!, $currentLevel: Int!) {
-    buildUniquesByBuildIdLevel(buildId: $id, currentLevel: $currentLevel) {
+    buildUniquesByBuildIdLevel(
+      buildId: $id
+      currentLevel: $currentLevel
+      orderBy: SLOT_DESC
+    ) {
       nodes {
         level
         slot
