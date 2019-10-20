@@ -78,10 +78,12 @@ export const BUILD_QUERY = gql`
 
 const CharacterWrapper = styled.div`
   width: max-content;
+  justify-self: center;
 `;
 
 const CharacterGrid = styled.div`
   display: grid;
+  max-width: 100vw;
   grid-template-areas:
     'weaponOne weaponOne .       helmet helmet .       weaponTwo weaponTwo'
     'weaponOne weaponOne .       helmet helmet .       weaponTwo weaponTwo'

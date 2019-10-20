@@ -39,5 +39,6 @@ const MainWrapper = styled.main`
     display: grid;
     grid-template-columns: 2fr 3fr;
     margin: 24px;
+    grid-gap: 24px;
   }
 `;
