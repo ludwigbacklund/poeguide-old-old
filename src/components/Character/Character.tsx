@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
 
-import { useBuildQuery } from '../../graphql-types';
+import { useCharacterQuery } from '../../graphql-types';
 import isNotNull from '../../utils/isNotNull';
 import { Item } from './Item/Item';
 import { useStoreState } from '../../features';
@@ -19,7 +19,7 @@ export const Character: React.SFC = () => {
   const currentTimelineLevel = useStoreState(
     state => state.build.currentTimelineLevel,
   );
-  const { loading, data, error } = useBuildQuery({
+  const { loading, data, error } = useCharacterQuery({
     variables: { id: 1, currentLevel: currentTimelineLevel },
   });
   if (!data || !data.buildUniquesByBuildIdLevel) return <p>No data</p>;
@@ -60,8 +60,8 @@ export const Character: React.SFC = () => {
   );
 };
 
-export const BUILD_QUERY = gql`
-  query Build($id: Int!, $currentLevel: Int!) {
+export const CHARACTER_QUERY = gql`
+  query Character($id: Int!, $currentLevel: Int!) {
     buildUniquesByBuildIdLevel(buildId: $id, currentLevel: $currentLevel) {
       nodes {
         level
