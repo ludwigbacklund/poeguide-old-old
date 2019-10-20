@@ -9,7 +9,7 @@
   "sideEffects": false,
   "scripts": {
     "predev": "npm run generate-types",
-    "dev": "concurrently --restart-tries 5 --restart-after 5000 --names 'next,codegen' 'next' 'yarn generate-types'",
+    "dev": "concurrently --restart-tries 5 --restart-after 5000 --names 'next,codegen' 'next' 'yarn generate-types --watch'",
     "prebuild": "npm run generate-types",
     "build": "next build",
     "now-build": "next build",
