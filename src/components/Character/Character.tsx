@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
 
 import { useBuildQuery } from '../../graphql-types';
 import isNotNull from '../../utils/isNotNull';
 import { Item } from './Item/Item';
-import { useStoreActions } from '../../features';
 import { useStoreState } from '../../features';
 
 const snakeToCamel = (str: string) =>
@@ -17,37 +16,27 @@ const snakeToCamel = (str: string) =>
   );
 
 export const Character: React.SFC = () => {
-  const buildUniquesForCurrentLevel = useStoreState(
-    state => state.build.buildUniquesForCurrentLevel,
-  );
-  const updateBuildUniques = useStoreActions(
-    actions => actions.build.updateBuildUniques,
+  const currentTimelineLevel = useStoreState(
+    state => state.build.currentTimelineLevel,
   );
   const { loading, data, error } = useBuildQuery({
-    variables: { id: 1 },
+    variables: { id: 1, currentLevel: currentTimelineLevel },
   });
-  if (!data || !data.buildById) return <p>No data</p>;
+  if (!data || !data.buildUniquesByBuildIdLevel) return <p>No data</p>;
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
 
-  const { nodes } = data.buildById.buildUniques;
+  const { nodes } = data.buildUniquesByBuildIdLevel;
   const buildUniques = nodes.filter(isNotNull);
-
-  useEffect(() => {
-    const mappedBuildUniques = buildUniques.map(({ level, slot, unique }) => {
-      const iconUrl = (unique && unique.iconUrl) || '';
-      const name = (unique && unique.name) || '';
-      return { level, slot, iconUrl, name };
-    });
-    updateBuildUniques({ buildUniques: mappedBuildUniques });
-  }, []);
 
   return (
     <CharacterWrapper>
       <CharacterGrid>
-        {buildUniquesForCurrentLevel
+        {buildUniques
           .filter(buildUnique => !buildUnique.slot.startsWith('flask'))
-          .map(({ slot, name, iconUrl }) => {
+          .map(({ slot, unique }) => {
+            if (!unique) return;
+            const { name, iconUrl } = unique;
             return (
               <Item
                 key={slot + name}
@@ -59,9 +48,11 @@ export const Character: React.SFC = () => {
           })}
       </CharacterGrid>
       <Flasks>
-        {buildUniquesForCurrentLevel
+        {buildUniques
           .filter(buildUnique => buildUnique.slot.startsWith('flask'))
-          .map(({ name, iconUrl }, i) => {
+          .map(({ unique }, i) => {
+            if (!unique) return;
+            const { name, iconUrl } = unique;
             return <Item key={i + name} uniqueName={name} iconUrl={iconUrl} />;
           })}
       </Flasks>
@@ -70,16 +61,14 @@ export const Character: React.SFC = () => {
 };
 
 export const BUILD_QUERY = gql`
-  query Build($id: Int!) {
-    buildById(id: $id) {
-      buildUniques(orderBy: LEVEL_ASC) {
-        nodes {
-          level
-          slot
-          unique {
-            name
-            iconUrl
-          }
+  query Build($id: Int!, $currentLevel: Int!) {
+    buildUniquesByBuildIdLevel(buildId: $id, currentLevel: $currentLevel) {
+      nodes {
+        level
+        slot
+        unique {
+          name
+          iconUrl
         }
       }
     }
