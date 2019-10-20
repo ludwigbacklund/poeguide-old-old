@@ -17,8 +17,8 @@ const levels = [
 ];
 
 export const Timeline: React.SFC = () => {
-  const updateLevelsInView = useStoreActions(
-    actions => actions.timeline.updateLevelsInView,
+  const updateTimelineLevelsInView = useStoreActions(
+    actions => actions.build.updateTimelineLevelsInView,
   );
 
   return (
@@ -33,7 +33,7 @@ export const Timeline: React.SFC = () => {
               level={level}
               steps={steps}
               onIntersect={(inView: boolean) =>
-                updateLevelsInView({ level, inView })
+                updateTimelineLevelsInView({ level, inView })
               }
             />
           ))}
