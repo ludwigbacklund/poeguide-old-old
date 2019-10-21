@@ -37,9 +37,7 @@ export const UniqueConnector: React.SFC<UniqueProps> = ({ name }) => {
       intRequirement={intRequirement}
       flavourText={flavourText}
       modifiers={modifiers.nodes.filter(isNotNull)}
-    >
-      Hej
-    </Unique>
+    />
   );
 };
 
