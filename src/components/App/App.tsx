@@ -6,6 +6,7 @@ import { Character } from '../Character/Character';
 import { Header } from '../Header/Header';
 import { SearchConnector } from '../Search/SearchConnector';
 import { Timeline } from '../Timeline/Timeline';
+import { Gems } from '../Gems/Gems';
 
 export const App = () => {
   return (
@@ -15,6 +16,7 @@ export const App = () => {
       <MainWrapper>
         <Timeline />
         <Character />
+        <Gems />
       </MainWrapper>
     </AppWrapper>
   );
