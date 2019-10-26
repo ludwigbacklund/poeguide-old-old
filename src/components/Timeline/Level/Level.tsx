@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useInView } from 'react-intersection-observer';
+import uuidv4 from 'uuid/v4';
+
 import { Popover } from '../../Popover/Popover';
 import { UniqueConnector } from '../../Unique/UniqueConnector';
 
@@ -24,7 +26,7 @@ export const Level: React.FC<LevelProps> = ({ level, steps, onIntersect }) => {
     <LevelWrapper ref={ref}>
       <LevelHeader>Level {level}</LevelHeader>
       {steps.map(uniqueName => (
-        <Step key={uniqueName}>
+        <Step key={uuidv4()}>
           Equip{' '}
           <Popover>
             {({
