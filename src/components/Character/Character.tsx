@@ -22,11 +22,11 @@ export const Character: React.SFC = () => {
   const { loading, data, error } = useCharacterQuery({
     variables: { id: 1, currentLevel: currentTimelineLevel },
   });
-  if (!data || !data.buildUniquesByBuildIdLevel) return <p>No data</p>;
+  if (!data || !data.buildUniquesByBuildIdAndLevel) return <p>No data</p>;
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
 
-  const { nodes } = data.buildUniquesByBuildIdLevel;
+  const { nodes } = data.buildUniquesByBuildIdAndLevel;
   const buildUniques = nodes.filter(isNotNull);
 
   return (
@@ -62,7 +62,7 @@ export const Character: React.SFC = () => {
 
 export const CHARACTER_QUERY = gql`
   query Character($id: Int!, $currentLevel: Int!) {
-    buildUniquesByBuildIdLevel(
+    buildUniquesByBuildIdAndLevel(
       buildId: $id
       currentLevel: $currentLevel
       orderBy: SLOT_DESC
