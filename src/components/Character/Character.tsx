@@ -64,7 +64,7 @@ export const CHARACTER_QUERY = gql`
   query Character($id: Int!, $currentLevel: Int!) {
     buildUniquesByBuildIdAndLevel(
       buildId: $id
-      currentLevel: $currentLevel
+      givenLevel: $currentLevel
       orderBy: SLOT_DESC
     ) {
       nodes {
