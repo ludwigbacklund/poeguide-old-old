@@ -31,10 +31,10 @@ export const Character: React.SFC = () => {
   const buildUniques = nodes.filter(isNotNull);
 
   return (
-    <div>
+    <CharacterWrapper>
       <h2>Character</h2>
-      <CharacterWrapper>
-        <CharacterGrid>
+      <ItemsWrapper>
+        <ItemGrid>
           {buildUniques
             .filter(buildUnique => !buildUnique.slot.startsWith('flask'))
             .map(({ slot, unique }) => {
@@ -49,7 +49,7 @@ export const Character: React.SFC = () => {
                 />
               );
             })}
-        </CharacterGrid>
+        </ItemGrid>
         <Flasks>
           {buildUniques
             .filter(buildUnique => buildUnique.slot.startsWith('flask'))
@@ -61,8 +61,8 @@ export const Character: React.SFC = () => {
               );
             })}
         </Flasks>
-      </CharacterWrapper>
-    </div>
+      </ItemsWrapper>
+    </CharacterWrapper>
   );
 };
 
@@ -86,11 +86,14 @@ export const CHARACTER_QUERY = gql`
 `;
 
 const CharacterWrapper = styled.div`
-  width: max-content;
   justify-self: center;
 `;
 
-const CharacterGrid = styled.div`
+const ItemsWrapper = styled.div`
+  width: max-content;
+`;
+
+const ItemGrid = styled.div`
   display: grid;
   max-width: 100vw;
   grid-template-areas:
