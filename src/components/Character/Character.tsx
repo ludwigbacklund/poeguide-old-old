@@ -6,6 +6,7 @@ import { useCharacterQuery } from '../../graphql-types';
 import isNotNull from '../../utils/isNotNull';
 import { Item } from './Item/Item';
 import { useStoreState } from '../../features';
+import { Placeholder } from '../Placeholder/Placeholder';
 
 const snakeToCamel = (str: string) =>
   str.replace(/([-_][a-z])/g, group =>
@@ -22,41 +23,46 @@ export const Character: React.SFC = () => {
   const { loading, data, error } = useCharacterQuery({
     variables: { id: 1, currentLevel: currentTimelineLevel },
   });
-  if (!data || !data.buildUniquesByBuildIdAndLevel) return <p>No data</p>;
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
+  if (!data || loading || error) {
+    return <Placeholder height={500}>No gems...</Placeholder>;
+  }
 
   const { nodes } = data.buildUniquesByBuildIdAndLevel;
   const buildUniques = nodes.filter(isNotNull);
 
   return (
-    <CharacterWrapper>
-      <CharacterGrid>
-        {buildUniques
-          .filter(buildUnique => !buildUnique.slot.startsWith('flask'))
-          .map(({ slot, unique }) => {
-            if (!unique) return;
-            const { name, iconUrl } = unique;
-            return (
-              <Item
-                key={slot + name}
-                uniqueName={name}
-                slot={snakeToCamel(slot)}
-                iconUrl={iconUrl}
-              />
-            );
-          })}
-      </CharacterGrid>
-      <Flasks>
-        {buildUniques
-          .filter(buildUnique => buildUnique.slot.startsWith('flask'))
-          .map(({ unique }, i) => {
-            if (!unique) return;
-            const { name, iconUrl } = unique;
-            return <Item key={i + name} uniqueName={name} iconUrl={iconUrl} />;
-          })}
-      </Flasks>
-    </CharacterWrapper>
+    <div>
+      <h2>Character</h2>
+      <CharacterWrapper>
+        <CharacterGrid>
+          {buildUniques
+            .filter(buildUnique => !buildUnique.slot.startsWith('flask'))
+            .map(({ slot, unique }) => {
+              if (!unique) return;
+              const { name, iconUrl } = unique;
+              return (
+                <Item
+                  key={slot + name}
+                  uniqueName={name}
+                  slot={snakeToCamel(slot)}
+                  iconUrl={iconUrl}
+                />
+              );
+            })}
+        </CharacterGrid>
+        <Flasks>
+          {buildUniques
+            .filter(buildUnique => buildUnique.slot.startsWith('flask'))
+            .map(({ unique }, i) => {
+              if (!unique) return;
+              const { name, iconUrl } = unique;
+              return (
+                <Item key={i + name} uniqueName={name} iconUrl={iconUrl} />
+              );
+            })}
+        </Flasks>
+      </CharacterWrapper>
+    </div>
   );
 };
 
