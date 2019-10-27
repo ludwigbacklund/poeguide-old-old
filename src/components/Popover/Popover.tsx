@@ -15,8 +15,9 @@ export const Popover: React.SFC<PopoverProps> = ({
   const [popoverStyles, setPopoverStyles] = useState({});
   const [shouldRenderPopover, setShouldRenderPopover] = useState(false);
   const [prevPopoverElementSize, setPrevPopoverElementSize] = useState({
-    width: 0,
-    height: 0,
+    // Estimates to prevent Popover jumping on first render
+    width: 380,
+    height: 380,
   });
   const anchorRef = useRef<HTMLDivElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
