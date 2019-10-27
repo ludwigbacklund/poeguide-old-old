@@ -5,12 +5,14 @@ import throttle from 'lodash/throttle';
 interface PopoverProps {
   content: React.ReactNode;
   className?: string;
+  alwaysShow?: boolean;
 }
 
 export const Popover: React.SFC<PopoverProps> = ({
   children,
   content,
   className,
+  alwaysShow,
 }) => {
   const [popoverStyles, setPopoverStyles] = useState({});
   const [shouldRenderPopover, setShouldRenderPopover] = useState(false);
@@ -80,8 +82,12 @@ export const Popover: React.SFC<PopoverProps> = ({
 
   return (
     <>
-      {shouldRenderPopover && (
-        <PopoverWrapper ref={popoverRef} style={popoverStyles}>
+      {(shouldRenderPopover || alwaysShow) && (
+        <PopoverWrapper
+          ref={popoverRef}
+          style={popoverStyles}
+          data-testid='popover'
+        >
           {content}
         </PopoverWrapper>
       )}

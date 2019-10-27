@@ -19,21 +19,10 @@ const getTransformValues = (transform: string) => {
 };
 
 describe('Popover', () => {
-  const renderPopover = (shouldAlwaysShowPopover = false) => {
+  const renderPopover = (alwaysShowPopover = false) => {
     return render(
-      <Popover>
-        {({ anchorRef, popoverRef, popoverStyles, shouldRenderPopover }) => (
-          <>
-            <div data-testid='anchor-ref' ref={anchorRef} />
-            {(shouldRenderPopover || shouldAlwaysShowPopover) && (
-              <div
-                data-testid='popover-ref'
-                ref={popoverRef}
-                style={popoverStyles}
-              />
-            )}
-          </>
-        )}
+      <Popover alwaysShow={alwaysShowPopover} content={<div />}>
+        <div data-testid='anchor-ref' />
       </Popover>,
     );
   };
@@ -47,22 +36,23 @@ describe('Popover', () => {
   it('displays the popover element only when the anchor element is hovered over', async () => {
     const { queryByTestId, getByTestId } = renderPopover();
 
-    expect(queryByTestId('popover-ref')).toBeNull();
+    expect(queryByTestId('popover')).toBeNull();
     fireEvent.mouseMove(getByTestId('anchor-ref'));
-    expect(getByTestId('popover-ref'));
+    expect(getByTestId('popover'));
     fireEvent.mouseOut(getByTestId('anchor-ref'));
-    expect(queryByTestId('popover-ref')).toBeNull();
+    expect(queryByTestId('popover')).toBeNull();
   });
 
   it('moves the popover element with the cursor', () => {
     const { getByTestId } = renderPopover(true);
 
-    const oldTransform = getByTestId('popover-ref').style.transform;
+    const oldTransform = getByTestId('popover').style.transform;
     const oldTransformX = oldTransform && getTransformValues(oldTransform).x;
     fireEvent.mouseMove(getByTestId('anchor-ref'), {
       clientX: 10,
     });
-    const newTransform = getByTestId('popover-ref').style.transform;
+    const newTransform = getByTestId('popover').style.transform;
+    console.log(getByTestId('popover').style);
     const newTransformX = newTransform && getTransformValues(newTransform).x;
 
     expect(newTransformX || 0).toBeGreaterThan(oldTransformX || 0);
@@ -75,7 +65,7 @@ describe('Popover', () => {
       clientX: WINDOW_WIDTH,
     });
 
-    const transform = getByTestId('popover-ref').style.transform;
+    const transform = getByTestId('popover').style.transform;
     expect(getTransformValues(transform || '').x).toBeLessThan(WINDOW_WIDTH);
   });
 });
