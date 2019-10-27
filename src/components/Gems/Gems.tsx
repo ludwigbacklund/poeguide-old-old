@@ -80,12 +80,13 @@ const GemsWrapper = styled.div`
   grid-column: 1 / 3;
 `;
 
-const GemGroups = styled.div`
-  display: flex;
+const Header = styled.h2`
+  margin: 0;
 `;
 
-const Header = styled.h2`
-  margin: 8px 0 0 4px;
+const GemGroups = styled.div`
+  display: flex;
+  margin-top: 16px;
 `;
 
 const Gem = styled.div`
