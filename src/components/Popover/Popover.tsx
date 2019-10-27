@@ -1,36 +1,43 @@
-import React, { createRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import throttle from 'lodash/throttle';
-
-interface PopoverState {
-  popoverStyles: React.CSSProperties;
-  shouldRenderPopover: boolean;
-}
 
 interface PopoverProps {
   content: React.ReactNode;
   className?: string;
 }
 
-export class Popover extends React.Component<PopoverProps, PopoverState> {
-  state = { popoverStyles: {}, shouldRenderPopover: false };
-  private anchorRef = createRef<HTMLDivElement>();
-  private popoverRef = createRef<HTMLDivElement>();
-  private prevPopoverElementSize = { width: 0, height: 0 };
+export const Popover: React.SFC<PopoverProps> = ({
+  children,
+  content,
+  className,
+}) => {
+  const [popoverStyles, setPopoverStyles] = useState({});
+  const [shouldRenderPopover, setShouldRenderPopover] = useState(false);
+  const [prevPopoverElementSize, setPrevPopoverElementSize] = useState({
+    width: 0,
+    height: 0,
+  });
+  const anchorRef = useRef<HTMLDivElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
 
-  calculateNewPopoverPosition(mouseX: number, mouseY: number, padding: number) {
+  const calculateNewPopoverPosition = (
+    mouseX: number,
+    mouseY: number,
+    padding: number,
+  ) => {
     // Re-use previously known size of the popover to prevent it from overflowing every time it re-appears
     const popoverElementSize = {
-      width: this.prevPopoverElementSize.width,
-      height: this.prevPopoverElementSize.height,
+      width: prevPopoverElementSize.width,
+      height: prevPopoverElementSize.height,
     };
 
     // Save current popover size
-    const popoverElement = this.popoverRef.current;
+    const popoverElement = popoverRef.current;
     if (popoverElement) {
       popoverElementSize.width = popoverElement.offsetWidth;
       popoverElementSize.height = popoverElement.offsetHeight;
-      this.prevPopoverElementSize = popoverElementSize;
+      setPrevPopoverElementSize(popoverElementSize);
     }
 
     const clientSize = {
@@ -52,73 +59,54 @@ export class Popover extends React.Component<PopoverProps, PopoverState> {
     if (mouseX >= newX) newX = mouseX - popoverElementSize.width - padding;
 
     return { newX, newY };
-  }
+  };
 
-  onMouseMove = throttle(e => {
+  const onMouseMove = throttle(e => {
     const padding = 20;
 
     const mouseX = e.clientX;
     const mouseY = e.clientY;
-    const { newX, newY } = this.calculateNewPopoverPosition(
-      mouseX,
-      mouseY,
-      padding,
-    );
+    const { newX, newY } = calculateNewPopoverPosition(mouseX, mouseY, padding);
 
-    this.setState({
-      popoverStyles: {
-        top: 0,
-        left: 0,
-        position: 'absolute',
-        transform: `translate3d(${newX}px, ${newY}px, 0)`,
-        zIndex: 999,
-      },
-      shouldRenderPopover: true,
+    setPopoverStyles({
+      top: 0,
+      left: 0,
+      position: 'absolute',
+      transform: `translate3d(${newX}px, ${newY}px, 0)`,
+      zIndex: 999,
     });
+    setShouldRenderPopover(true);
   }, 15);
 
-  componentDidMount() {
-    const anchorElement = this.anchorRef.current;
+  useEffect(() => {
+    const anchorElement = anchorRef.current;
 
     if (anchorElement) {
       anchorElement.addEventListener('touchstart', e => {
         e.preventDefault();
       });
-
-      anchorElement.addEventListener('mousemove', this.onMouseMove);
-
+      anchorElement.addEventListener('mousemove', onMouseMove);
       anchorElement.addEventListener('mouseout', () => {
-        this.setState({ shouldRenderPopover: false });
+        setShouldRenderPopover(false);
       });
+
+      return () => anchorElement.removeEventListener('mousemove', onMouseMove);
     }
-  }
+  }, []);
 
-  componentWillUnmount() {
-    const anchorElement = this.anchorRef.current;
-
-    if (anchorElement) {
-      anchorElement.removeEventListener('mousemove', this.onMouseMove);
-    }
-  }
-
-  render() {
-    const { children, content, className } = this.props;
-    const { popoverStyles, shouldRenderPopover } = this.state;
-
-    return (
-      <>
-        {shouldRenderPopover && (
-          <PopoverWrapper ref={this.popoverRef} style={popoverStyles}>
-            {content}
-          </PopoverWrapper>
-        )}
-        <Anchor className={className} ref={this.anchorRef}>
-          {children}
-        </Anchor>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      {shouldRenderPopover && (
+        <PopoverWrapper ref={popoverRef} style={popoverStyles}>
+          {content}
+        </PopoverWrapper>
+      )}
+      <Anchor className={className} ref={anchorRef}>
+        {children}
+      </Anchor>
+    </>
+  );
+};
 
 const PopoverWrapper = styled.div`
   z-index: 10;
