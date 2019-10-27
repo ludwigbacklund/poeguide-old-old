@@ -15,27 +15,21 @@ interface IconProps {
 
 const ItemComponent: React.SFC<ItemProps> = ({ uniqueName, slot, iconUrl }) => {
   return (
-    <Popover>
-      {({ anchorRef, popoverRef, popoverStyles, shouldRenderPopover }) => (
-        <>
-          {shouldRenderPopover && (
-            <div ref={popoverRef} style={popoverStyles}>
-              <UniqueConnector name={uniqueName} />
-            </div>
-          )}
-          <ItemWrapper ref={anchorRef} slot={slot}>
-            <Icon src={iconUrl} />
-          </ItemWrapper>
-        </>
-      )}
-    </Popover>
+    <ItemPopover slot={slot} content={<UniqueConnector name={uniqueName} />}>
+      <ItemWrapper>
+        <Icon src={iconUrl} />
+      </ItemWrapper>
+    </ItemPopover>
   );
 };
 
 export const Item = memo(ItemComponent);
 
-const ItemWrapper = styled.div`
+const ItemPopover = styled(Popover)`
   ${({ slot }: IconProps) => slot && `grid-area: ${slot};`}
+`;
+
+const ItemWrapper = styled.div`
   align-self: center;
 `;
 

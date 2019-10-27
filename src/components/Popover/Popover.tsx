@@ -1,17 +1,14 @@
 import React, { createRef } from 'react';
+import styled from 'styled-components';
 
 interface PopoverState {
   popoverStyles: React.CSSProperties;
   shouldRenderPopover: boolean;
 }
 
-interface InjectedPopoverProps extends PopoverState {
-  anchorRef: React.RefObject<HTMLDivElement>;
-  popoverRef: React.RefObject<HTMLDivElement>;
-}
-
 interface PopoverProps {
-  children(props: InjectedPopoverProps): React.ReactNode;
+  content: React.ReactNode;
+  className?: string;
 }
 
 export class Popover extends React.Component<PopoverProps, PopoverState> {
@@ -94,18 +91,26 @@ export class Popover extends React.Component<PopoverProps, PopoverState> {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, content, className } = this.props;
     const { popoverStyles, shouldRenderPopover } = this.state;
 
     return (
       <>
-        {children({
-          anchorRef: this.anchorRef,
-          popoverRef: this.popoverRef,
-          popoverStyles,
-          shouldRenderPopover,
-        })}
+        {shouldRenderPopover && (
+          <PopoverWrapper style={popoverStyles}>{content}</PopoverWrapper>
+        )}
+        <Anchor className={className} ref={this.anchorRef}>
+          {children}
+        </Anchor>
       </>
     );
   }
 }
+
+const PopoverWrapper = styled.div`
+  z-index: 10;
+`;
+
+const Anchor = styled.div`
+  display: inline-block;
+`;

@@ -27,23 +27,9 @@ export const Level: React.FC<LevelProps> = ({ level, steps, onIntersect }) => {
       <LevelHeader>Level {level}</LevelHeader>
       {steps.map(uniqueName => (
         <Step key={uuidv4()}>
-          Equip{' '}
-          <Popover>
-            {({
-              anchorRef,
-              popoverRef,
-              popoverStyles,
-              shouldRenderPopover,
-            }) => (
-              <>
-                {shouldRenderPopover && (
-                  <div ref={popoverRef} style={popoverStyles}>
-                    <UniqueConnector name={uniqueName} />
-                  </div>
-                )}
-                <UniqueName ref={anchorRef}>{uniqueName}</UniqueName>
-              </>
-            )}
+          Equip
+          <Popover content={<UniqueConnector name={uniqueName} />}>
+            <UniqueName>{uniqueName}</UniqueName>
           </Popover>
         </Step>
       ))}

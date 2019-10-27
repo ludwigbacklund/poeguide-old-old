@@ -7,21 +7,16 @@ import { SearchItem } from '../../../graphql-types';
 import { UniqueConnector } from '../../Unique/UniqueConnector';
 
 export const Item: React.SFC<{} & SearchItem> = ({ name, type, iconUrl }) => (
-  <Popover>
-    {({ anchorRef, popoverRef, popoverStyles, shouldRenderPopover }) => (
-      <>
-        {shouldRenderPopover && (
-          <div ref={popoverRef} style={popoverStyles}>
-            {type !== 'gem' && name && <UniqueConnector name={name} />}
-          </div>
-        )}
-        <ItemWrapper ref={anchorRef} tabIndex={0}>
-          {iconUrl && <ItemIcon src={iconUrl} alt={name ? name : 'Item'} />}
-          <Name>{name || 'Unknown'}</Name>
-          <Type>{type && type.toUpperCase()}</Type>
-        </ItemWrapper>
-      </>
-    )}
+  <Popover
+    content={() => {
+      type !== 'gem' && name && <UniqueConnector name={name} />;
+    }}
+  >
+    <ItemWrapper tabIndex={0}>
+      {iconUrl && <ItemIcon src={iconUrl} alt={name ? name : 'Item'} />}
+      <Name>{name || 'Unknown'}</Name>
+      <Type>{type && type.toUpperCase()}</Type>
+    </ItemWrapper>
   </Popover>
 );
 
