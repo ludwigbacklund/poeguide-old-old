@@ -1,6 +1,6 @@
 import React, { createRef } from 'react';
 import styled from 'styled-components';
-import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 
 interface PopoverState {
   popoverStyles: React.CSSProperties;
@@ -54,6 +54,29 @@ export class Popover extends React.Component<PopoverProps, PopoverState> {
     return { newX, newY };
   }
 
+  onMouseMove = throttle(e => {
+    const padding = 20;
+
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    const { newX, newY } = this.calculateNewPopoverPosition(
+      mouseX,
+      mouseY,
+      padding,
+    );
+
+    this.setState({
+      popoverStyles: {
+        top: 0,
+        left: 0,
+        position: 'absolute',
+        transform: `translate3d(${newX}px, ${newY}px, 0)`,
+        zIndex: 999,
+      },
+      shouldRenderPopover: true,
+    });
+  }, 15);
+
   componentDidMount() {
     const anchorElement = this.anchorRef.current;
 
@@ -62,35 +85,19 @@ export class Popover extends React.Component<PopoverProps, PopoverState> {
         e.preventDefault();
       });
 
-      anchorElement.addEventListener(
-        'mousemove',
-        debounce(e => {
-          const padding = 20;
-
-          const mouseX = e.clientX;
-          const mouseY = e.clientY;
-          const { newX, newY } = this.calculateNewPopoverPosition(
-            mouseX,
-            mouseY,
-            padding,
-          );
-
-          this.setState({
-            popoverStyles: {
-              top: 0,
-              left: 0,
-              position: 'absolute',
-              transform: `translate3d(${newX}px, ${newY}px, 0)`,
-              zIndex: 999,
-            },
-            shouldRenderPopover: true,
-          });
-        }, 5),
-      );
+      anchorElement.addEventListener('mousemove', this.onMouseMove);
 
       anchorElement.addEventListener('mouseout', () => {
         this.setState({ shouldRenderPopover: false });
       });
+    }
+  }
+
+  componentWillUnmount() {
+    const anchorElement = this.anchorRef.current;
+
+    if (anchorElement) {
+      anchorElement.removeEventListener('mousemove', this.onMouseMove);
     }
   }
 
