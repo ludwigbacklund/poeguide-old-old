@@ -24,7 +24,7 @@ export const Character: React.SFC = () => {
     variables: { id: 1, currentLevel: currentTimelineLevel },
   });
   if (!data || loading || error) {
-    return <Placeholder height={500}>No gems...</Placeholder>;
+    return <Placeholder height={550}>No gems...</Placeholder>;
   }
 
   const { nodes } = data.buildUniquesByBuildIdAndLevel;

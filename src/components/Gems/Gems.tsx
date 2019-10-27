@@ -17,7 +17,7 @@ export const Gems: React.SFC = () => {
     variables: { buildId: 1, currentLevel: currentTimelineLevel },
   });
   if (!data || loading || error) {
-    return <Placeholder height={300}>No gems...</Placeholder>;
+    return <Placeholder height={320}>No gems...</Placeholder>;
   }
 
   const buildGemNodes =
