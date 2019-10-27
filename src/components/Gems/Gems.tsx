@@ -5,12 +5,20 @@ import groupBy from 'lodash/groupBy';
 
 import { useGemsQuery } from '../../graphql-types';
 import isNotNull from '../../utils/isNotNull';
+import { useStoreState } from '../../features';
+import { Placeholder } from '../Placeholder/Placeholder';
+import { desktop } from '../../utils/styling';
 
 export const Gems: React.SFC = () => {
+  const currentTimelineLevel = useStoreState(
+    state => state.build.currentTimelineLevel,
+  );
   const { data, loading, error } = useGemsQuery({
-    variables: { buildId: 1, currentLevel: 1 },
+    variables: { buildId: 1, currentLevel: currentTimelineLevel },
   });
-  if (!data || loading || error) return <p>No gems...</p>;
+  if (!data || loading || error) {
+    return <Placeholder height={300}>No gems...</Placeholder>;
+  }
 
   const buildGemNodes =
     (data.buildGemsByBuildIdAndLevel &&
@@ -23,22 +31,26 @@ export const Gems: React.SFC = () => {
 
   return (
     <GemsWrapper>
-      <h2>Gems</h2>
-      {Object.entries(buildGemsByGemGroup).map(([, gemGroup]) =>
-        gemGroup
-          .sort((buildGemA, buildGemB) =>
-            buildGemA.slot > buildGemB.slot ? 1 : -1,
-          )
-          .map(({ gem }) => {
-            if (!gem) return;
-            return (
-              <Gem key={gem.name}>
-                <img src={gem.iconUrl} />
-                <GemName>{gem.name}</GemName>
-              </Gem>
-            );
-          }),
-      )}
+      <Header>Gems</Header>
+      <GemGroups>
+        {Object.entries(buildGemsByGemGroup).map(([gemGroupId, gemGroup]) => (
+          <div key={gemGroupId}>
+            {gemGroup
+              .sort((buildGemA, buildGemB) =>
+                buildGemA.slot > buildGemB.slot ? 1 : -1,
+              )
+              .map(({ gem }) => {
+                if (!gem) return;
+                return (
+                  <Gem key={gem.name}>
+                    <img src={gem.iconUrl} />
+                    <GemName>{gem.name}</GemName>
+                  </Gem>
+                );
+              })}
+          </div>
+        ))}
+      </GemGroups>
     </GemsWrapper>
   );
 };
@@ -68,11 +80,23 @@ const GemsWrapper = styled.div`
   grid-column: 1 / 3;
 `;
 
+const GemGroups = styled.div`
+  display: flex;
+`;
+
+const Header = styled.h2`
+  margin: 8px 0 0 4px;
+`;
+
 const Gem = styled.div`
   display: flex;
   align-items: center;
+
+  @media (${desktop}) {
+    width: 260px;
+  }
 `;
 
 const GemName = styled.span`
-  margin-left: 4px;
+  margin: 4px;
 `;
