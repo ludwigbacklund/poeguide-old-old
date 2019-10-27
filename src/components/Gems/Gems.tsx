@@ -85,7 +85,10 @@ const Header = styled.h2`
 `;
 
 const GemGroups = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+  width: max-content;
   margin-top: 16px;
 `;
 
