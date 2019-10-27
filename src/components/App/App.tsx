@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { desktop } from '../../utils/styling';
-import { Character } from '../Character/Character';
+import { Items } from '../Character/Items';
 import { Header } from '../Header/Header';
 import { SearchConnector } from '../Search/SearchConnector';
 import { Timeline } from '../Timeline/Timeline';
@@ -15,7 +15,7 @@ export const App = () => {
       <SearchConnector />
       <MainWrapper>
         <Timeline />
-        <Character />
+        <Items />
         <Gems />
       </MainWrapper>
     </AppWrapper>

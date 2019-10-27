@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
 
-import { useCharacterQuery } from '../../graphql-types';
 import isNotNull from '../../utils/isNotNull';
 import { Item } from './Item/Item';
 import { useStoreState } from '../../features';
 import { Placeholder } from '../Placeholder/Placeholder';
+import { useItemsQuery } from '../../graphql-types';
 
 const snakeToCamel = (str: string) =>
   str.replace(/([-_][a-z])/g, group =>
@@ -16,11 +16,11 @@ const snakeToCamel = (str: string) =>
       .replace('_', ''),
   );
 
-export const Character: React.SFC = () => {
+export const Items: React.SFC = () => {
   const currentTimelineLevel = useStoreState(
     state => state.build.currentTimelineLevel,
   );
-  const { loading, data, error } = useCharacterQuery({
+  const { loading, data, error } = useItemsQuery({
     variables: { id: 1, currentLevel: currentTimelineLevel },
   });
   if (!data || loading || error) {
@@ -31,9 +31,9 @@ export const Character: React.SFC = () => {
   const buildUniques = nodes.filter(isNotNull);
 
   return (
-    <CharacterWrapper>
-      <h2>Character</h2>
-      <ItemsWrapper>
+    <ItemsWrapper>
+      <Header>Items</Header>
+      <ItemGroups>
         <ItemGrid>
           {buildUniques
             .filter(buildUnique => !buildUnique.slot.startsWith('flask'))
@@ -61,13 +61,13 @@ export const Character: React.SFC = () => {
               );
             })}
         </Flasks>
-      </ItemsWrapper>
-    </CharacterWrapper>
+      </ItemGroups>
+    </ItemsWrapper>
   );
 };
 
-export const CHARACTER_QUERY = gql`
-  query Character($id: Int!, $currentLevel: Int!) {
+export const QUERY_QUERY = gql`
+  query Items($id: Int!, $currentLevel: Int!) {
     buildUniquesByBuildIdAndLevel(
       buildId: $id
       givenLevel: $currentLevel
@@ -85,12 +85,17 @@ export const CHARACTER_QUERY = gql`
   }
 `;
 
-const CharacterWrapper = styled.div`
+const ItemsWrapper = styled.div`
   justify-self: center;
 `;
 
-const ItemsWrapper = styled.div`
+const Header = styled.h2`
+  margin: 0;
+`;
+
+const ItemGroups = styled.div`
   width: max-content;
+  margin-top: 16px;
 `;
 
 const ItemGrid = styled.div`
