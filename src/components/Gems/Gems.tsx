@@ -7,7 +7,6 @@ import { useGemsQuery } from '../../graphql-types';
 import isNotNull from '../../utils/isNotNull';
 import { useStoreState } from '../../features';
 import { Placeholder } from '../Placeholder/Placeholder';
-import { desktop } from '../../utils/styling';
 
 export const Gems: React.SFC = () => {
   const currentTimelineLevel = useStoreState(
@@ -86,19 +85,15 @@ const Header = styled.h2`
 
 const GemGroups = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 260px));
   grid-gap: 16px;
-  width: max-content;
   margin-top: 16px;
+  width: 100%;
 `;
 
 const Gem = styled.div`
   display: flex;
   align-items: center;
-
-  @media (${desktop}) {
-    width: 260px;
-  }
 `;
 
 const GemName = styled.span`
