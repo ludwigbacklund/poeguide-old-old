@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { Popover } from '../../Popover/Popover';
 import { UniqueConnector } from '../../Unique/UniqueConnector';
@@ -13,7 +13,7 @@ interface IconProps {
   slot?: string;
 }
 
-export const Item: React.SFC<ItemProps> = ({ uniqueName, slot, iconUrl }) => {
+const ItemComponent: React.SFC<ItemProps> = ({ uniqueName, slot, iconUrl }) => {
   return (
     <Popover>
       {({ anchorRef, popoverRef, popoverStyles, shouldRenderPopover }) => (
@@ -31,6 +31,8 @@ export const Item: React.SFC<ItemProps> = ({ uniqueName, slot, iconUrl }) => {
     </Popover>
   );
 };
+
+export const Item = memo(ItemComponent);
 
 const ItemWrapper = styled.div`
   ${({ slot }: IconProps) => slot && `grid-area: ${slot};`}
