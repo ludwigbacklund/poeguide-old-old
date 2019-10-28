@@ -45,6 +45,7 @@ export const Popover: React.SFC<PopoverProps> = ({
   const [popoverPosition, setPopoverPosition] = useState({ x: 0, y: 0 });
   const [popoverSize, setPopoverSize] = useState({ width: 0, height: 0 });
   const [shouldRenderPopover, setShouldRenderPopover] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const popoverRef = useRef<HTMLDivElement>(null);
   const anchorRef = useRef<HTMLDivElement>(null);
 
@@ -55,10 +56,15 @@ export const Popover: React.SFC<PopoverProps> = ({
 
     if (shouldRenderPopover) {
       document.addEventListener('touchstart', hidePopover);
+      document.addEventListener('touchmove', hidePopover);
     } else {
       document.removeEventListener('touchstart', hidePopover);
+      document.removeEventListener('touchmove', hidePopover);
     }
-    return () => document.removeEventListener('touchstart', hidePopover);
+    return () => {
+      document.removeEventListener('touchstart', hidePopover);
+      document.removeEventListener('touchmove', hidePopover);
+    };
   }, [shouldRenderPopover]);
 
   useLayoutEffect(() => {
@@ -82,8 +88,9 @@ export const Popover: React.SFC<PopoverProps> = ({
     setPopoverPosition({ x, y });
   }, [clientPosition, popoverSize]);
 
-  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    const { clientX, clientY } = e.touches[0];
+  const onTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (isDragging) return;
+    const { clientX, clientY } = e.changedTouches[0];
     setClientPosition({ x: clientX, y: clientY });
     setShouldRenderPopover(true);
   };
@@ -128,7 +135,9 @@ export const Popover: React.SFC<PopoverProps> = ({
       )}
       <Anchor
         ref={anchorRef}
-        onTouchStart={onTouchStart}
+        onTouchStart={() => setIsDragging(false)}
+        onTouchMove={() => setIsDragging(true)}
+        onTouchEnd={onTouchEnd}
         onMouseMove={throttle(onMouseMove, 15)}
         onMouseOut={() => setShouldRenderPopover(false)}
         className={className}
