@@ -21,7 +21,7 @@ const calculateNewPopoverPosition = (
 
   const isOverflowingY =
     currentY + popoverHeight + padding + scrollY > clientHeight + scrollY;
-  const topPlacement = currentY - popoverHeight - padding;
+  const topPlacement = currentY - popoverHeight - padding + scrollY;
   const bottomPlacement = currentY + padding + scrollY;
   const newY =
     isOverflowingY && topPlacement > 0 ? topPlacement : bottomPlacement;
