@@ -11,11 +11,7 @@
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
-  "plugins": [
-    "@typescript-eslint",
-    "react",
-    "jest"
-  ],
+  "plugins": ["@typescript-eslint", "react", "jest", "react-hooks"],
   "settings": {
     "react": {
       "version": "detect"
@@ -34,12 +30,12 @@
     "@typescript-eslint/camelcase": [
       "error",
       {
-        "allow": [
-          "^Get\\w+_"
-        ]
+        "allow": ["^Get\\w+_"]
       }
     ],
     "react/prop-types": "off",
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
