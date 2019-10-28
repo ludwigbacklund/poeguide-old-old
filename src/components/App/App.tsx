@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { desktop } from '../../utils/styling';
-import { Items } from '../Character/Items';
+// import { Items } from '../Character/Items';
 import { Header } from '../Header/Header';
-import { SearchConnector } from '../Search/SearchConnector';
+// import { SearchConnector } from '../Search/SearchConnector';
 import { Timeline } from '../Timeline/Timeline';
 import { Gems } from '../Gems/Gems';
 
@@ -12,10 +12,10 @@ export const App = () => {
   return (
     <AppWrapper>
       <Header />
-      <SearchConnector />
+      {/* <SearchConnector /> */}
       <MainWrapper>
         <Timeline />
-        <Items />
+        {/* <Items /> */}
         <Gems />
       </MainWrapper>
     </AppWrapper>
