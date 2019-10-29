@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import styled from 'styled-components';
 import { useInView } from 'react-intersection-observer';
 import uuidv4 from 'uuid/v4';
@@ -12,15 +12,19 @@ interface LevelProps {
   onIntersect(inView: boolean): void;
 }
 
-export const Level: React.FC<LevelProps> = ({ level, steps, onIntersect }) => {
+const LevelComponent: React.FC<LevelProps> = ({
+  level,
+  steps,
+  onIntersect,
+}) => {
   const [ref, inView] = useInView({
-    threshold: 0.1,
+    threshold: 0.01,
   });
 
   useEffect(() => {
     onIntersect(inView);
     return () => onIntersect(false);
-  }, [inView]);
+  }, [onIntersect, inView]);
 
   return (
     <LevelWrapper ref={ref}>
@@ -37,14 +41,24 @@ export const Level: React.FC<LevelProps> = ({ level, steps, onIntersect }) => {
   );
 };
 
+export const Level = memo(LevelComponent);
+
 const LevelWrapper = styled.div`
+  :not(:first-child) {
+    margin-top: 8px;
+  }
+
   :last-child {
     margin-bottom: 400px;
   }
 `;
 
 const LevelHeader = styled.h3`
-  margin: 16px 0 0 0;
+  position: sticky;
+  top: 0px;
+  background-color: white;
+  margin: 0;
+  padding: 8px 8px 8px 8px;
 `;
 
 const Step = styled.span`
