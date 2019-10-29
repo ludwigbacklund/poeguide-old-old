@@ -7,6 +7,7 @@ import { useGemsQuery } from '../../graphql-types';
 import isNotNull from '../../utils/isNotNull';
 import { useStoreState } from '../../features';
 import { Placeholder } from '../Placeholder/Placeholder';
+import { Gem } from './Gem/Gem';
 
 export const Gems: React.SFC = () => {
   const currentTimelineLevel = useStoreState(
@@ -41,10 +42,7 @@ export const Gems: React.SFC = () => {
               .map(({ gem }) => {
                 if (!gem) return;
                 return (
-                  <Gem key={gem.name}>
-                    <img src={gem.iconUrl} />
-                    <GemName>{gem.name}</GemName>
-                  </Gem>
+                  <Gem key={gem.name} name={gem.name} iconUrl={gem.iconUrl} />
                 );
               })}
           </div>
@@ -89,13 +87,4 @@ const GemGroups = styled.div`
   grid-gap: 16px;
   margin-top: 16px;
   width: 100%;
-`;
-
-const Gem = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const GemName = styled.span`
-  margin: 4px;
 `;
