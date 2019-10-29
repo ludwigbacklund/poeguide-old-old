@@ -58,14 +58,11 @@ export const Popover: React.SFC<PopoverProps> = ({
 
     if (shouldRenderPopover) {
       document.addEventListener('touchstart', hidePopover);
-      document.addEventListener('touchmove', hidePopover);
     } else {
       document.removeEventListener('touchstart', hidePopover);
-      document.removeEventListener('touchmove', hidePopover);
     }
     return () => {
       document.removeEventListener('touchstart', hidePopover);
-      document.removeEventListener('touchmove', hidePopover);
     };
   }, [shouldRenderPopover]);
 
