@@ -8,12 +8,16 @@ import { useStoreActions } from '../../features';
 import { useTimelineQuery } from '../../graphql-types';
 import isNotNull from '../../utils/isNotNull';
 
-export const Timeline: React.SFC = () => {
+interface TimelineProps {
+  buildId: number;
+}
+
+export const Timeline: React.SFC<TimelineProps> = ({ buildId }) => {
   const updateTimelineLevelsInView = useStoreActions(
     actions => actions.build.updateTimelineLevelsInView,
   );
   const { loading, data, error } = useTimelineQuery({
-    variables: { id: 1 },
+    variables: { buildId },
   });
   if (!data || !data.buildById) return <p>No data</p>;
   if (loading) return <p>Loading...</p>;
@@ -47,8 +51,8 @@ export const Timeline: React.SFC = () => {
 };
 
 export const TIMELINE_QUERY = gql`
-  query Timeline($id: Int!) {
-    buildById(id: $id) {
+  query Timeline($buildId: Int!) {
+    buildById(id: $buildId) {
       buildUniques(orderBy: LEVEL_ASC) {
         nodes {
           level

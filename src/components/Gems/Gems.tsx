@@ -9,12 +9,16 @@ import { useStoreState } from '../../features';
 import { Placeholder } from '../Placeholder/Placeholder';
 import { Gem } from './Gem/Gem';
 
-export const Gems: React.SFC = () => {
+interface GemsProps {
+  buildId: number;
+}
+
+export const Gems: React.SFC<GemsProps> = ({ buildId }) => {
   const currentTimelineLevel = useStoreState(
     state => state.build.currentTimelineLevel,
   );
   const { data, loading, error } = useGemsQuery({
-    variables: { buildId: 1, currentLevel: currentTimelineLevel },
+    variables: { buildId, currentLevel: currentTimelineLevel },
   });
   if (!data || loading || error) {
     return <Placeholder height={320}>No gems...</Placeholder>;

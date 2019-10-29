@@ -1,22 +1,13 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
+import { Layout } from '../src/components/Layout/Layout';
+import Link from 'next/link';
 
-import { App } from '../src/components/App/App';
-import fetchFonts from '../src/utils/fetch-fonts';
-import { theme } from '../src/utils/styling';
+const Index = () => (
+  <Link href='/build/[buildId]' as='/build/1'>
+    <a>Build 1</a>
+  </Link>
+);
 
-class Index extends React.Component {
-  componentDidMount() {
-    fetchFonts();
-  }
-
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    );
-  }
-}
+Index.getLayout = (page: React.ReactNode) => <Layout>{page}</Layout>;
 
 export default Index;

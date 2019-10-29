@@ -8,6 +8,10 @@ import { useStoreState } from '../../features';
 import { Placeholder } from '../Placeholder/Placeholder';
 import { useItemsQuery } from '../../graphql-types';
 
+interface ItemsProps {
+  buildId: number;
+}
+
 const snakeToCamel = (str: string) =>
   str.replace(/([-_][a-z])/g, group =>
     group
@@ -16,12 +20,12 @@ const snakeToCamel = (str: string) =>
       .replace('_', ''),
   );
 
-export const Items: React.SFC = () => {
+export const Items: React.SFC<ItemsProps> = ({ buildId }) => {
   const currentTimelineLevel = useStoreState(
     state => state.build.currentTimelineLevel,
   );
   const { loading, data, error } = useItemsQuery({
-    variables: { id: 1, currentLevel: currentTimelineLevel },
+    variables: { buildId, currentLevel: currentTimelineLevel },
   });
   if (!data || loading || error) {
     return <Placeholder height={550}>No item data...</Placeholder>;
@@ -67,9 +71,9 @@ export const Items: React.SFC = () => {
 };
 
 export const QUERY_QUERY = gql`
-  query Items($id: Int!, $currentLevel: Int!) {
+  query Items($buildId: Int!, $currentLevel: Int!) {
     buildUniquesByBuildIdAndLevel(
-      buildId: $id
+      givenBuildId: $buildId
       givenLevel: $currentLevel
       orderBy: SLOT_DESC
     ) {
