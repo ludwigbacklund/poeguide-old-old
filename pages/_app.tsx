@@ -1,6 +1,5 @@
 import App from 'next/app';
 import React from 'react';
-import { ApolloProvider } from 'react-apollo';
 import { ApolloProvider as ApolloHooksProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from 'styled-components';
 
@@ -21,13 +20,11 @@ class MyApp extends App {
     const getLayout = Component.getLayout || ((page: any) => page);
 
     return (
-      <ApolloProvider client={apollo}>
-        <ApolloHooksProvider client={apollo}>
-          <ThemeProvider theme={theme}>
-            {getLayout(<Component {...pageProps} />)}
-          </ThemeProvider>
-        </ApolloHooksProvider>
-      </ApolloProvider>
+      <ApolloHooksProvider client={apollo}>
+        <ThemeProvider theme={theme}>
+          {getLayout(<Component {...pageProps} />)}
+        </ThemeProvider>
+      </ApolloHooksProvider>
     );
   }
 }
