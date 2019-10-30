@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { fontSizes } from '../../utils/styling';
+import { fontSizes, desktop } from '../../utils/styling';
 
 type Modifier = {
   type: string;
@@ -90,11 +90,15 @@ export const Unique: React.SFC<UniqueProps> = ({
 const UniqueWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 380px;
+  width: 300px;
   border-radius: 8px;
   background-color: rgb(${props => props.theme.darkShades});
   color: rgb(${props => props.theme.lightShades});
   text-align: center;
+
+  @media (${desktop}) {
+    width: 380px;
+  }
 `;
 
 const Divider = styled.hr`
