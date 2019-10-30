@@ -98,13 +98,11 @@ const Header = styled.h2`
 `;
 
 const ItemGroups = styled.div`
-  width: max-content;
   margin-top: 16px;
 `;
 
 const ItemGrid = styled.div`
   display: grid;
-  max-width: 100vw;
   grid-template-areas:
     'weaponOne weaponOne .       helmet helmet .       weaponTwo weaponTwo'
     'weaponOne weaponOne .       helmet helmet .       weaponTwo weaponTwo'
