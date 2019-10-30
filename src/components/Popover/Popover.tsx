@@ -1,6 +1,7 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import throttle from 'lodash/throttle';
+import { createPortal } from 'react-dom';
 
 const calculateNewPopoverPosition = (
   currentX: number,
@@ -49,7 +50,8 @@ export const Popover: React.SFC<PopoverProps> = ({
   const [shouldRenderPopover, setShouldRenderPopover] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const popoverRef = useRef<HTMLDivElement>(null);
-  const anchorRef = useRef<HTMLDivElement>(null);
+  const popoverRoot =
+    process.browser && document.getElementById('popover-root');
 
   useLayoutEffect(() => {
     const hidePopover = () => {
@@ -111,29 +113,32 @@ export const Popover: React.SFC<PopoverProps> = ({
     }
   };
 
+  const popoverRender = (
+    <div
+      ref={popoverRef}
+      style={{
+        top: 0,
+        left: 0,
+        position: 'absolute',
+        transform: `translate3d(${popoverPosition.x}px, ${popoverPosition.y}px, 0)`,
+        visibility:
+          popoverSize.width === 0 && popoverSize.height === 0
+            ? 'hidden'
+            : 'visible',
+        zIndex: 999,
+      }}
+      data-testid='popover'
+    >
+      {content}
+    </div>
+  );
+
   return (
     <>
-      {(shouldRenderPopover || alwaysShow) && (
-        <div
-          ref={popoverRef}
-          style={{
-            top: 0,
-            left: 0,
-            position: 'absolute',
-            transform: `translate3d(${popoverPosition.x}px, ${popoverPosition.y}px, 0)`,
-            visibility:
-              popoverSize.width === 0 && popoverSize.height === 0
-                ? 'hidden'
-                : 'visible',
-            zIndex: 999,
-          }}
-          data-testid='popover'
-        >
-          {content}
-        </div>
-      )}
+      {(shouldRenderPopover || alwaysShow) &&
+        popoverRoot &&
+        createPortal(popoverRender, popoverRoot)}
       <Anchor
-        ref={anchorRef}
         onTouchStart={() => setIsDragging(false)}
         onTouchMove={() => setIsDragging(true)}
         onTouchEnd={onTouchEnd}

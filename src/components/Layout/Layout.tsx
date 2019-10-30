@@ -9,6 +9,7 @@ export const Layout: React.SFC = ({ children }) => {
       <Header />
       <SearchConnector />
       {children}
+      <div id='popover-root' />
     </LayoutWrapper>
   );
 };
