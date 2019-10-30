@@ -25,6 +25,8 @@ export const Item = memo(ItemComponent);
 
 const ItemPopover = styled(Popover)`
   ${({ slot }: IconProps) => slot && `grid-area: ${slot};`}
+  display: flex;
+  align-items: center;
 `;
 
 const Icon = styled.img`
