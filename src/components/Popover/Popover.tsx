@@ -70,7 +70,6 @@ export const Popover: React.SFC<PopoverProps> = ({
 
   useLayoutEffect(() => {
     if (popoverRef.current) {
-      // console.log('popoverelement', popoverElement.getBoundingClientRect());
       setPopoverSize({
         width: popoverRef.current ? popoverRef.current.offsetWidth : 0,
         height: popoverRef.current ? popoverRef.current.offsetHeight : 0,
