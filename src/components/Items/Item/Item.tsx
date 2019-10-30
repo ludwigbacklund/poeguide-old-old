@@ -27,14 +27,14 @@ const ItemPopover = styled(Popover)`
   ${({ slot }: IconProps) => slot && `grid-area: ${slot};`}
   display: flex;
   align-items: center;
+`;
+
+const Icon = styled.img`
+  width: 100%;
   transition: all 0.3s ease-in-out;
 
   :hover {
     transform: scale(1.2, 1.2);
     cursor: pointer;
   }
-`;
-
-const Icon = styled.img`
-  width: 100%;
 `;
