@@ -70,7 +70,7 @@ export const Items: React.SFC<ItemsProps> = ({ buildId }) => {
   );
 };
 
-export const QUERY_QUERY = gql`
+export const ITEMS_QUERY = gql`
   query Items($buildId: Int!, $currentLevel: Int!) {
     buildUniquesByBuildIdAndLevel(
       givenBuildId: $buildId
