@@ -6,11 +6,7 @@ import isNotNull from '../../utils/isNotNull';
 import { Item } from './Item/Item';
 import { useStoreState } from '../../features';
 import { Placeholder } from '../Placeholder/Placeholder';
-import { useItemsQuery } from '../../graphql-types';
-
-interface ItemsProps {
-  buildId: number;
-}
+import { useItemsQuery, useReplaceItemMutation } from '../../graphql-types';
 
 const snakeToCamel = (str: string) =>
   str.replace(/([-_][a-z])/g, group =>
@@ -20,13 +16,19 @@ const snakeToCamel = (str: string) =>
       .replace('_', ''),
   );
 
+interface ItemsProps {
+  buildId: number;
+}
+
 export const Items: React.SFC<ItemsProps> = ({ buildId }) => {
   const currentTimelineLevel = useStoreState(
     state => state.build.currentTimelineLevel,
   );
-  const { loading, data, error } = useItemsQuery({
+  const [replaceItem] = useReplaceItemMutation();
+  const { loading, data, error, refetch } = useItemsQuery({
     variables: { buildId, currentLevel: currentTimelineLevel },
   });
+
   if (!data || loading || error) {
     return <Placeholder height={550}>No item data...</Placeholder>;
   }
@@ -39,32 +41,25 @@ export const Items: React.SFC<ItemsProps> = ({ buildId }) => {
       <Header>Items</Header>
       <ItemGroups>
         <ItemGrid>
-          {buildUniques
-            .filter(buildUnique => !buildUnique.slot.startsWith('flask'))
-            .map(({ slot, unique }) => {
-              if (!unique) return;
-              const { name, iconUrl } = unique;
-              return (
-                <Item
-                  key={slot + name}
-                  uniqueName={name}
-                  slot={snakeToCamel(slot)}
-                  iconUrl={iconUrl}
-                />
-              );
-            })}
+          {buildUniques.map(({ slot, unique }) => {
+            if (!unique) return;
+            const { name, iconUrl } = unique;
+            return (
+              <Item
+                key={slot + name}
+                uniqueName={name}
+                slot={snakeToCamel(slot)}
+                iconUrl={iconUrl}
+                onReplace={async newUniqueName => {
+                  await replaceItem({
+                    variables: { buildId, slot, newUniqueName, level: 1 },
+                  });
+                  refetch();
+                }}
+              />
+            );
+          })}
         </ItemGrid>
-        <Flasks>
-          {buildUniques
-            .filter(buildUnique => buildUnique.slot.startsWith('flask'))
-            .map(({ unique }, i) => {
-              if (!unique) return;
-              const { name, iconUrl } = unique;
-              return (
-                <Item key={i + name} uniqueName={name} iconUrl={iconUrl} />
-              );
-            })}
-        </Flasks>
       </ItemGroups>
     </ItemsWrapper>
   );
@@ -89,6 +84,28 @@ export const ITEMS_QUERY = gql`
   }
 `;
 
+export const REPLACE_ITEM_MUTATION = gql`
+  mutation ReplaceItem(
+    $buildId: Int!
+    $level: Int!
+    $slot: String!
+    $newUniqueName: String!
+  ) {
+    updateBuildUniqueByBuildIdAndLevelAndSlot(
+      input: {
+        patch: { uniqueName: $newUniqueName }
+        buildId: $buildId
+        level: $level
+        slot: $slot
+      }
+    ) {
+      buildUnique {
+        uniqueName
+      }
+    }
+  }
+`;
+
 const ItemsWrapper = styled.div`
   justify-self: center;
 `;
@@ -104,17 +121,23 @@ const ItemGroups = styled.div`
 const ItemGrid = styled.div`
   display: grid;
   grid-template-areas:
-    'weaponOne weaponOne .       helmet helmet .       weaponTwo weaponTwo'
-    'weaponOne weaponOne .       helmet helmet .       weaponTwo weaponTwo'
-    'weaponOne weaponOne .       body   body   amulet  weaponTwo weaponTwo'
-    'weaponOne weaponOne ringOne body   body   ringTwo weaponTwo weaponTwo'
-    '.         gloves    gloves  body   body   boots   boots     .'
-    '.         gloves    gloves  belt   belt   boots   boots     .';
+    'weaponOne weaponOne .        helmet   helmet     .         weaponTwo weaponTwo'
+    'weaponOne weaponOne .        helmet   helmet     .         weaponTwo weaponTwo'
+    'weaponOne weaponOne .        body     body       amulet    weaponTwo weaponTwo'
+    'weaponOne weaponOne ringOne  body     body       ringTwo   weaponTwo weaponTwo'
+    '.         gloves    gloves   body     body       boots     boots     .'
+    '.         gloves    gloves   belt     belt       boots     boots     .'
+    '.         .         flaskOne flaskTwo flaskThree flaskFour flaskFive .'
+    '.         .         flaskOne flaskTwo flaskThree flaskFour flaskFive .';
   grid-template-columns: repeat(8, minmax(40px, 60px));
-  grid-template-rows: repeat(6, 1fr);
-`;
-
-const Flasks = styled.div`
-  display: flex;
+  grid-template-rows: repeat(8, 1fr);
   justify-content: center;
 `;
+
+// const Flasks = styled.div`
+//   display: grid;
+//   grid-template-areas: 'flaskOne flaskTwo flaskThree flaskFour flaskFive';
+//   grid-template-columns: repeat(5, minmax(30px, 50px));
+//   grid-template-rows: 1fr;
+//   justify-content: center;
+// `;
