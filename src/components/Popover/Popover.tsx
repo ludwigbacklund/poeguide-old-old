@@ -125,5 +125,5 @@ export const Popover: React.SFC<PopoverProps> = ({
 };
 
 const Anchor = styled.div`
-  display: inline-block;
+  display: contents;
 `;
