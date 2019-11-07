@@ -7,6 +7,7 @@ import { Level } from './Level/Level';
 import { useStoreActions } from '../../features';
 import { useTimelineQuery } from '../../graphql-types';
 import isNotNull from '../../utils/isNotNull';
+import { Placeholder } from '../Placeholder/Placeholder';
 
 interface TimelineProps {
   buildId: number;
@@ -19,9 +20,8 @@ export const Timeline: React.SFC<TimelineProps> = ({ buildId }) => {
   const { loading, data, error } = useTimelineQuery({
     variables: { buildId },
   });
-  if (!data || !data.buildById) return <p>No data</p>;
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error</p>;
+  if (!data || !data.buildById || loading || error)
+    return <Placeholder height={530}>No timeline data</Placeholder>;
 
   const { nodes } = data.buildById.buildUniques;
   const buildUniques = nodes.filter(isNotNull);
