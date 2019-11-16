@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 
-import { usePopoverUniqueQuery } from '../../graphql-types';
+import { useUniqueQuery } from '../../graphql-types';
 import { Unique } from './Unique';
 import isNotNull from '../../utils/isNotNull';
 
@@ -10,10 +10,10 @@ interface UniqueProps {
 }
 
 export const UniqueConnector: React.SFC<UniqueProps> = ({ name }) => {
-  const { data } = usePopoverUniqueQuery({ variables: { name } });
+  const { data } = useUniqueQuery({ variables: { name } });
 
-  const popoverUnique = data && data.uniqueByName;
-  if (!popoverUnique) return null;
+  const unique = data && data.uniqueByName;
+  if (!unique) return null;
 
   const {
     baseType,
@@ -24,7 +24,7 @@ export const UniqueConnector: React.SFC<UniqueProps> = ({ name }) => {
     intRequirement,
     flavourText,
     modifiers,
-  } = popoverUnique;
+  } = unique;
 
   return (
     <Unique
@@ -41,8 +41,8 @@ export const UniqueConnector: React.SFC<UniqueProps> = ({ name }) => {
   );
 };
 
-export const POPOVER_UNIQUE = gql`
-  query PopoverUnique($name: String!) {
+export const UNIQUE_QUERY = gql`
+  query Unique($name: String!) {
     uniqueByName(name: $name) {
       name
       baseType
@@ -62,19 +62,3 @@ export const POPOVER_UNIQUE = gql`
     }
   }
 `;
-
-// export const GET_GEM = gql`
-//   query GetGem($name: String!) {
-//     gemByName(name: $name) {
-//       name
-//       description
-//       iconUrl
-//       statText
-//       qualityStatText
-//       levelRequirement
-//       strRequirement
-//       dexRequirement
-//       intRequirement
-//     }
-//   }
-// `;
