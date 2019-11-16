@@ -35,11 +35,7 @@ export const Timeline: React.SFC<TimelineProps> = ({ buildId }) => {
           <Level
             key={level}
             level={level}
-            steps={buildUniques
-              .map(buildUnique =>
-                buildUnique.unique ? buildUnique.unique.name : null,
-              )
-              .filter(isNotNull)}
+            steps={buildUniques.map(({ uniqueName }) => uniqueName)}
             onIntersect={(inView: boolean) =>
               updateTimelineLevelsInView({ level: parseInt(level, 10), inView })
             }
@@ -56,9 +52,7 @@ export const TIMELINE_QUERY = gql`
       buildUniques(orderBy: LEVEL_ASC) {
         nodes {
           level
-          unique {
-            name
-          }
+          uniqueName
         }
       }
     }
