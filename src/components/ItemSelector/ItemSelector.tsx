@@ -7,7 +7,7 @@ import { useItemSelectorLazyQuery, SearchItem } from '../../graphql-types';
 import isNotNull from '../../utils/isNotNull';
 import calculatePopoverPosition from '../../utils/calculate-popover-position';
 import { Popover } from '../Popover/Popover';
-import { UniqueConnector } from '../Unique/UniqueConnector';
+import { UniqueConnector } from '../UniqueDetails/UniqueConnector';
 
 interface ItemSelectorProps {
   onSelect: (suggestion: SearchItem) => void;

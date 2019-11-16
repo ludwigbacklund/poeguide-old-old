@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Unique } from './Unique';
+import { UniqueDetails } from './UniqueDetails';
 import { ModifierType } from '../../graphql-types';
 import { render } from '../../utils/custom-render';
 
@@ -19,7 +19,8 @@ const explicitModifier = {
 describe('Popover', () => {
   const renderUnique = () => {
     return render(
-      <Unique
+      <UniqueDetails
+        name='Test Unique'
         baseType='Test Basetype'
         iconUrl='http=//example.com/image.png'
         flavourText='Test Flavour Text'

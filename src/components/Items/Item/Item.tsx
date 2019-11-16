@@ -1,7 +1,7 @@
 import React, { memo, useState } from 'react';
 import styled from 'styled-components';
 import { Popover } from '../../Popover/Popover';
-import { UniqueConnector } from '../../Unique/UniqueConnector';
+import { UniqueConnector } from '../../UniqueDetails/UniqueConnector';
 import { ItemSelector } from '../../ItemSelector/ItemSelector';
 
 interface ItemProps {

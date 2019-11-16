@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { fontSizes, desktop } from '../../../utils/styling';
 import { Popover } from '../../Popover/Popover';
 import { SearchItem } from '../../../graphql-types';
-import { UniqueConnector } from '../../Unique/UniqueConnector';
+import { UniqueConnector } from '../../UniqueDetails/UniqueConnector';
 
 export const Item: React.SFC<{} & SearchItem> = ({ name, type, iconUrl }) => (
   <Popover

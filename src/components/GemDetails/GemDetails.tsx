@@ -3,24 +3,18 @@ import styled from 'styled-components';
 
 import { fontSizes, desktop } from '../../utils/styling';
 
-type Modifier = {
-  type: string;
-  text: string;
-};
-
-interface UniqueProps {
+interface GemDetailsProps {
   name: string;
-  baseType: string;
+  baseType?: string;
   iconUrl: string;
   levelRequirement: number;
   strRequirement: number;
   dexRequirement: number;
   intRequirement: number;
-  flavourText: string;
-  modifiers: Modifier[];
+  description: string;
 }
 
-export const Unique: React.SFC<UniqueProps> = ({
+export const GemDetails: React.SFC<GemDetailsProps> = ({
   name,
   baseType,
   iconUrl,
@@ -28,18 +22,8 @@ export const Unique: React.SFC<UniqueProps> = ({
   strRequirement,
   dexRequirement,
   intRequirement,
-  flavourText,
-  modifiers,
+  description,
 }) => {
-  const implicitModifiers = modifiers.filter(
-    modifier => modifier && modifier.type === 'IMPLICIT',
-  );
-  const explicitModifiers = modifiers.filter(
-    modifier => modifier && modifier.type === 'EXPLICIT',
-  );
-  const hasModifiers =
-    implicitModifiers.length > 0 || explicitModifiers.length > 0;
-
   const readableAttributeRequirements = [
     { label: 'Str', value: strRequirement },
     { label: 'Dex', value: dexRequirement },
@@ -50,10 +34,10 @@ export const Unique: React.SFC<UniqueProps> = ({
     .join(', ');
 
   return (
-    <UniqueWrapper>
+    <GemDetailsWrapper>
       <NameWrapper>
         <Name>{name}</Name>
-        <Name>{baseType}</Name>
+        {baseType && <Name>{baseType}</Name>}
       </NameWrapper>
       <BodyWrapper>
         <span>
@@ -61,33 +45,22 @@ export const Unique: React.SFC<UniqueProps> = ({
           {readableAttributeRequirements !== '' &&
             `, ${readableAttributeRequirements}`}
         </span>
-        {hasModifiers && <Divider />}
-        {implicitModifiers.length > 0 && (
-          <>
-            <Modifiers data-testid='implicit-modifiers'>
-              {implicitModifiers.map((modifier, i) =>
-                modifier ? <Modifier key={i}>{modifier.text}</Modifier> : null,
-              )}
-            </Modifiers>
-            <Divider />
-          </>
-        )}
-        {explicitModifiers.length > 0 && (
-          <Modifiers data-testid='explicit-modifiers'>
-            {explicitModifiers.map((modifier, i) =>
-              modifier ? <Modifier key={i}>{modifier.text}</Modifier> : null,
-            )}
-          </Modifiers>
-        )}
         <Divider />
-        <FlavourText>{flavourText.replace(/\|/gm, '\n')}</FlavourText>
+        <p>{description}</p>
+        <Divider />
+        {/* <Modifiers data-testid='explicit-modifiers'>
+          {modifiers.map((modifier, i) =>
+            modifier ? <Modifier key={i}>{modifier.text}</Modifier> : null,
+          )}
+        </Modifiers> */}
+        <Divider />
         <Icon src={iconUrl} />
       </BodyWrapper>
-    </UniqueWrapper>
+    </GemDetailsWrapper>
   );
 };
 
-const UniqueWrapper = styled.div`
+const GemDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 300px;
@@ -129,19 +102,31 @@ const Name = styled.h2`
   margin: 0px;
 `;
 
-const Modifiers = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+// const Modifiers = styled.div`
+//   display: flex;
+//   flex-direction: column;
+// `;
 
-const Modifier = styled.span`
-  line-height: 20px;
-`;
-
-const FlavourText = styled.p`
-  font-style: italic;
-`;
+// const Modifier = styled.span`
+//   line-height: 20px;
+// `;
 
 const Icon = styled.img`
   object-fit: scale-down;
 `;
+
+// export const GET_GEM = gql`
+//   query GetGem($name: String!) {
+//     gemByName(name: $name) {
+//       name
+//       description
+//       iconUrl
+//       statText
+//       qualityStatText
+//       levelRequirement
+//       strRequirement
+//       dexRequirement
+//       intRequirement
+//     }
+//   }
+// `;

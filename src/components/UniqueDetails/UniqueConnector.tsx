@@ -2,7 +2,7 @@ import React from 'react';
 import gql from 'graphql-tag';
 
 import { useUniqueQuery } from '../../graphql-types';
-import { Unique } from './Unique';
+import { UniqueDetails } from './UniqueDetails';
 import isNotNull from '../../utils/isNotNull';
 
 interface UniqueProps {
@@ -27,7 +27,7 @@ export const UniqueConnector: React.SFC<UniqueProps> = ({ name }) => {
   } = unique;
 
   return (
-    <Unique
+    <UniqueDetails
       name={name}
       baseType={baseType}
       iconUrl={iconUrl}
