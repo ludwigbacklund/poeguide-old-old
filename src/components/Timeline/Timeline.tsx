@@ -20,22 +20,26 @@ export const Timeline: React.SFC<TimelineProps> = ({ buildId }) => {
   const { loading, data, error } = useTimelineQuery({
     variables: { buildId },
   });
-  if (!data || !data.buildById || loading || error)
+  if (!data || loading || error)
     return <Placeholder height={530}>No timeline data</Placeholder>;
 
-  const { nodes } = data.buildById.buildUniques;
-  const buildUniques = nodes.filter(isNotNull);
-  const buildUniquesByLevel = groupBy(buildUniques, 'level');
+  const { nodes } = data.buildTimelineItemsByBuildId;
+  const timelineItems = nodes.filter(isNotNull);
+  const timelineItemsByLevel = groupBy(timelineItems, 'level');
 
   return (
     <div>
       <TimelineHeader>Timeline</TimelineHeader>
       <TimelineWrapper>
-        {Object.entries(buildUniquesByLevel).map(([level, buildUniques]) => (
+        {Object.entries(timelineItemsByLevel).map(([level, timelineItems]) => (
           <Level
             key={level}
             level={level}
-            steps={buildUniques.map(({ uniqueName }) => uniqueName)}
+            steps={timelineItems.map(({ name, slot, type }) => ({
+              name: name || '',
+              slot: slot || '',
+              type: type || '',
+            }))}
             onIntersect={(inView: boolean) =>
               updateTimelineLevelsInView({ level: parseInt(level, 10), inView })
             }
@@ -48,12 +52,12 @@ export const Timeline: React.SFC<TimelineProps> = ({ buildId }) => {
 
 export const TIMELINE_QUERY = gql`
   query Timeline($buildId: Int!) {
-    buildById(id: $buildId) {
-      buildUniques(orderBy: LEVEL_ASC) {
-        nodes {
-          level
-          uniqueName
-        }
+    buildTimelineItemsByBuildId(givenBuildId: $buildId) {
+      nodes {
+        level
+        name
+        slot
+        type
       }
     }
   }

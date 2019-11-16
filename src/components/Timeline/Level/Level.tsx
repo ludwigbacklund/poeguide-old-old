@@ -4,11 +4,18 @@ import { useInView } from 'react-intersection-observer';
 import uuidv4 from 'uuid/v4';
 
 import { Popover } from '../../Popover/Popover';
-import { UniqueConnector } from '../../Unique/UniqueConnector';
+import { UniqueConnector } from '../../UniqueDetails/UniqueConnector';
+import { GemConnector } from '../../GemDetails/GemConnector';
+
+interface TimelineItem {
+  name: string;
+  slot: string;
+  type: string;
+}
 
 interface LevelProps {
   level: string;
-  steps: string[];
+  steps: TimelineItem[];
   onIntersect(inView: boolean): void;
 }
 
@@ -29,11 +36,19 @@ const LevelComponent: React.FC<LevelProps> = ({
   return (
     <LevelWrapper ref={ref}>
       <LevelHeader>Level {level}</LevelHeader>
-      {steps.map(uniqueName => (
+      {steps.map(({ name, type }) => (
         <Step key={uuidv4()}>
           Equip
-          <Popover content={<UniqueConnector name={uniqueName} />}>
-            <UniqueName>{uniqueName}</UniqueName>
+          <Popover
+            content={
+              type === 'unique' ? (
+                <UniqueConnector name={name} />
+              ) : (
+                <GemConnector name={name} />
+              )
+            }
+          >
+            <ItemName>{name}</ItemName>
           </Popover>
         </Step>
       ))}
@@ -69,7 +84,7 @@ const Step = styled.span`
   border-radius: 4px;
 `;
 
-const UniqueName = styled.span`
+const ItemName = styled.span`
   margin-left: 4px;
   padding-bottom: 2px;
   border-bottom: solid #ea4c2b 2px;
