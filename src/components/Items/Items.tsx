@@ -41,7 +41,7 @@ export const Items: React.SFC<ItemsProps> = ({ buildId }) => {
       <Header>Items</Header>
       <ItemGroups>
         <ItemGrid>
-          {buildUniques.map(({ slot, unique }) => {
+          {buildUniques.map(({ slot, level, unique }) => {
             if (!unique) return;
             const { name, iconUrl } = unique;
             return (
@@ -50,9 +50,18 @@ export const Items: React.SFC<ItemsProps> = ({ buildId }) => {
                 uniqueName={name}
                 slot={snakeToCamel(slot)}
                 iconUrl={iconUrl}
-                onReplace={async newUniqueName => {
+                onReplace={async (
+                  newUniqueName: string,
+                  newUniqueLevelReq: number,
+                ) => {
                   await replaceItem({
-                    variables: { buildId, slot, newUniqueName, level: 1 },
+                    variables: {
+                      buildId,
+                      slot,
+                      level,
+                      newUniqueName,
+                      newUniqueLevelReq,
+                    },
                   });
                   refetch();
                 }}
@@ -90,10 +99,11 @@ export const REPLACE_ITEM_MUTATION = gql`
     $level: Int!
     $slot: String!
     $newUniqueName: String!
+    $newUniqueLevelReq: Int!
   ) {
     updateBuildUniqueByBuildIdAndLevelAndSlot(
       input: {
-        patch: { uniqueName: $newUniqueName }
+        patch: { uniqueName: $newUniqueName, level: $newUniqueLevelReq }
         buildId: $buildId
         level: $level
         slot: $slot

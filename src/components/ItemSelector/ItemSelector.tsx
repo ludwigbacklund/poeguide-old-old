@@ -13,7 +13,7 @@ interface ItemSelectorProps {
   onSelect: (suggestion: SearchItem) => void;
   visible: boolean;
   onClickOutside: () => void;
-  onKeyUp: (e: KeyboardEvent) => void;
+  onEscapePressed: () => void;
   className?: string;
 }
 
@@ -21,7 +21,7 @@ export const ItemSelector: React.FC<ItemSelectorProps> = ({
   onSelect,
   visible,
   onClickOutside,
-  onKeyUp,
+  onEscapePressed,
   className,
   children,
 }) => {
@@ -50,6 +50,9 @@ export const ItemSelector: React.FC<ItemSelectorProps> = ({
       const anchor = anchorRef.current;
       if (anchor && !anchor.contains(e.target as Node)) onClickOutside();
     };
+    const onKeyUp = (e: KeyboardEvent) => {
+      if (e.keyCode === 27) onEscapePressed();
+    };
 
     if (visible) {
       document.addEventListener('mouseup', onMouseUp);
@@ -62,7 +65,7 @@ export const ItemSelector: React.FC<ItemSelectorProps> = ({
       document.removeEventListener('mouseup', onMouseUp);
       document.removeEventListener('keyup', onKeyUp);
     };
-  }, [visible, onClickOutside, onKeyUp]);
+  }, [visible, onClickOutside, onEscapePressed]);
 
   const getSuggestions = ({ value }: { value: string }) => {
     const searchInput = value.trim().toLowerCase();

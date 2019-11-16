@@ -8,7 +8,7 @@ interface ItemProps {
   uniqueName: string;
   slot: string;
   iconUrl: string;
-  onReplace: (newUniqueName: string) => void;
+  onReplace: (newUniqueName: string, newUniqueLevelReq: number) => void;
 }
 
 const ItemComponent: React.SFC<ItemProps> = ({
@@ -23,19 +23,17 @@ const ItemComponent: React.SFC<ItemProps> = ({
     setReplaceMode(false);
   };
 
-  const quitReplaceModeIfEscapePressed = (e: KeyboardEvent) => {
-    if (e.keyCode === 27) setReplaceMode(false);
-  };
-
   return (
     <ItemSelector
       visible={replaceMode}
       onSelect={item => {
-        onReplace(item.name || '');
-        setReplaceMode(false);
+        if (item.name && item.levelRequirement) {
+          onReplace(item.name || '', item.levelRequirement || 1);
+        }
+        quitReplaceMode();
       }}
       onClickOutside={quitReplaceMode}
-      onKeyUp={quitReplaceModeIfEscapePressed}
+      onEscapePressed={quitReplaceMode}
     >
       <Popover
         content={replaceMode ? null : <UniqueConnector name={uniqueName} />}
