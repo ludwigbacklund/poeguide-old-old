@@ -1,5 +1,7 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
+import { Popover } from '../../Popover/Popover';
+import { GemConnector } from '../../GemDetails/GemConnector';
 
 interface GemProps {
   name: string;
@@ -9,8 +11,10 @@ interface GemProps {
 const GemComponent: React.SFC<GemProps> = ({ name, iconUrl }) => {
   return (
     <GemWrapper>
-      <img src={iconUrl} />
-      <GemName>{name}</GemName>
+      <Popover content={<GemConnector name={name} />}>
+        <img src={iconUrl} />
+        <GemName>{name}</GemName>
+      </Popover>
     </GemWrapper>
   );
 };
