@@ -6,16 +6,17 @@ import uuidv4 from 'uuid/v4';
 import { Popover } from '../../Popover/Popover';
 import { UniqueConnector } from '../../UniqueDetails/UniqueConnector';
 import { GemConnector } from '../../GemDetails/GemConnector';
+import isNotNull from '../../../utils/isNotNull';
 
 interface TimelineItem {
   name: string;
-  slot: string;
   type: string;
+  replacesItemWithName: string;
 }
 
 interface LevelProps {
   level: string;
-  steps: TimelineItem[];
+  steps: Array<TimelineItem | null>;
   onIntersect(inView: boolean): void;
 }
 
@@ -36,9 +37,16 @@ const LevelComponent: React.FC<LevelProps> = ({
   return (
     <LevelWrapper ref={ref}>
       <LevelHeader>Level {level}</LevelHeader>
-      {steps.map(({ name, type }) => (
+      {steps.filter(isNotNull).map(({ name, type, replacesItemWithName }) => (
         <Step key={uuidv4()}>
-          Equip
+          {replacesItemWithName ? (
+            <>
+              <span>Replace</span>
+              <ItemName>{replacesItemWithName}</ItemName> <span>with</span>
+            </>
+          ) : (
+            'Equip'
+          )}
           <Popover
             content={
               type === 'unique' ? (

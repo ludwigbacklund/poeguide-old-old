@@ -27,6 +27,21 @@ export const Timeline: React.SFC<TimelineProps> = ({ buildId }) => {
   const timelineItems = nodes.filter(isNotNull);
   const timelineItemsByLevel = groupBy(timelineItems, 'level');
 
+  const slotItems: { [key: string]: string } = {};
+  const timelineItemsWithReplacement = timelineItems.reduce<{
+    [key: string]: string;
+  }>((acc, item) => {
+    const { slot, name } = item;
+    if (!slot || !name) return acc;
+
+    const slotItem = slotItems[slot];
+    if (slotItem) {
+      acc[name] = slotItem;
+    }
+    slotItems[slot] = name;
+    return acc;
+  }, {});
+
   return (
     <div>
       <TimelineHeader>Timeline</TimelineHeader>
@@ -35,11 +50,14 @@ export const Timeline: React.SFC<TimelineProps> = ({ buildId }) => {
           <Level
             key={level}
             level={level}
-            steps={timelineItems.map(({ name, slot, type }) => ({
-              name: name || '',
-              slot: slot || '',
-              type: type || '',
-            }))}
+            steps={timelineItems.map(({ name, type }) => {
+              if (!name || !type) return null;
+              return {
+                name,
+                type,
+                replacesItemWithName: timelineItemsWithReplacement[name],
+              };
+            })}
             onIntersect={(inView: boolean) =>
               updateTimelineLevelsInView({ level: parseInt(level, 10), inView })
             }
