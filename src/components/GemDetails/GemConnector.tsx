@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 
 import { useGemQuery } from '../../graphql-types';
 import { GemDetails } from './GemDetails';
+import isNotNull from '../../utils/isNotNull';
 
 interface GemConnectorProps {
   name: string;
@@ -21,7 +22,9 @@ export const GemConnector: React.SFC<GemConnectorProps> = ({ name }) => {
     dexRequirement,
     intRequirement,
     description,
+    gemModifiers: { nodes },
   } = gem;
+  const modifiers = nodes.filter(isNotNull);
 
   return (
     <GemDetails
@@ -32,6 +35,7 @@ export const GemConnector: React.SFC<GemConnectorProps> = ({ name }) => {
       dexRequirement={dexRequirement}
       intRequirement={intRequirement}
       description={description}
+      modifiers={modifiers}
     />
   );
 };
@@ -46,6 +50,11 @@ export const GEM_QUERY = gql`
       strRequirement
       dexRequirement
       intRequirement
+      gemModifiers {
+        nodes {
+          text
+        }
+      }
     }
   }
 `;

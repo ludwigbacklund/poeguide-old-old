@@ -3,6 +3,10 @@ import styled from 'styled-components';
 
 import { fontSizes, desktop } from '../../utils/styling';
 
+interface Modifier {
+  text: string;
+}
+
 interface GemDetailsProps {
   name: string;
   baseType?: string;
@@ -12,6 +16,7 @@ interface GemDetailsProps {
   dexRequirement: number;
   intRequirement: number;
   description: string;
+  modifiers: Modifier[];
 }
 
 export const GemDetails: React.SFC<GemDetailsProps> = ({
@@ -23,6 +28,7 @@ export const GemDetails: React.SFC<GemDetailsProps> = ({
   dexRequirement,
   intRequirement,
   description,
+  modifiers,
 }) => {
   const readableAttributeRequirements = [
     { label: 'Str', value: strRequirement },
@@ -48,11 +54,11 @@ export const GemDetails: React.SFC<GemDetailsProps> = ({
         <Divider />
         <p>{description}</p>
         <Divider />
-        {/* <Modifiers data-testid='explicit-modifiers'>
+        <Modifiers>
           {modifiers.map((modifier, i) =>
             modifier ? <Modifier key={i}>{modifier.text}</Modifier> : null,
           )}
-        </Modifiers> */}
+        </Modifiers>
         <Divider />
         <Icon src={iconUrl} />
       </BodyWrapper>
@@ -102,31 +108,16 @@ const Name = styled.h2`
   margin: 0px;
 `;
 
-// const Modifiers = styled.div`
-//   display: flex;
-//   flex-direction: column;
-// `;
+const Modifiers = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
-// const Modifier = styled.span`
-//   line-height: 20px;
-// `;
+const Modifier = styled.span`
+  line-height: 20px;
+  margin-top: 4px;
+`;
 
 const Icon = styled.img`
   object-fit: scale-down;
 `;
-
-// export const GET_GEM = gql`
-//   query GetGem($name: String!) {
-//     gemByName(name: $name) {
-//       name
-//       description
-//       iconUrl
-//       statText
-//       qualityStatText
-//       levelRequirement
-//       strRequirement
-//       dexRequirement
-//       intRequirement
-//     }
-//   }
-// `;
