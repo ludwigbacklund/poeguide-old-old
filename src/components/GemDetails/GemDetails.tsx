@@ -52,7 +52,7 @@ export const GemDetails: React.SFC<GemDetailsProps> = ({
             `, ${readableAttributeRequirements}`}
         </span>
         <Divider />
-        <p>{description}</p>
+        <span>{description}</span>
         <Divider />
         <Modifiers>
           {modifiers.map((modifier, i) =>
@@ -115,7 +115,6 @@ const Modifiers = styled.div`
 
 const Modifier = styled.span`
   line-height: 20px;
-  margin-top: 4px;
 `;
 
 const Icon = styled.img`
