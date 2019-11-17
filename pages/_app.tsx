@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 
 import withRedux from '../src/utils/with-redux';
 import fetchFonts from '../src/utils/fetch-fonts';
-import withApolloClient from '../src/utils/with-apollo';
+import { withApollo } from '../src/utils/with-apollo';
 import { theme } from '../src/utils/styling';
 
 class MyApp extends App {
@@ -29,4 +29,4 @@ class MyApp extends App {
   }
 }
 
-export default withRedux(withApolloClient(MyApp));
+export default withRedux(withApollo(MyApp));
