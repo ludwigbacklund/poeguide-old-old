@@ -11,6 +11,8 @@ import { useRouter } from 'next/router';
 const Build = () => {
   const router = useRouter();
   let { buildId } = router.query;
+  if (!buildId) return null;
+
   buildId = Array.isArray(buildId) ? buildId[0] : buildId;
   const buildIdAsNumber = parseInt(buildId, 10);
 
