@@ -1,5 +1,8 @@
+require('dotenv').config();
+
 module.exports = {
   client: {
-    service: 'poeguide',
+    service: { name: 'poeguide', url: process.env.GRAPHQL_API_URL },
+    excludes: ['src/graphql-types.ts'],
   },
 };
